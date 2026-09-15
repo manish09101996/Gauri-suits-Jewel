@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>@yield('title', 'Gauri Suits & Jewel | Luxury Punjabi Fashion & Heritage Jewellery')</title>
+    <meta name="description" content="@yield('meta_description', 'Discover timeless Punjabi fashion, heavily embroidered designer suits, and heirloom heritage jewellery handcrafted for royalty.')">
+    <link rel="canonical" href="{{ url()->current() }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
+
+    <!-- Open Graph / Social Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@yield('title', 'Gauri Suits & Jewel | Luxury Punjabi Fashion & Heritage Jewellery')">
+    <meta property="og:description" content="@yield('meta_description', 'Discover timeless Punjabi fashion, heavily embroidered designer suits, and heirloom heritage jewellery handcrafted for royalty.')">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ asset('images/logo.png') }}">
+    <meta property="og:site_name" content="Gauri Suits & Jewel">
+
+    <!-- Fonts: Cormorant Garamond & Playfair Display (Serif) + Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @stack('styles')
+</head>
+<body class="bg-[#FDFBF7] text-[#2A1810] font-sans antialiased selection:bg-[#D4AF37] selection:text-[#3B0A11]"
+      x-data="{ mobileMenuOpen: false }">
+
+    <!-- Top Announcement Bar (Royal Emerald Green & Gold) -->
+    @if(isset($announcement) && $announcement->is_active)
+        <aside aria-label="Announcement" class="bg-[#083323] text-[#E6CA65] text-[11px] py-1.5 px-4 text-center font-serif tracking-[0.25em] flex items-center justify-center gap-3 border-b border-[#D4AF37]/30">
+            <span>✨ {{ $announcement->title }}</span>
+            @if($announcement->link_url)
+                <a href="{{ $announcement->link_url }}" class="underline hover:text-white transition-colors underline-offset-4 ml-1">
+                    {{ $announcement->button_text ?: 'Shop Now' }} &rarr;
+                </a>
+            @endif
+        </aside>
+    @else
+        <aside aria-label="Announcement" class="bg-[#083323] text-[#E6CA65] text-[11px] py-1.5 px-4 text-center font-serif tracking-[0.25em] flex items-center justify-center gap-3 border-b border-[#D4AF37]/30">
+            <span>✨ COMPLIMENTARY EXPRESS SHIPPING ACROSS INDIA ON ORDERS ABOVE ₹2,999</span>
+            <a href="{{ route('shop.index') }}" class="underline hover:text-white transition-colors underline-offset-4 ml-1 font-semibold">EXPLORE &rarr;</a>
+        </aside>
+    @endif
+
+    <!-- Main Navigation Header (Regal Maroon, Gold Borders & Finalized Logo) -->
+    <header class="sticky top-0 z-40 bg-[#3B0A11]/95 backdrop-blur-md border-b border-[#D4AF37]/30 text-[#F7EED9] transition-all duration-300 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20 md:h-24">
+
+                <!-- Left: Mobile Menu Toggle & Brand Logo -->
+                <div class="flex items-center gap-4 sm:gap-6">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="lg:hidden p-2 text-[#E6CA65] hover:text-[#D4AF37] focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Finalized Brand Logo -->
+                    <a href="{{ route('home') }}" class="flex items-center gap-3 sm:gap-3.5 group py-1" title="Gauri Suits & Jewel - Tradition Meets Elegance">
+                        <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#0A3828] to-[#D4AF37] shadow-lg shrink-0 group-hover:scale-105 transition-transform duration-300">
+                            <img src="{{ asset('images/logo.png') }}" alt="Gauri Suits & Jewel" class="w-full h-full object-cover rounded-full">
+                        </div>
+                        <div class="flex flex-col items-start text-left">
+                            <span class="font-serif text-2xl sm:text-3xl tracking-[0.18em] text-[#F7EED9] uppercase font-normal leading-tight transition-colors group-hover:text-[#D4AF37]">
+                                GAURI
+                            </span>
+                            <span class="text-[9px] sm:text-[10px] tracking-[0.38em] text-[#D4AF37] uppercase font-semibold font-sans -mt-0.5">
+                                SUITS &amp; JEWEL
+                            </span>
+                            <span class="hidden sm:inline-block text-[8px] tracking-[0.25em] text-[#E6CA65]/90 uppercase font-sans mt-0.5 font-medium">
+                                TRADITION MEETS ELEGANCE
+                            </span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Center: Desktop Navigation -->
+                <nav class="hidden lg:flex items-center space-x-6 xl:space-x-7 text-xs font-semibold uppercase tracking-[0.2em] text-[#F7EED9]">
+                    <a href="{{ route('home') }}" class="hover:text-[#D4AF37] transition-colors {{ request()->routeIs('home') ? 'text-[#D4AF37] border-b-2 border-[#D4AF37] pb-1' : '' }}">Home</a>
+                    <a href="{{ route('shop.new-arrivals') }}" class="text-[#249A6E] hover:text-[#D1EBE1] font-bold transition-colors">New Arrivals</a>
+                    <a href="{{ route('shop.suits') }}" class="hover:text-[#D4AF37] transition-colors {{ request()->is('suits*') || request()->is('punjabi-suits*') ? 'text-[#D4AF37] border-b-2 border-[#D4AF37] pb-1' : '' }}">Suits</a>
+                    <a href="{{ route('shop.jewellery') }}" class="hover:text-[#D4AF37] transition-colors {{ request()->is('jewellery*') ? 'text-[#D4AF37] border-b-2 border-[#D4AF37] pb-1' : '' }}">Jewellery</a>
+                    <a href="{{ route('shop.wedding-collection') }}" class="hover:text-[#D4AF37] transition-colors {{ request()->is('wedding*') || request()->is('bridal*') ? 'text-[#D4AF37] border-b-2 border-[#D4AF37] pb-1' : '' }}">Bridal</a>
+                    <a href="{{ route('shop.best-sellers') }}" class="hover:text-[#D4AF37] transition-colors {{ request()->routeIs('shop.best-sellers') ? 'text-[#D4AF37] border-b-2 border-[#D4AF37] pb-1' : '' }}">Best Sellers</a>
+                    <a href="{{ route('shop.sale') }}" class="text-[#E6CA65] hover:text-white font-bold transition-colors">Sale</a>
+                </nav>
+
+                <!-- Right: Icons (Search, Account, Wishlist, Cart) -->
+                <div class="flex items-center space-x-3 sm:space-x-5 text-[#F7EED9]">
+                    <!-- Search Trigger -->
+                    <button @click="$dispatch('open-search')" type="button" class="p-2 hover:text-[#D4AF37] transition-colors focus:outline-none" title="Search">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Account -->
+                    <a href="{{ auth()->check() ? route('account.dashboard') : route('customer.login') }}" class="p-2 hover:text-[#D4AF37] transition-colors" title="Account">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </a>
+
+                    <!-- Wishlist -->
+                    <a href="{{ route('wishlist.index') }}" class="p-2 hover:text-[#D4AF37] transition-colors relative" title="Wishlist">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                        <span id="header-wishlist-badge" class="absolute -top-0.5 -right-0.5 bg-[#0A3828] border border-[#D4AF37]/50 text-[#F7EED9] text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold" style="display: {{ ($wishlistCount ?? 0) > 0 ? 'flex' : 'none' }};">
+                            {{ $wishlistCount ?? 0 }}
+                        </span>
+                    </a>
+
+                    <!-- Cart Drawer Trigger -->
+                    <button @click="$dispatch('open-cart')" type="button" class="p-2 hover:text-[#D4AF37] transition-colors relative focus:outline-none" title="Shopping Cart">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                        <span id="header-cart-badge" class="absolute -top-0.5 -right-0.5 bg-[#D4AF37] text-[#3B0A11] text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold shadow" style="display: {{ ($cartCount ?? 0) > 0 ? 'flex' : 'none' }};">
+                            {{ $cartCount ?? 0 }}
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div x-show="mobileMenuOpen"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="-translate-x-full opacity-0"
+             x-transition:enter-end="translate-x-0 opacity-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="translate-x-0 opacity-100"
+             x-transition:leave-end="-translate-x-full opacity-0"
+             class="fixed inset-0 z-50 lg:hidden flex"
+             style="display: none;">
+
+            <!-- Backdrop -->
+            <div @click="mobileMenuOpen = false" class="fixed inset-0 bg-black/60 backdrop-blur-sm"></div>
+
+            <!-- Drawer Panel -->
+            <div class="relative w-4/5 max-w-sm bg-[#FDFBF7] h-full shadow-2xl z-10 flex flex-col justify-between overflow-y-auto">
+                <div>
+                    <div class="p-5 bg-[#3B0A11] border-b border-[#D4AF37]/30 flex items-center justify-between text-[#F7EED9]">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#0A3828] to-[#D4AF37] shadow">
+                                <img src="{{ asset('images/logo.png') }}" alt="Gauri Suits & Jewel" class="w-full h-full object-cover rounded-full">
+                            </div>
+                            <div>
+                                <span class="font-serif text-xl tracking-widest text-[#F7EED9] font-normal block leading-tight">GAURI</span>
+                                <span class="block text-[8px] tracking-[0.3em] text-[#D4AF37] uppercase font-semibold">SUITS &amp; JEWEL</span>
+                            </div>
+                        </div>
+                        <button @click="mobileMenuOpen = false" class="text-[#E6CA65] hover:text-white p-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+
+                    <div class="px-6 py-6 space-y-4 text-sm font-semibold tracking-widest uppercase">
+                        <a href="{{ route('home') }}" class="block py-2 text-[#2A1810] hover:text-[#58111A]">Home</a>
+                        <a href="{{ route('shop.index') }}" class="block py-2 text-[#2A1810] hover:text-[#58111A]">All Products</a>
+                        <a href="{{ route('shop.suits') }}" class="block py-2 text-[#2A1810] hover:text-[#58111A]">Punjabi Suits</a>
+                        <a href="{{ route('shop.designer-suits') }}" class="block py-2 text-[#2A1810] hover:text-[#58111A]">Designer Suits</a>
+                        <a href="{{ route('shop.party-wear') }}" class="block py-2 text-[#2A1810] hover:text-[#58111A]">Party Wear</a>
+                        <a href="{{ route('shop.jewellery') }}" class="block py-2 text-[#2A1810] hover:text-[#58111A]">Heritage Jewellery</a>
+                        <a href="{{ route('shop.wedding-collection') }}" class="block py-2 text-[#2A1810] hover:text-[#58111A]">Wedding Collection</a>
+                        <a href="{{ route('shop.new-arrivals') }}" class="block py-2 text-[#2A1810] hover:text-[#58111A]">New Arrivals</a>
+                        <a href="{{ route('shop.sale') }}" class="block py-2 text-[#7A1D2A] font-bold">Sale</a>
+                        <div class="pt-4 border-t border-[#EFE9DE] space-y-3">
+                            <a href="{{ route('blog.index') }}" class="block text-xs text-[#6B5E55]">Editorial &amp; Stories</a>
+                            <a href="{{ route('pages.about') }}" class="block text-xs text-[#6B5E55]">Our Story &amp; Heritage</a>
+                            <a href="{{ route('pages.contact') }}" class="block text-xs text-[#6B5E55]">Contact Concierge</a>
+                            <a href="{{ route('order.track') }}" class="block text-xs text-[#6B5E55]">Track Your Order</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-[#F7F4EE] border-t border-[#EFE9DE]">
+                    @auth
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="font-medium text-[#2A1810]">Signed in as {{ auth()->user()->name }}</span>
+                            <form action="{{ route('customer.logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="text-[#7A1D2A] font-bold hover:underline">Logout</button>
+                            </form>
+                        </div>
+                    @else
+                        <div class="grid grid-cols-2 gap-3 text-center">
+                            <a href="{{ route('customer.login') }}" class="py-2.5 px-3 bg-[#58111A] text-white text-xs tracking-wider uppercase font-semibold rounded-sm">Sign In</a>
+                            <a href="{{ route('customer.register') }}" class="py-2.5 px-3 border border-[#58111A] text-[#58111A] text-xs tracking-wider uppercase font-semibold rounded-sm">Register</a>
+                        </div>
+                    @endauth
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Page Content -->
+    <main>
+        <!-- Flash Alerts -->
+        @if(session('success'))
+            <div class="max-w-7xl mx-auto px-4 mt-4">
+                <div class="bg-emerald-50 border-l-4 border-emerald-600 p-4 text-sm text-emerald-800 flex items-center justify-between shadow-sm">
+                    <span>{{ session('success') }}</span>
+                    <button onclick="this.parentElement.remove()" class="text-emerald-600 hover:text-emerald-900 font-bold">&times;</button>
+                </div>
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="max-w-7xl mx-auto px-4 mt-4">
+                <div class="bg-rose-50 border-l-4 border-rose-600 p-4 text-sm text-rose-800 flex items-center justify-between shadow-sm">
+                    <span>{{ session('error') }}</span>
+                    <button onclick="this.parentElement.remove()" class="text-rose-600 hover:text-rose-900 font-bold">&times;</button>
+                </div>
+            </div>
+        @endif
+
+        @yield('content')
+    </main>
+
+    <!-- Slide-over AJAX Cart Drawer -->
+    <div x-data="cartDrawer"
+         x-show="open"
+         x-cloak
+         class="fixed inset-0 z-50 overflow-hidden"
+         style="display: none;">
+
+        <div @click="open = false" class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"></div>
+
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-[#FDFBF7] shadow-2xl flex flex-col justify-between">
+
+                <!-- Drawer Header (Royal Maroon & Gold) -->
+                <div class="p-5 border-b border-[#D4AF37]/30 flex items-center justify-between bg-[#3B0A11] text-[#F7EED9]">
+                    <div class="flex items-center gap-2.5">
+                        <h2 class="font-serif text-lg font-normal tracking-wider text-[#F7EED9]">YOUR SHOPPING BAG</h2>
+                        <span class="text-xs bg-[#D4AF37] text-[#3B0A11] font-bold px-2 py-0.5 rounded-full shadow" x-text="summary.total_items"></span>
+                    </div>
+                    <button @click="open = false" class="text-[#E6CA65] hover:text-white p-1">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+
+                <!-- Free Shipping Progress Indicator (Royal Emerald & Gold) -->
+                <div class="bg-[#FCFBF8] border-b border-[#EFE9DE] px-6 py-3">
+                    <div class="text-xs text-center font-medium text-[#2A1810]">
+                        <template x-if="summary.free_shipping_unlocked">
+                            <span class="text-[#0A3828] font-bold">🎉 Congratulations! You have unlocked FREE Express Shipping!</span>
+                        </template>
+                        <template x-if="!summary.free_shipping_unlocked">
+                            <span>Add <strong class="text-[#58111A]">₹<span x-text="summary.amount_needed_free_shipping.toLocaleString('en-IN')"></span></strong> more to unlock <strong class="text-[#0A3828]">FREE SHIPPING</strong></span>
+                        </template>
+                    </div>
+                    <div class="w-full bg-[#EFE9DE] rounded-full h-2 mt-2 overflow-hidden">
+                        <div class="bg-gradient-to-r from-[#0A3828] to-[#125B40] h-2 transition-all duration-500 rounded-full shadow-xs" :style="'width: ' + summary.free_shipping_percent + '%'"></div>
+                    </div>
+                </div>
+
+                <!-- Items List -->
+                <div class="flex-1 overflow-y-auto p-6 space-y-4">
+                    <template x-if="summary.items.length === 0">
+                        <div class="text-center py-16">
+                            <svg class="w-12 h-12 text-[#C5A869]/50 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                            </svg>
+                            <p class="font-serif text-lg text-[#58111A]">Your cart is waiting for something beautiful.</p>
+                            <a href="{{ route('shop.index') }}" @click="open = false" class="inline-block mt-4 text-xs font-bold uppercase tracking-widest text-[#C5A869] hover:underline">Explore Collections &rarr;</a>
+                        </div>
+                    </template>
+
+                    <template x-for="item in summary.items" :key="item.id">
+                        <div class="flex gap-4 pb-4 border-b border-[#EFE9DE] items-start">
+                            <img :src="item.image" :alt="item.name" class="w-20 h-24 object-cover rounded-sm bg-[#EFE9DE]">
+                            <div class="flex-1 min-w-0">
+                                <a :href="item.slug ? '/product/' + item.slug : '#'" class="font-serif text-sm font-semibold text-[#2A1810] hover:text-[#58111A] truncate block" x-text="item.name"></a>
+                                <div class="text-xs text-[#6B5E55] mt-0.5 space-x-2">
+                                    <span x-show="item.size" x-text="'Size: ' + item.size"></span>
+                                    <span x-show="item.colour" x-text="'Colour: ' + item.colour"></span>
+                                </div>
+                                <div class="text-sm font-bold text-[#58111A] mt-1" x-text="'₹' + item.price.toLocaleString('en-IN')"></div>
+
+                                <!-- Quantity Stepper & Remove -->
+                                <div class="flex items-center justify-between mt-3">
+                                    <div class="flex items-center border border-[#C5A869]/40 rounded-sm">
+                                        <button @click="updateQty(item.id, item.quantity - 1)" type="button" class="px-2 py-0.5 text-xs text-[#58111A] hover:bg-[#C5A869]/10">-</button>
+                                        <span class="px-2 py-0.5 text-xs font-semibold" x-text="item.quantity"></span>
+                                        <button @click="updateQty(item.id, item.quantity + 1)" type="button" class="px-2 py-0.5 text-xs text-[#58111A] hover:bg-[#C5A869]/10">+</button>
+                                    </div>
+                                    <button @click="removeItem(item.id)" type="button" class="text-xs text-[#7A1D2A] hover:underline">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Footer Summary & Checkout -->
+                <div class="p-6 bg-[#F7F4EE] border-t border-[#EFE9DE]" x-show="summary.items.length > 0">
+                    <div class="space-y-2 mb-4 text-sm">
+                        <div class="flex justify-between text-[#6B5E55]">
+                            <span>Subtotal</span>
+                            <span class="font-bold text-[#2A1810]" x-text="'₹' + summary.subtotal.toLocaleString('en-IN')"></span>
+                        </div>
+                        <div class="flex justify-between text-emerald-700" x-show="summary.discount > 0">
+                            <span>Discount <span x-show="summary.coupon_code" x-text="'(' + summary.coupon_code + ')'"></span></span>
+                            <span class="font-bold" x-text="'-₹' + summary.discount.toLocaleString('en-IN')"></span>
+                        </div>
+                        <div class="flex justify-between text-xs text-[#8C713B]">
+                            <span>Shipping &amp; Taxes</span>
+                            <span>Calculated at checkout</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <a href="{{ route('checkout.index') }}" class="w-full block py-3.5 bg-[#58111A] hover:bg-[#430D14] text-[#F7EED9] text-center text-xs tracking-[0.2em] uppercase font-bold rounded-sm transition-colors shadow-md">
+                            PROCEED TO CHECKOUT
+                        </a>
+                        <a href="{{ route('cart.index') }}" class="w-full block py-2.5 border border-[#58111A] text-[#58111A] text-center text-xs tracking-[0.15em] uppercase font-semibold rounded-sm hover:bg-[#58111A]/5 transition-colors">
+                            VIEW FULL BAG
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Instant Search Modal -->
+    <div x-data="searchModal"
+         @open-search.window="open = true; $nextTick(() => $refs.searchInput.focus())"
+         x-show="open"
+         x-cloak
+         class="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-md flex items-start justify-center p-4 sm:p-6 md:p-20"
+         style="display: none;">
+
+        <div @click.away="open = false" class="bg-[#FDFBF7] w-full max-w-2xl rounded-sm shadow-2xl overflow-hidden border border-[#C5A869]/30">
+            <div class="p-4 sm:p-6 border-b border-[#EFE9DE] flex items-center gap-3">
+                <svg class="w-5 h-5 text-[#C5A869]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <input x-ref="searchInput"
+                       x-model="query"
+                       @input="onInput"
+                       type="text"
+                       placeholder="Search royal suits, lehengas, jewellery, jhumkas, fabrics..."
+                       class="w-full bg-transparent border-none text-base text-[#2A1810] focus:ring-0 placeholder-[#8C713B]/60">
+                <button @click="open = false" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <!-- Suggestions Dropdown -->
+            <div class="p-6 max-h-96 overflow-y-auto">
+                <template x-if="loading">
+                    <div class="py-6 text-center text-xs text-[#C5A869] font-medium animate-pulse">Searching royal archive...</div>
+                </template>
+
+                <template x-if="!loading && results.products.length === 0 && query.length >= 2">
+                    <div class="py-6 text-center">
+                        <p class="text-sm text-[#6B5E55]">We couldn't find matches for "<span x-text="query"></span>".</p>
+                        <a href="{{ route('shop.index') }}" class="inline-block mt-3 text-xs font-bold text-[#58111A] hover:underline uppercase tracking-wider">Browse All Collections &rarr;</a>
+                    </div>
+                </template>
+
+                <div x-show="results.products.length > 0">
+                    <h3 class="text-xs uppercase font-bold tracking-widest text-[#8C713B] mb-3">Matching Products</h3>
+                    <div class="space-y-3">
+                        <template x-for="prod in results.products" :key="prod.id">
+                            <a :href="prod.url" class="flex items-center gap-3 p-2 hover:bg-[#F7F4EE] rounded transition-colors">
+                                <img :src="prod.image" :alt="prod.name" class="w-12 h-14 object-cover rounded bg-[#EFE9DE]">
+                                <div class="flex-1">
+                                    <h4 class="font-serif text-sm font-semibold text-[#2A1810]" x-text="prod.name"></h4>
+                                    <span class="text-xs text-[#8C713B]" x-text="prod.category"></span>
+                                </div>
+                                <span class="text-sm font-bold text-[#58111A]" x-text="'₹' + prod.price.toLocaleString('en-IN')"></span>
+                            </a>
+                        </template>
+                    </div>
+                </div>
+
+                <div x-show="results.categories.length > 0" class="mt-4 pt-4 border-t border-[#EFE9DE]">
+                    <h3 class="text-xs uppercase font-bold tracking-widest text-[#8C713B] mb-2">Categories</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <template x-for="cat in results.categories" :key="cat.name">
+                            <a :href="cat.url" class="px-3 py-1 bg-[#F7F4EE] hover:bg-[#58111A] hover:text-white text-xs font-semibold rounded text-[#2A1810] transition-colors" x-text="cat.name"></a>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div x-data="quickViewModal"
+         @open-quick-view.window="show($event.detail.id)"
+         x-show="open"
+         x-cloak
+         class="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-md flex items-center justify-center p-4"
+         style="display: none;">
+
+        <div @click.away="open = false" class="bg-[#FDFBF7] w-full max-w-3xl rounded-sm shadow-2xl overflow-hidden border border-[#C5A869]/30 relative">
+            <button @click="open = false" class="absolute top-4 right-4 text-gray-500 hover:text-black z-10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <template x-if="loading">
+                <div class="p-16 text-center text-[#58111A] font-serif text-lg">Loading details...</div>
+            </template>
+
+            <template x-if="!loading && product">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="h-80 md:h-full bg-[#EFE9DE]">
+                        <img :src="product.primary_image" :alt="product.name" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 sm:p-8 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] tracking-[0.25em] uppercase font-bold text-[#C5A869]" x-text="product.category_name"></span>
+                            <h2 class="font-serif text-xl sm:text-2xl font-bold text-[#58111A] mt-1" x-text="product.name"></h2>
+                            <div class="text-xs text-[#8C713B] mt-1" x-text="'SKU: ' + product.sku"></div>
+
+                            <div class="flex items-baseline gap-3 mt-3">
+                                <span class="text-xl font-bold text-[#58111A]" x-text="'₹' + (selectedVariant ? selectedVariant.price : product.effective_price).toLocaleString('en-IN')"></span>
+                                <span x-show="product.sale_price" class="text-sm text-gray-400 line-through" x-text="'₹' + product.price.toLocaleString('en-IN')"></span>
+                                <span x-show="product.discount_percent > 0" class="text-xs font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded" x-text="product.discount_percent + '% OFF'"></span>
+                            </div>
+
+                            <p class="text-xs text-[#4A3E38] mt-3 leading-relaxed" x-text="product.short_description"></p>
+
+                            <!-- Variant sizes if any -->
+                            <div x-show="product.variants && product.variants.length > 0" class="mt-4">
+                                <span class="text-xs font-bold text-[#2A1810] block mb-2">Select Variant:</span>
+                                <div class="flex flex-wrap gap-2">
+                                    <template x-for="v in product.variants" :key="v.id">
+                                        <button @click="selectVariant(v)"
+                                                type="button"
+                                                class="px-3 py-1.5 text-xs font-semibold border rounded-sm transition-all"
+                                                :class="selectedVariant && selectedVariant.id === v.id ? 'border-[#58111A] bg-[#58111A] text-[#F7EED9]' : 'border-[#EFE9DE] bg-white text-[#2A1810] hover:border-[#C5A869]'">
+                                            <span x-text="(v.size || '') + (v.size && v.colour ? ' / ' : '') + (v.colour || '')"></span>
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-[#EFE9DE] space-y-3">
+                            <button @click="addToCart" type="button" class="w-full py-3 bg-[#58111A] hover:bg-[#430D14] text-[#F7EED9] text-xs font-bold tracking-[0.2em] uppercase rounded-sm transition-colors shadow">
+                                Add to Cart
+                            </button>
+                            <a :href="product.url" class="block text-center text-xs font-semibold text-[#8C713B] hover:text-[#58111A] uppercase tracking-wider">
+                                View Full Product Details &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Concierge Button -->
+    @php
+        $whatsappNumber = \App\Models\Setting::get('whatsapp_number', '+919984700018');
+        $cleanWa = preg_replace('/[^0-9]/', '', $whatsappNumber);
+    @endphp
+    <a href="https://wa.me/{{ $cleanWa }}?text={{ urlencode('Hello Gauri Suits & Jewel, I would like to inquire about your collections.') }}"
+       target="_blank"
+       rel="noopener"
+       class="fixed bottom-6 right-6 z-30 w-14 h-14 bg-[#25D366] text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 group"
+       title="Chat with our Personal Stylist on WhatsApp">
+        <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+        </svg>
+    </a>
+
+    <!-- 4-Pillar Trust Badges Bar (Deep Royal Emerald & Gold) -->
+    <section class="bg-[#083323] text-[#F7EED9] border-t border-[#D4AF37]/35 py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            <div class="space-y-1.5 flex flex-col items-center">
+                <div class="text-[#D4AF37] text-2xl font-serif">✦</div>
+                <h4 class="font-serif text-sm font-semibold tracking-wider text-[#F7EED9]">Handcrafted in Punjab</h4>
+                <p class="text-[11px] text-[#E3CE9B]/80 font-light">Artisanal weaves by generational karigars</p>
+            </div>
+            <div class="space-y-1.5 flex flex-col items-center">
+                <div class="text-[#D4AF37] text-2xl font-serif">❦</div>
+                <h4 class="font-serif text-sm font-semibold tracking-wider text-[#F7EED9]">Complimentary Delivery</h4>
+                <p class="text-[11px] text-[#E3CE9B]/80 font-light">Free express shipping on orders above ₹2,999</p>
+            </div>
+            <div class="space-y-1.5 flex flex-col items-center">
+                <div class="text-[#D4AF37] text-2xl font-serif">↺</div>
+                <h4 class="font-serif text-sm font-semibold tracking-wider text-[#F7EED9]">Easy 7-Day Exchange</h4>
+                <p class="text-[11px] text-[#E3CE9B]/80 font-light">Dedicated personal concierge assistance</p>
+            </div>
+            <div class="space-y-1.5 flex flex-col items-center">
+                <div class="text-[#D4AF37] text-2xl font-serif">✈</div>
+                <h4 class="font-serif text-sm font-semibold tracking-wider text-[#F7EED9]">Worldwide Royal Shipping</h4>
+                <p class="text-[11px] text-[#E3CE9B]/80 font-light">Insured international express to 40+ countries</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deep Royal Maroon Luxury Brand Footer with Finalized Logo -->
+    <footer class="bg-[#2B070D] text-[#F7EED9] pt-16 pb-12 border-t border-[#D4AF37]/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-[#D4AF37]/25">
+
+                <!-- Column 1: Shop -->
+                <div>
+                    <h3 class="font-serif text-xs uppercase tracking-[0.25em] text-[#D4AF37] font-bold mb-4">Shop</h3>
+                    <ul class="space-y-2.5 text-xs text-[#E3CE9B]/85">
+                        <li><a href="{{ route('shop.suits') }}" class="hover:text-white transition-colors">Punjabi Suits</a></li>
+                        <li><a href="{{ route('shop.designer-suits') }}" class="hover:text-white transition-colors">Patiala Salwars</a></li>
+                        <li><a href="{{ route('shop.jewellery') }}" class="hover:text-white transition-colors">Heirloom Jewellery</a></li>
+                        <li><a href="{{ route('shop.wedding-collection') }}" class="hover:text-white transition-colors">Bridal Couture</a></li>
+                        <li><a href="{{ route('shop.new-arrivals') }}" class="hover:text-white transition-colors">New In Atelier</a></li>
+                        <li><a href="{{ route('shop.sale') }}" class="hover:text-[#E6CA65] transition-colors font-semibold">Festive Sale</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: Client Concierge -->
+                <div>
+                    <h3 class="font-serif text-xs uppercase tracking-[0.25em] text-[#D4AF37] font-bold mb-4">Client Care</h3>
+                    <ul class="space-y-2.5 text-xs text-[#E3CE9B]/85">
+                        <li><a href="{{ route('order.track') }}" class="hover:text-white transition-colors">Track Order</a></li>
+                        <li><a href="{{ route('pages.shipping-policy') }}" class="hover:text-white transition-colors">Shipping &amp; Delivery</a></li>
+                        <li><a href="{{ route('pages.return-policy') }}" class="hover:text-white transition-colors">Returns &amp; Exchanges</a></li>
+                        <li><a href="{{ route('pages.refund-policy') }}" class="hover:text-white transition-colors">Refund Policy</a></li>
+                        <li><a href="{{ route('pages.faq') }}" class="hover:text-white transition-colors">FAQs</a></li>
+                        <li><a href="{{ route('pages.contact') }}" class="hover:text-white transition-colors">Contact Concierge</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Center Grand Brand Crest with Finalized Logo -->
+                <div class="flex flex-col items-center justify-center text-center space-y-2 py-4 lg:py-0 border-y lg:border-y-0 lg:border-x border-[#D4AF37]/25 px-4">
+                    <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full p-1 bg-gradient-to-tr from-[#D4AF37] via-[#0A3828] to-[#D4AF37] shadow-2xl shrink-0 group hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('images/logo.png') }}" alt="Gauri Suits & Jewel" class="w-full h-full object-cover rounded-full">
+                    </div>
+                    <span class="font-serif text-2xl sm:text-3xl tracking-[0.22em] text-[#F7EED9] uppercase font-normal block mt-2">GAURI</span>
+                    <span class="text-[10px] tracking-[0.45em] text-[#D4AF37] uppercase font-semibold block -mt-1 font-sans">SUITS &amp; JEWEL</span>
+                    <p class="text-[11px] text-[#E3CE9B]/80 font-serif italic max-w-xs pt-1">
+                        Tradition Meets Elegance • Heirloom Punjabi silhouettes &amp; royal Kundan jewels.
+                    </p>
+                    <span class="text-[9px] tracking-[0.35em] text-[#249A6E] uppercase font-semibold block pt-1 font-sans">CHANDIGARH • AMRITSAR</span>
+                </div>
+
+                <!-- Column 4: The Atelier -->
+                <div>
+                    <h3 class="font-serif text-xs uppercase tracking-[0.25em] text-[#D4AF37] font-bold mb-4">The Atelier</h3>
+                    <ul class="space-y-2.5 text-xs text-[#E3CE9B]/85">
+                        <li><a href="{{ route('pages.about') }}" class="hover:text-white transition-colors">Our Legacy &amp; Craft</a></li>
+                        <li><a href="{{ route('blog.index') }}" class="hover:text-white transition-colors">Editorial Journal</a></li>
+                        <li><a href="{{ route('pages.privacy-policy') }}" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="{{ route('pages.terms') }}" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 5: Social & Newsletter -->
+                <div>
+                    <h3 class="font-serif text-xs uppercase tracking-[0.25em] text-[#D4AF37] font-bold mb-4">Stay Connected</h3>
+                    <p class="text-xs text-[#E3CE9B]/75 mb-3">Subscribe for royal seasonal trunk shows and private bridal previews.</p>
+                    <form action="{{ route('newsletter.subscribe') }}" method="POST" class="space-y-2">
+                        @csrf
+                        <input type="email" name="email" required placeholder="Enter your email" class="w-full bg-[#1A0408] border border-[#D4AF37]/35 rounded-xs px-3 py-2 text-xs text-[#F7EED9] placeholder-[#E3CE9B]/40 focus:outline-none focus:border-[#D4AF37]">
+                        <button type="submit" class="w-full py-2 bg-[#0A3828] hover:bg-[#0D4732] text-[#F7EED9] text-[10px] uppercase font-bold tracking-[0.2em] rounded-xs transition border border-[#D4AF37]/40 shadow">
+                            JOIN ATELIER
+                        </button>
+                    </form>
+                    <div class="pt-4 flex items-center space-x-3 text-[#D4AF37]">
+                        <a href="{{ \App\Models\Setting::get('instagram_url', 'https://instagram.com') }}" target="_blank" class="hover:text-white" title="Instagram">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                        <a href="{{ \App\Models\Setting::get('facebook_url', 'https://facebook.com') }}" target="_blank" class="hover:text-white" title="Facebook">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.688 5H18V0h-3.808C10.595 0 9 1.582 9 4.615V8z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Copyright & Accepted Payments -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#E3CE9B]/70 gap-4">
+                <p>&copy; {{ date('Y') }} Gauri Suits &amp; Jewel. All Rights Reserved. Handcrafted in Punjab.</p>
+                <div class="flex items-center space-x-2 text-[10px] tracking-wider uppercase font-semibold text-[#D4AF37]">
+                    <span class="px-2.5 py-1 bg-[#1A0408] rounded-xs border border-[#D4AF37]/30">Razorpay</span>
+                    <span class="px-2.5 py-1 bg-[#1A0408] rounded-xs border border-[#D4AF37]/30">UPI</span>
+                    <span class="px-2.5 py-1 bg-[#1A0408] rounded-xs border border-[#D4AF37]/30">Visa / Mastercard</span>
+                    <span class="px-2.5 py-1 bg-[#1A0408] rounded-xs border border-[#D4AF37]/30">Cash on Delivery</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Global Toast Container -->
+    <div x-data="{ toasts: [] }"
+         @toast-message.window="toasts.push({ id: Date.now(), message: $event.detail.message, type: $event.detail.type }); setTimeout(() => toasts.shift(), 3500)"
+         class="fixed bottom-6 left-6 z-50 space-y-2 pointer-events-none">
+        <template x-for="toast in toasts" :key="toast.id">
+            <div class="pointer-events-auto px-4 py-3 rounded shadow-xl text-xs font-semibold tracking-wide flex items-center gap-2 border transition-all duration-300"
+                 :class="toast.type === 'error' ? 'bg-rose-900 text-rose-100 border-rose-700' : 'bg-[#58111A] text-[#F7EED9] border-[#C5A869]'">
+                <span x-text="toast.type === 'error' ? '⚠️' : '✨'"></span>
+                <span x-text="toast.message"></span>
+            </div>
+        </template>
+    </div>
+
+    @stack('scripts')
+</body>
+</html>

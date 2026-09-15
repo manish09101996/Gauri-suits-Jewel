@@ -1,0 +1,273 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    /* Ivory Backgrounds */
+    --color-ivory-50: #FCFBF8;
+    --color-ivory-100: #FDFBF7;
+    --color-ivory-200: #F7F4EE;
+    --color-ivory-300: #EFE9DE;
+    --color-ivory-400: #E3D9C8;
+
+    /* Primary Brand: Maroon */
+    --color-brand-maroon: #58111A;
+    --color-brand-maroon-dark: #3B0A11;
+    --color-brand-maroon-deep: #4A0E17;
+    --color-brand-maroon-light: #7A1D2A;
+    --color-maroon-950: #26050A;
+    --color-maroon-900: #3B0A11;
+    --color-maroon-800: #4A0E17;
+    --color-maroon-700: #58111A;
+    --color-maroon-600: #7A1D2A;
+    --color-maroon-500: #932232;
+    --color-maroon-100: #F3D9DC;
+    --color-maroon-50: #FDF5F6;
+
+    /* Secondary / Accent: Emerald Green */
+    --color-brand-emerald: #0A3828;
+    --color-brand-emerald-dark: #062419;
+    --color-brand-emerald-deep: #083323;
+    --color-brand-emerald-light: #125B40;
+    --color-emerald-950: #041B13;
+    --color-emerald-900: #083323;
+    --color-emerald-800: #0A3828;
+    --color-emerald-700: #0E4D37;
+    --color-emerald-600: #135D43;
+    --color-emerald-500: #1B7A57;
+    --color-emerald-400: #249A6E;
+    --color-emerald-200: #A3D7C5;
+    --color-emerald-100: #D1EBE1;
+    --color-emerald-50: #EDF7F3;
+
+    /* Highlights, Buttons & Borders: Royal Gold */
+    --color-brand-gold: #D4AF37;
+    --color-brand-gold-light: #E6CA65;
+    --color-brand-gold-dark: #A88B4D;
+    --color-gold-50: #FDF9F0;
+    --color-gold-100: #F7EED9;
+    --color-gold-200: #EFE2BE;
+    --color-gold-300: #E3CE9B;
+    --color-gold-400: #E6CA65;
+    --color-gold-500: #D4AF37;
+    --color-gold-600: #C5A869;
+    --color-gold-700: #A88B4D;
+    --color-gold-800: #8C713B;
+    --color-gold-900: #6B552A;
+
+    --color-charcoal-800: #2A1810;
+    --color-charcoal-900: #1B120C;
+    --color-brand-charcoal: #2A1810;
+    --color-brand-ivory: #FDFBF7;
+}
+
+@layer base {
+    body {
+        font-family: var(--font-sans);
+        background-color: var(--color-ivory-100);
+        color: var(--color-charcoal-800);
+        letter-spacing: -0.01em;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .font-serif-luxury {
+        font-family: var(--font-serif);
+        letter-spacing: 0.02em;
+    }
+}
+
+/* Custom Luxury Helpers */
+.bg-ivory {
+    background-color: #FDFBF7;
+}
+
+.bg-ivory-warm {
+    background-color: #F7F4EE;
+}
+
+.bg-maroon-deep {
+    background-color: #4A0E17;
+}
+
+.bg-maroon-royal {
+    background-color: #58111A;
+}
+
+.text-maroon-deep {
+    color: #4A0E17;
+}
+
+.text-maroon-royal {
+    color: #58111A;
+}
+
+.border-maroon-deep {
+    border-color: #4A0E17;
+}
+
+.border-maroon-royal {
+    border-color: #58111A;
+}
+
+.bg-emerald-royal {
+    background-color: #0A3828;
+}
+
+.bg-emerald-deep {
+    background-color: #083323;
+}
+
+.text-emerald-royal {
+    color: #0A3828;
+}
+
+.text-emerald-bright {
+    color: #249A6E;
+}
+
+.border-emerald-royal {
+    border-color: #0A3828;
+}
+
+.border-emerald-light {
+    border-color: #125B40;
+}
+
+.bg-gold-antique {
+    background-color: #C5A869;
+}
+
+.bg-gold-royal {
+    background-color: #D4AF37;
+}
+
+.text-gold-antique {
+    color: #C5A869;
+}
+
+.text-gold-royal {
+    color: #D4AF37;
+}
+
+.border-gold-antique {
+    border-color: #C5A869;
+}
+
+.border-gold-royal {
+    border-color: #D4AF37;
+}
+
+.gold-gradient {
+    background: linear-gradient(135deg, #E6CA65 0%, #D4AF37 50%, #A88B4D 100%);
+}
+
+.gold-text-gradient {
+    background: linear-gradient(135deg, #E6CA65 0%, #D4AF37 50%, #A88B4D 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.maroon-gradient {
+    background: linear-gradient(135deg, #58111A 0%, #3B0A11 100%);
+}
+
+.emerald-gradient {
+    background: linear-gradient(135deg, #0A3828 0%, #083323 100%);
+}
+
+.gold-border-glow {
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+}
+
+/* Luxury button transitions */
+.btn-royal {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-royal::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transition: all 0.5s ease;
+}
+
+.btn-royal:hover::after {
+    left: 100%;
+}
+
+/* Elegant scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #F7F4EE;
+}
+::-webkit-scrollbar-thumb {
+    background: #C5A869;
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #A88B4D;
+}
+
+/* Vintage Parchment & Regional Map Texture */
+.bg-vintage-parchment {
+    background-color: #F7F3E8;
+    background-image: 
+        radial-gradient(rgba(197, 168, 105, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, #FAF6EE, #F4EEDB, #FAF6EE);
+    background-size: 24px 24px, 100% 100%;
+}
+
+.map-watermark-overlay {
+    position: relative;
+}
+
+.map-watermark-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg width='800' height='800' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='120' y='180' font-family='Georgia, serif' font-size='56' font-style='italic' fill='%232A1810'%3EPanjab%3C/text%3E%3Ctext x='480' y='130' font-family='Georgia, serif' font-size='38' fill='%232A1810'%3EAmritsar%3C/text%3E%3Ctext x='160' y='360' font-family='Georgia, serif' font-size='44' fill='%232A1810'%3ELahore%3C/text%3E%3Ctext x='520' y='420' font-family='Georgia, serif' font-size='48' font-style='italic' fill='%232A1810'%3EPatiala%3C/text%3E%3Ctext x='340' y='640' font-family='Georgia, serif' font-size='42' fill='%232A1810'%3EDelhi%3C/text%3E%3Ctext x='80' y='520' font-family='Georgia, serif' font-size='32' letter-spacing='6' fill='%232A1810'%3EMAJHA%3C/text%3E%3Ctext x='620' y='280' font-family='Georgia, serif' font-size='32' letter-spacing='6' fill='%232A1810'%3EDOABA%3C/text%3E%3Cpath d='M80 120 Q 250 200 450 160 T 750 300' fill='none' stroke='%232A1810' stroke-width='1.5' stroke-dasharray='4,8'/%3E%3Cpath d='M120 400 Q 300 450 500 380 T 780 580' fill='none' stroke='%232A1810' stroke-width='1.5' stroke-dasharray='4,8'/%3E%3Ccircle cx='400' cy='400' r='180' fill='none' stroke='%232A1810' stroke-width='1' stroke-opacity='0.5'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 700px 700px;
+    z-index: 0;
+}
+
+/* Hide scrollbar for clean carousels */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Ornamental Motif */
+.ornament-flourish {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.ornament-flourish::before,
+.ornament-flourish::after {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background-color: #C5A869;
+}

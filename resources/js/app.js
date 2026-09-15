@@ -1,0 +1,258 @@
+import './bootstrap';
+import Alpine from 'alpinejs';
+
+window.Alpine = Alpine;
+
+// Global Toast Notifications
+window.showToast = function(message, type = 'success') {
+    window.dispatchEvent(new CustomEvent('toast-message', {
+        detail: { message, type }
+    }));
+};
+
+// Cart Drawer Store / Alpine Component
+Alpine.data('cartDrawer', () => ({
+    open: false,
+    loading: false,
+    summary: {
+        items: [],
+        total_items: 0,
+        subtotal: 0,
+        discount: 0,
+        coupon_code: '',
+        free_shipping_threshold: 2999,
+        amount_needed_free_shipping: 2999,
+        free_shipping_percent: 0,
+        free_shipping_unlocked: false,
+    },
+
+    init() {
+        this.fetchSummary();
+        window.addEventListener('open-cart', () => {
+            this.open = true;
+            this.fetchSummary();
+        });
+        window.addEventListener('cart-updated', () => {
+            this.fetchSummary();
+        });
+    },
+
+    async fetchSummary() {
+        try {
+            const res = await fetch('/cart/summary', { credentials: 'same-origin' });
+            if (res.ok) {
+                this.summary = await res.json();
+                // Update badge in header
+                const badge = document.getElementById('header-cart-badge');
+                if (badge) {
+                    badge.innerText = this.summary.total_items;
+                    badge.style.display = this.summary.total_items > 0 ? 'flex' : 'none';
+                }
+            }
+        } catch (e) {
+            console.error('Failed to fetch cart summary', e);
+        }
+    },
+
+    async updateQty(itemId, newQty) {
+        this.loading = true;
+        try {
+            const res = await fetch('/cart/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ item_id: itemId, quantity: newQty }),
+            });
+            const data = await res.json();
+            if (data.success) {
+                this.summary = data.cart;
+                window.showToast(data.message, 'success');
+            } else {
+                window.showToast(data.message, 'error');
+            }
+        } catch (e) {
+            window.showToast('Failed to update cart.', 'error');
+        } finally {
+            this.loading = false;
+        }
+    },
+
+    async removeItem(itemId) {
+        this.loading = true;
+        try {
+            const res = await fetch(`/cart/remove/${itemId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json'
+                },
+            });
+            const data = await res.json();
+            if (data.success) {
+                this.summary = data.cart;
+                window.showToast(data.message, 'success');
+            }
+        } catch (e) {
+            window.showToast('Failed to remove item.', 'error');
+        } finally {
+            this.loading = false;
+        }
+    }
+}));
+
+// Quick View Modal Component
+Alpine.data('quickViewModal', () => ({
+    open: false,
+    loading: false,
+    product: null,
+    selectedVariant: null,
+    selectedSize: '',
+    selectedColour: '',
+    quantity: 1,
+
+    async show(productId) {
+        this.open = true;
+        this.loading = true;
+        this.product = null;
+        try {
+            const res = await fetch(`/api/quick-view/${productId}`);
+            if (res.ok) {
+                this.product = await res.json();
+                if (this.product.variants && this.product.variants.length > 0) {
+                    this.selectedVariant = this.product.variants[0];
+                    this.selectedSize = this.selectedVariant.size;
+                    this.selectedColour = this.selectedVariant.colour;
+                }
+            }
+        } catch (e) {
+            window.showToast('Error loading quick view', 'error');
+        } finally {
+            this.loading = false;
+        }
+    },
+
+    selectVariant(variant) {
+        this.selectedVariant = variant;
+        this.selectedSize = variant.size;
+        this.selectedColour = variant.colour;
+    },
+
+    async addToCart() {
+        if (!this.product) return;
+        this.loading = true;
+
+        try {
+            const res = await fetch('/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    product_id: this.product.id,
+                    variant_id: this.selectedVariant ? this.selectedVariant.id : null,
+                    quantity: this.quantity,
+                })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                this.open = false;
+                window.dispatchEvent(new CustomEvent('cart-updated'));
+                window.dispatchEvent(new CustomEvent('open-cart'));
+                window.showToast(data.message, 'success');
+            } else {
+                window.showToast(data.message, 'error');
+            }
+        } catch (e) {
+            window.showToast('Failed to add item to cart', 'error');
+        } finally {
+            this.loading = false;
+        }
+    }
+}));
+
+// Instant Search Modal Component
+Alpine.data('searchModal', () => ({
+    open: false,
+    query: '',
+    loading: false,
+    results: { products: [], categories: [] },
+    debounceTimer: null,
+
+    onInput() {
+        clearTimeout(this.debounceTimer);
+        if (this.query.trim().length < 2) {
+            this.results = { products: [], categories: [] };
+            return;
+        }
+
+        this.loading = true;
+        this.debounceTimer = setTimeout(async () => {
+            try {
+                const res = await fetch(`/search/suggestions?q=${encodeURIComponent(this.query)}`);
+                if (res.ok) {
+                    this.results = await res.json();
+                }
+            } catch (e) {
+                console.error(e);
+            } finally {
+                this.loading = false;
+            }
+        }, 300);
+    }
+}));
+
+// Wishlist Toggle Function
+window.toggleWishlist = async function(productId, btnElement) {
+    try {
+        const res = await fetch('/wishlist/toggle', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ product_id: productId })
+        });
+
+        if (res.status === 401) {
+            window.location.href = '/login';
+            return;
+        }
+
+        const data = await res.json();
+        if (data.success) {
+            window.showToast(data.message, 'success');
+
+            // Update badge in header
+            const badge = document.getElementById('header-wishlist-badge');
+            if (badge) {
+                badge.innerText = data.count;
+                badge.style.display = data.count > 0 ? 'flex' : 'none';
+            }
+
+            // Update icon appearance
+            if (btnElement) {
+                const svg = btnElement.querySelector('svg');
+                if (svg) {
+                    if (data.in_wishlist) {
+                        svg.setAttribute('fill', 'currentColor');
+                        svg.classList.add('text-rose-600');
+                    } else {
+                        svg.setAttribute('fill', 'none');
+                        svg.classList.remove('text-rose-600');
+                    }
+                }
+            }
+        }
+    } catch (e) {
+        window.showToast('Something went wrong.', 'error');
+    }
+};
+
+Alpine.start();
