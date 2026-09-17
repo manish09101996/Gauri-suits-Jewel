@@ -23,7 +23,7 @@
       x-data="{
           variants: {!! $variantsJson !!},
           addVariant() {
-              this.variants.push({ id: null, sku: '{{ $product->sku }}-' + (this.variants.length + 1), size: 'L', colour: '{{ $product->colour ?: "Gold" }}', price: '', sale_price: '', stock: 5 });
+              this.variants.push({ id: null, sku: '{{ $product->sku }}-' + (this.variants.length + 1), size: 'L', colour: '{{ $product->colour ?: 'Gold' }}', price: '', sale_price: '', stock: 5 });
           },
           removeVariant(index) {
               this.variants.splice(index, 1);

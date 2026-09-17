@@ -4,56 +4,7 @@
 @section('meta_description', $product->short_description ?: Str::limit(strip_tags($product->description), 160))
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16"
-     x-data="{
-        activeImage: '{{ $product->primary_image_url }}',
-        selectedVariantId: '{{ $product->variants->first()?->id ?? '' }}',
-        selectedSize: '{{ $product->variants->first()?->size ?? 'Standard' }}',
-        selectedPrice: {{ $product->effective_price }},
-        quantity: 1,
-        activeTab: 'desc',
-        sizeGuideOpen: false,
-        reviewModalOpen: false,
-        variants: {{ json_encode($product->variants) }},
-        selectVariant(v) {
-            this.selectedVariantId = v.id;
-            this.selectedSize = v.size || v.name || 'Standard';
-            this.selectedPrice = v.price || {{ $product->effective_price }};
-        },
-        addToCart(redirectCheckout = false) {
-            fetch(window.apiUrl('/cart/add'), {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    product_id: {{ $product->id }},
-                    variant_id: this.selectedVariantId || null,
-                    quantity: this.quantity
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    if (redirectCheckout) {
-                        window.location.href = window.apiUrl('/checkout');
-                    } else {
-                        window.dispatchEvent(new CustomEvent('cart-updated', { detail: data }));
-                        window.dispatchEvent(new CustomEvent('open-cart'));
-                        window.showToast(data.message || 'Added to bag!', 'success');
-                    }
-                } else {
-                    window.showToast(data.message || 'Error adding item to bag.', 'error');
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                window.showToast('Failed to add item to bag.', 'error');
-            });
-        }
-     }">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16" x-data="productPage()">
 
     <!-- Breadcrumbs -->
     <nav class="flex items-center gap-2 text-xs text-stone-400 uppercase tracking-wider">
@@ -391,3 +342,59 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function productPage() {
+    return {
+        activeImage: {!! json_encode($product->primary_image_url) !!},
+        selectedVariantId: {!! json_encode($product->variants->first()?->id ?? '') !!},
+        selectedSize: {!! json_encode($product->variants->first()?->size ?? 'Standard') !!},
+        selectedPrice: {{ $product->effective_price }},
+        quantity: 1,
+        activeTab: 'desc',
+        sizeGuideOpen: false,
+        reviewModalOpen: false,
+        variants: {!! json_encode($product->variants) !!},
+        selectVariant(v) {
+            this.selectedVariantId = v.id;
+            this.selectedSize = v.size || v.name || 'Standard';
+            this.selectedPrice = v.price || {{ $product->effective_price }};
+        },
+        addToCart(redirectCheckout = false) {
+            fetch(window.apiUrl('/cart/add'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': window.csrfToken(),
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    product_id: {{ $product->id }},
+                    variant_id: this.selectedVariantId || null,
+                    quantity: this.quantity
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    if (redirectCheckout) {
+                        window.location.href = window.apiUrl('/checkout');
+                    } else {
+                        window.dispatchEvent(new CustomEvent('cart-updated', { detail: data }));
+                        window.dispatchEvent(new CustomEvent('open-cart'));
+                        window.showToast(data.message || 'Added to bag!', 'success');
+                    }
+                } else {
+                    window.showToast(data.message || 'Error adding item to bag.', 'error');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                window.showToast('Failed to add item to bag.', 'error');
+            });
+        }
+    };
+}
+</script>
+@endpush

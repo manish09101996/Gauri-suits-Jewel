@@ -3,58 +3,7 @@
 @section('title', 'Secure Checkout | Gauri Suits & Jewel')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8"
-     x-data="{
-        selectedState: '{{ old('state', $defaultAddress?->state ?? 'Punjab') }}',
-        paymentMethod: '{{ old('payment_method', 'razorpay') }}',
-        shippingFee: {{ $totals['shipping_fee'] ?? 0 }},
-        subtotal: {{ $totals['subtotal'] ?? 0 }},
-        discount: {{ $totals['discount'] ?? 0 }},
-        codAvailable: {{ $codAvailable ? 'true' : 'false' }},
-        grandTotal: {{ $totals['grand_total'] ?? 0 }},
-        updatingRates: false,
-        onStateOrPaymentChange() {
-            this.updatingRates = true;
-            fetch(window.apiUrl('/checkout/shipping-rate'), {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    state: this.selectedState,
-                    payment_method: this.paymentMethod
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    this.shippingFee = data.totals.shipping_fee;
-                    this.grandTotal = data.totals.grand_total;
-                    this.codAvailable = data.cod_available;
-                    if (!this.codAvailable && this.paymentMethod === 'cod') {
-                        this.paymentMethod = 'razorpay';
-                    }
-                }
-                this.updatingRates = false;
-            })
-            .catch(err => {
-                console.error(err);
-                this.updatingRates = false;
-            });
-        },
-        fillAddress(addr) {
-            document.querySelector('[name=name]').value = (addr.first_name || '') + ' ' + (addr.last_name || '');
-            document.querySelector('[name=phone]').value = addr.phone || '';
-            document.querySelector('[name=address_line1]').value = addr.address_line1 || '';
-            document.querySelector('[name=address_line2]').value = addr.address_line2 || '';
-            document.querySelector('[name=city]').value = addr.city || '';
-            document.querySelector('[name=postal_code]').value = addr.postal_code || '';
-            this.selectedState = addr.state || 'Punjab';
-            this.onStateOrPaymentChange();
-        }
-     }">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8" x-data="checkoutPage()">
 
     <!-- Page Header -->
     <div class="border-b border-stone-200 pb-4 text-center sm:text-left">
@@ -295,3 +244,61 @@
     </form>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function checkoutPage() {
+    return {
+        selectedState: {!! json_encode(old('state', $defaultAddress?->state ?? 'Punjab')) !!},
+        paymentMethod: {!! json_encode(old('payment_method', 'razorpay')) !!},
+        shippingFee: {{ $totals['shipping_fee'] ?? 0 }},
+        subtotal: {{ $totals['subtotal'] ?? 0 }},
+        discount: {{ $totals['discount'] ?? 0 }},
+        codAvailable: {{ $codAvailable ? 'true' : 'false' }},
+        grandTotal: {{ $totals['grand_total'] ?? 0 }},
+        updatingRates: false,
+        onStateOrPaymentChange() {
+            this.updatingRates = true;
+            fetch(window.apiUrl('/checkout/shipping-rate'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': window.csrfToken(),
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    state: this.selectedState,
+                    payment_method: this.paymentMethod
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    this.shippingFee = data.totals.shipping_fee;
+                    this.grandTotal = data.totals.grand_total;
+                    this.codAvailable = data.cod_available;
+                    if (!this.codAvailable && this.paymentMethod === 'cod') {
+                        this.paymentMethod = 'razorpay';
+                    }
+                }
+                this.updatingRates = false;
+            })
+            .catch(err => {
+                console.error(err);
+                this.updatingRates = false;
+            });
+        },
+        fillAddress(addr) {
+            document.querySelector('[name=name]').value = (addr.first_name || '') + ' ' + (addr.last_name || '');
+            document.querySelector('[name=phone]').value = addr.phone || '';
+            document.querySelector('[name=address_line1]').value = addr.address_line1 || '';
+            document.querySelector('[name=address_line2]').value = addr.address_line2 || '';
+            document.querySelector('[name=city]').value = addr.city || '';
+            document.querySelector('[name=postal_code]').value = addr.postal_code || '';
+            this.selectedState = addr.state || 'Punjab';
+            this.onStateOrPaymentChange();
+        }
+    };
+}
+</script>
+@endpush

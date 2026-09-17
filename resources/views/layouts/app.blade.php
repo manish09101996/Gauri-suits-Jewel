@@ -46,6 +46,11 @@
             clean = clean.replace(/^\/+/, '');
             return base ? (base + '/' + clean) : ('/' + clean);
         };
+
+        window.csrfToken = function() {
+            return (window.AppConfig && window.AppConfig.csrfToken) ||
+                   (document.querySelector('meta[name=csrf-token]') ? document.querySelector('meta[name=csrf-token]').content : '');
+        };
     </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])

@@ -3,53 +3,7 @@
 @section('title', 'Shopping Bag | Gauri Suits & Jewel')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8"
-     x-data="{
-        updating: false,
-        updateQty(itemId, qty) {
-            if (qty < 1) {
-                this.removeItem(itemId);
-                return;
-            }
-            this.updating = true;
-            fetch(window.apiUrl('/cart/update'), {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({ item_id: itemId, quantity: qty })
-            })
-            .then(res => res.json())
-            .then(data => {
-                window.location.reload();
-            })
-            .catch(err => {
-                console.error(err);
-                this.updating = false;
-            });
-        },
-        removeItem(itemId) {
-            if (!confirm('Remove this piece from your bag?')) return;
-            this.updating = true;
-            fetch(window.apiUrl('/cart/remove/' + itemId), {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}',
-                    'Accept': 'application/json'
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                window.location.reload();
-            })
-            .catch(err => {
-                console.error(err);
-                this.updating = false;
-            });
-        }
-     }">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8" x-data="cartPage()">
 
     <!-- Page Title -->
     <div class="border-b border-stone-200 pb-6 flex items-center justify-between">
@@ -236,3 +190,56 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function cartPage() {
+    return {
+        updating: false,
+        updateQty(itemId, qty) {
+            if (qty < 1) {
+                this.removeItem(itemId);
+                return;
+            }
+            this.updating = true;
+            fetch(window.apiUrl('/cart/update'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': window.csrfToken(),
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ item_id: itemId, quantity: qty })
+            })
+            .then(res => res.json())
+            .then(data => {
+                window.location.reload();
+            })
+            .catch(err => {
+                console.error(err);
+                this.updating = false;
+            });
+        },
+        removeItem(itemId) {
+            if (!confirm('Remove this piece from your bag?')) return;
+            this.updating = true;
+            fetch(window.apiUrl('/cart/remove/' + itemId), {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': window.csrfToken(),
+                    'Accept': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                window.location.reload();
+            })
+            .catch(err => {
+                console.error(err);
+                this.updating = false;
+            });
+        }
+    };
+}
+</script>
+@endpush
