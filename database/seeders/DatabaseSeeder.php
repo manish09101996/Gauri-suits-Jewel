@@ -187,7 +187,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Velvet Festive Suits',
             'slug' => 'velvet-suits',
             'description' => 'Opulent micro-velvet suits adorned with antique Kashmiri tilla work.',
-            'image' => 'https://images.unsplash.com/photo-1583391733975-021c37b679b3?q=80&w=800&auto=format&fit=crop',
+            'image' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=800&auto=format&fit=crop',
             'is_active' => true,
             'is_featured' => true,
             'sort_order' => 5,
@@ -354,8 +354,8 @@ class DatabaseSeeder extends Seeder
                 'short_description' => 'Regal deep maroon micro-velvet ensemble enriched with intricate antique gold Kashmiri tilla embroidery.',
                 'description' => '<p>Crafted for distinguished winter nuptials, the Noor-e-Kashmir suit features luxurious micro-velvet that drapes with stately grace. Artisans have hand-guided authentic silver and gold tilla threads across the neckline, front daman, and sleeves. Paired with tailored velvet pants and a pure tissue silk dupatta carrying hand-stitched borders.</p>',
                 'images' => [
-                    ['url' => 'https://images.unsplash.com/photo-1583391733975-021c37b679b3?q=80&w=900&auto=format&fit=crop', 'is_primary' => true],
-                    ['url' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=900&auto=format&fit=crop', 'is_primary' => false],
+                    ['url' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=900&auto=format&fit=crop', 'is_primary' => true],
+                    ['url' => 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=900&auto=format&fit=crop', 'is_primary' => false],
                 ],
                 'variants' => [
                     ['size' => 'S', 'colour' => 'Royal Maroon', 'sku' => 'GS-VS-002-S', 'stock' => 4],

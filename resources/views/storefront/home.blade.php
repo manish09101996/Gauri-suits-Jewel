@@ -14,6 +14,7 @@
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=85&w=2400&auto=format&fit=crop"
                  alt="Gauri Suits & Jewel Timeless Traditions"
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=85&w=2400&auto=format&fit=crop';"
                  class="w-full h-full object-cover object-center sm:object-[center_35%] filter brightness-[0.88]">
             <!-- Luxury Vignette Gradients for Editorial Text Legibility -->
             <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 to-transparent"></div>
@@ -94,7 +95,7 @@
             ],
             [
                 'name' => 'NEW IN ATELIER',
-                'image' => 'https://images.unsplash.com/photo-1583391733975-021c37b679b3?q=80&w=600&auto=format&fit=crop',
+                'image' => 'https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=600&auto=format&fit=crop',
                 'url' => route('shop.new-arrivals')
             ],
             [
@@ -115,6 +116,7 @@
                     <div class="relative aspect-[3/4] overflow-hidden bg-[#EFE9DE]">
                         <img src="{{ $card['image'] }}"
                              alt="{{ $card['name'] }}"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop';"
                              class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out">
                     </div>
                     <!-- Clean White Card Label with Title and Arrow -->
@@ -150,7 +152,7 @@
         @php
             // Curated showcase list matching screenshot down to names & prices
             $curatedMock = [
-                ['name' => 'Royal Maroon Embroidered Suit', 'price' => 4999, 'image' => 'https://images.unsplash.com/photo-1583391733975-021c37b679b3?q=80&w=600&auto=format&fit=crop'],
+                ['name' => 'Royal Maroon Embroidered Suit', 'price' => 4999, 'image' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop'],
                 ['name' => 'Pastel Pink Palazzo Suit', 'price' => 3899, 'image' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop'],
                 ['name' => 'Mehndi Green Designer Suit', 'price' => 4299, 'image' => 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=600&auto=format&fit=crop'],
                 ['name' => 'Classic Red Bridal Suit', 'price' => 5999, 'image' => 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=80&w=600&auto=format&fit=crop'],
@@ -173,7 +175,7 @@
                     $prodName = $prod ? $prod->name : $fallback['name'];
                     $prodPrice = $prod ? ($prod->sale_price ?? $prod->price) : $fallback['price'];
                     $prodUrl = $prod ? route('product.show', $prod->slug) : route('shop.index');
-                    $prodImg = $prod && $prod->images->isNotEmpty() ? $prod->primary_image : $fallback['image'];
+                    $prodImg = ($prod && !empty($prod->primary_image_url)) ? $prod->primary_image_url : $fallback['image'];
                 @endphp
 
                 <div class="group flex flex-col bg-white border border-[#E3DACD] hover:border-[#58111A] transition-all duration-300 shadow-2xs hover:shadow-md">
@@ -182,6 +184,7 @@
                         <a href="{{ $prodUrl }}" class="block w-full h-full">
                             <img src="{{ $prodImg }}"
                                  alt="{{ $prodName }}"
+                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop';"
                                  class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out">
                         </a>
 
@@ -235,6 +238,7 @@
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=85&w=2200&auto=format&fit=crop"
                  alt="The Atelier Heritage Craftsmanship"
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=85&w=2200&auto=format&fit=crop';"
                  class="w-full h-full object-cover object-center filter brightness-[0.45]">
             <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/70"></div>
         </div>
@@ -322,7 +326,7 @@
             ],
             [
                 'name' => 'FESTIVE',
-                'image' => 'https://images.unsplash.com/photo-1583391733975-021c37b679b3?q=80&w=600&auto=format&fit=crop',
+                'image' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop',
                 'url' => route('shop.suits', ['occasion' => 'festive'])
             ],
             [
@@ -361,6 +365,7 @@
                     <div class="relative aspect-[3/4] overflow-hidden bg-[#EFE9DE]">
                         <img src="{{ $occ['image'] }}"
                              alt="{{ $occ['name'] }}"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop';"
                              class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out">
                     </div>
                     <div class="py-2.5 px-2 text-center bg-white border-t border-[#E8DFD5] group-hover:bg-[#FAF7F2] transition-colors">
@@ -383,6 +388,7 @@
                 <div class="absolute inset-0 z-0">
                     <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=85&w=1200&auto=format&fit=crop"
                          alt="Festive Edit"
+                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=85&w=1200&auto=format&fit=crop';"
                          class="w-full h-full object-cover object-[center_25%] filter brightness-[0.65]">
                     <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent"></div>
                 </div>
@@ -423,6 +429,7 @@
                 <div class="absolute inset-y-0 left-0 w-3/5 z-0 overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=85&w=900&auto=format&fit=crop"
                          alt="Heirloom Jewellery"
+                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=85&w=900&auto=format&fit=crop';"
                          class="w-full h-full object-cover object-center filter brightness-[0.95]">
                     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#F7F2E9]/60 to-[#F7F2E9]"></div>
                 </div>
