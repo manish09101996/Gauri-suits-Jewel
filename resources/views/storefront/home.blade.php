@@ -172,6 +172,7 @@
                     $fallback = $curatedMock[$i] ?? $curatedMock[0];
 
                     $prodId = $prod ? $prod->id : ($i + 1);
+                    $prodVariantId = ($prod && $prod->variants && $prod->variants->isNotEmpty()) ? $prod->variants->first()->id : 'null';
                     $prodName = $prod ? $prod->name : $fallback['name'];
                     $prodPrice = $prod ? ($prod->sale_price ?? $prod->price) : $fallback['price'];
                     $prodUrl = $prod ? route('product.show', $prod->slug) : route('shop.index');
@@ -213,7 +214,7 @@
 
                         <!-- Clean ADD TO CART button below price -->
                         <button type="button"
-                                @click="addToCartDirect({{ $prodId }}, null, 1, $el)"
+                                @click="addToCartDirect({{ $prodId }}, {{ $prodVariantId }}, 1, $el)"
                                 class="w-full mt-2.5 py-2 px-2 bg-[#FAF7F2] hover:bg-[#58111A] text-[#2A1810] hover:text-[#F7EED9] border border-[#D5CBC0] hover:border-[#58111A] text-[10px] sm:text-[10.5px] font-sans uppercase font-bold tracking-[0.16em] transition-all rounded-xs shadow-2xs text-center">
                             ADD TO CART
                         </button>

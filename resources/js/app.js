@@ -3,6 +3,18 @@ import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
+// Dynamic Base URL Resolver (supports subfolders like /Gauri suits & Jewel/public)
+window.apiUrl = window.apiUrl || function(path) {
+    if (!path) return (window.AppConfig && window.AppConfig.baseUrl) || '';
+    if (path.startsWith('http://') || path.startsWith('https://')) return path;
+    const base = (window.AppConfig && window.AppConfig.baseUrl) ? window.AppConfig.baseUrl.replace(/\/+$/, '') : '';
+    const cleanPath = path.replace(/^\/+/, '');
+    return base ? `${base}/${cleanPath}` : `/${cleanPath}`;
+};
+
+const getApiUrl = (path) => window.apiUrl(path);
+const getCsrfToken = () => document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || (window.AppConfig?.csrfToken || '');
+
 // Global Toast Notifications
 window.showToast = function(message, type = 'success') {
     window.dispatchEvent(new CustomEvent('toast-message', {
@@ -39,7 +51,7 @@ Alpine.data('cartDrawer', () => ({
 
     async fetchSummary() {
         try {
-            const res = await fetch('/cart/summary', { credentials: 'same-origin' });
+            const res = await fetch(getApiUrl('/cart/summary'), { credentials: 'same-origin' });
             if (res.ok) {
                 this.summary = await res.json();
                 // Update badge in header
@@ -57,21 +69,21 @@ Alpine.data('cartDrawer', () => ({
     async updateQty(itemId, newQty) {
         this.loading = true;
         try {
-            const res = await fetch('/cart/update', {
+            const res = await fetch(getApiUrl('/cart/update'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'X-CSRF-TOKEN': getCsrfToken(),
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({ item_id: itemId, quantity: newQty }),
             });
             const data = await res.json();
-            if (data.success) {
+            if (res.ok && data.success) {
                 this.summary = data.cart;
                 window.showToast(data.message, 'success');
             } else {
-                window.showToast(data.message, 'error');
+                window.showToast(data.message || 'Failed to update item.', 'error');
             }
         } catch (e) {
             window.showToast('Failed to update cart.', 'error');
@@ -83,17 +95,19 @@ Alpine.data('cartDrawer', () => ({
     async removeItem(itemId) {
         this.loading = true;
         try {
-            const res = await fetch(`/cart/remove/${itemId}`, {
+            const res = await fetch(getApiUrl(`/cart/remove/${itemId}`), {
                 method: 'POST',
                 headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'X-CSRF-TOKEN': getCsrfToken(),
                     'Accept': 'application/json'
                 },
             });
             const data = await res.json();
-            if (data.success) {
+            if (res.ok && data.success) {
                 this.summary = data.cart;
                 window.showToast(data.message, 'success');
+            } else {
+                window.showToast(data.message || 'Failed to remove item.', 'error');
             }
         } catch (e) {
             window.showToast('Failed to remove item.', 'error');
@@ -118,7 +132,7 @@ Alpine.data('quickViewModal', () => ({
         this.loading = true;
         this.product = null;
         try {
-            const res = await fetch(`/api/quick-view/${productId}`);
+            const res = await fetch(getApiUrl(`/api/quick-view/${productId}`));
             if (res.ok) {
                 this.product = await res.json();
                 if (this.product.variants && this.product.variants.length > 0) {
@@ -145,11 +159,11 @@ Alpine.data('quickViewModal', () => ({
         this.loading = true;
 
         try {
-            const res = await fetch('/cart/add', {
+            const res = await fetch(getApiUrl('/cart/add'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'X-CSRF-TOKEN': getCsrfToken(),
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({
@@ -160,13 +174,13 @@ Alpine.data('quickViewModal', () => ({
             });
 
             const data = await res.json();
-            if (data.success) {
+            if (res.ok && data.success) {
                 this.open = false;
                 window.dispatchEvent(new CustomEvent('cart-updated'));
                 window.dispatchEvent(new CustomEvent('open-cart'));
-                window.showToast(data.message, 'success');
+                window.showToast(data.message || 'Added to bag!', 'success');
             } else {
-                window.showToast(data.message, 'error');
+                window.showToast(data.message || 'Unable to add item.', 'error');
             }
         } catch (e) {
             window.showToast('Failed to add item to cart', 'error');
@@ -194,7 +208,7 @@ Alpine.data('searchModal', () => ({
         this.loading = true;
         this.debounceTimer = setTimeout(async () => {
             try {
-                const res = await fetch(`/search/suggestions?q=${encodeURIComponent(this.query)}`);
+                const res = await fetch(getApiUrl(`/search/suggestions?q=${encodeURIComponent(this.query)}`));
                 if (res.ok) {
                     this.results = await res.json();
                 }
@@ -210,18 +224,18 @@ Alpine.data('searchModal', () => ({
 // Wishlist Toggle Function
 window.toggleWishlist = async function(productId, btnElement) {
     try {
-        const res = await fetch('/wishlist/toggle', {
+        const res = await fetch(getApiUrl('/wishlist/toggle'), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'X-CSRF-TOKEN': getCsrfToken(),
                 'Accept': 'application/json'
             },
             body: JSON.stringify({ product_id: productId })
         });
 
         if (res.status === 401) {
-            window.location.href = '/login';
+            window.location.href = getApiUrl('/login');
             return;
         }
 
@@ -249,6 +263,8 @@ window.toggleWishlist = async function(productId, btnElement) {
                     }
                 }
             }
+        } else {
+            window.showToast(data.message || 'Unable to update wishlist.', 'error');
         }
     } catch (e) {
         window.showToast('Something went wrong.', 'error');
@@ -265,11 +281,11 @@ window.addToCartDirect = async function(productId, variantId = null, quantity = 
     }
 
     try {
-        const res = await fetch('/cart/add', {
+        const res = await fetch(getApiUrl('/cart/add'), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'X-CSRF-TOKEN': getCsrfToken(),
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
@@ -279,16 +295,27 @@ window.addToCartDirect = async function(productId, variantId = null, quantity = 
             })
         });
 
-        const data = await res.json();
-        if (data.success) {
+        const contentType = res.headers.get('content-type') || '';
+        let data = {};
+        if (contentType.includes('application/json')) {
+            data = await res.json();
+        } else {
+            const text = await res.text();
+            console.error('Non-JSON server response:', text);
+            throw new Error(`Server returned status ${res.status}`);
+        }
+
+        if (res.ok && data.success) {
             window.dispatchEvent(new CustomEvent('cart-updated'));
             window.dispatchEvent(new CustomEvent('open-cart'));
-            window.showToast(data.message, 'success');
+            window.showToast(data.message || 'Added to bag!', 'success');
         } else {
-            window.showToast(data.message, 'error');
+            window.showToast(data.message || 'Unable to add item to bag.', 'error');
         }
     } catch (e) {
-        window.showToast('Failed to add item to bag.', 'error');
+        console.error('addToCartDirect error:', e);
+        const msg = (e.message && !e.message.includes('Server returned')) ? e.message : 'Failed to add item to bag.';
+        window.showToast(msg, 'error');
     } finally {
         if (btnElement) {
             btnElement.innerText = originalText;

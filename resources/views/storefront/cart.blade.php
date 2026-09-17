@@ -33,7 +33,7 @@
         removeItem(itemId) {
             if (!confirm('Remove this piece from your bag?')) return;
             this.updating = true;
-            fetch(`/cart/remove/${itemId}`, {
+            fetch(`{{ url('/cart/remove') }}/${itemId}`, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',

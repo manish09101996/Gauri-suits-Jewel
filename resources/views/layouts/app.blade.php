@@ -24,6 +24,28 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Global App Configuration & Dynamic URL Resolution for Subfolder Environments -->
+    <script>
+        window.AppConfig = {
+            baseUrl: "{{ rtrim(url('/'), '/') }}",
+            csrfToken: "{{ csrf_token() }}",
+            routes: {
+                cartSummary: "{{ route('cart.summary') }}",
+                cartAdd: "{{ route('cart.add') }}",
+                cartUpdate: "{{ route('cart.update') }}",
+                wishlistToggle: "{{ route('wishlist.toggle') }}",
+            }
+        };
+
+        window.apiUrl = function(path) {
+            if (!path) return window.AppConfig.baseUrl;
+            if (path.startsWith('http://') || path.startsWith('https://')) return path;
+            var base = (window.AppConfig && window.AppConfig.baseUrl) ? window.AppConfig.baseUrl : '';
+            var cleanPath = path.replace(/^\/+/, '');
+            return base ? (base + '/' + cleanPath) : ('/' + cleanPath);
+        };
+    </script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @stack('styles')
@@ -276,7 +298,7 @@
                         <div class="flex gap-4 pb-4 border-b border-[#EFE9DE] items-start">
                             <img :src="item.image" :alt="item.name" class="w-20 h-24 object-cover rounded-sm bg-[#EFE9DE]">
                             <div class="flex-1 min-w-0">
-                                <a :href="item.slug ? '/product/' + item.slug : '#'" class="font-serif text-sm font-semibold text-[#2A1810] hover:text-[#58111A] truncate block" x-text="item.name"></a>
+                                <a :href="item.url || (item.slug ? (window.apiUrl ? window.apiUrl('/product/' + item.slug) : '/product/' + item.slug) : '#')" class="font-serif text-sm font-semibold text-[#2A1810] hover:text-[#58111A] truncate block" x-text="item.name"></a>
                                 <div class="text-xs text-[#6B5E55] mt-0.5 space-x-2">
                                     <span x-show="item.size" x-text="'Size: ' + item.size"></span>
                                     <span x-show="item.colour" x-text="'Colour: ' + item.colour"></span>

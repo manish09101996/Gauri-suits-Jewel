@@ -33,7 +33,15 @@ class CartService
         $unitPrice = $product->effective_price;
         $maxStock = $product->stock;
 
-        if ($variantId) {
+        if (!$variantId && $product->variants()->exists()) {
+            $firstVariant = $product->variants()->where('stock', '>', 0)->first() ?? $product->variants()->first();
+            if ($firstVariant) {
+                $variantId = $firstVariant->id;
+                $variant = $firstVariant;
+                $unitPrice = $variant->effective_price;
+                $maxStock = $variant->stock;
+            }
+        } elseif ($variantId) {
             $variant = ProductVariant::where('product_id', $productId)->findOrFail($variantId);
             $unitPrice = $variant->effective_price;
             $maxStock = $variant->stock;
@@ -182,6 +190,7 @@ class CartService
                 'product_id' => $item->product_id,
                 'name' => $item->product->name,
                 'slug' => $item->product->slug,
+                'url' => route('product.show', $item->product->slug),
                 'image' => $item->product->primary_image_url,
                 'variant_id' => $item->variant_id,
                 'size' => $item->variant?->size,
