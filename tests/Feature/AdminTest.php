@@ -171,6 +171,8 @@ class AdminTest extends TestCase
             route('admin.settings.index'),
             route('admin.shipping.index'),
             route('admin.blog.index'),
+            route('admin.banners.index'),
+            route('admin.banners.create'),
             route('admin.videos.index'),
             route('admin.reels.index'),
             route('admin.live-visitors.index'),

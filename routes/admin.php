@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\AbandonedCartController;
 use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\Admin\ReelController;
 use App\Http\Controllers\Admin\ReportController;
@@ -85,6 +86,9 @@ Route::middleware('admin.auth')->group(function () {
 
     // Blog CMS
     Route::resource('blog', BlogController::class);
+
+    // Hero Banners
+    Route::resource('banners', BannerController::class);
 
     // Videos
     Route::resource('videos', VideoController::class);

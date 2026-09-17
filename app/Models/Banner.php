@@ -8,11 +8,13 @@ class Banner extends Model
 {
     protected $fillable = [
         'title',
+        'kicker',
         'subtitle',
         'image_desktop',
         'image_mobile',
         'link_url',
         'button_text',
+        'tagline',
         'type',
         'is_active',
         'sort_order',
@@ -28,6 +30,9 @@ class Banner extends Model
 
     public function getDesktopImageUrlAttribute(): string
     {
+        if (empty($this->image_desktop)) {
+            return 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=85&w=2400&auto=format&fit=crop';
+        }
         if (str_starts_with($this->image_desktop, 'http')) {
             return $this->image_desktop;
         }
@@ -36,7 +41,7 @@ class Banner extends Model
 
     public function getMobileImageUrlAttribute(): string
     {
-        if ($this->image_mobile) {
+        if (!empty($this->image_mobile)) {
             if (str_starts_with($this->image_mobile, 'http')) {
                 return $this->image_mobile;
             }

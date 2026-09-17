@@ -7,65 +7,123 @@
 <div class="bg-[#FAF7F2] text-[#2A1810]">
 
     <!-- ============================================================== -->
-    <!-- HERO SECTION: FULL-WIDTH CINEMATIC PUNJABI BRIDAL EDITORIAL    -->
+    <!-- HERO SECTION: DYNAMIC BACKEND-MANAGED EDITORIAL CAROUSEL        -->
     <!-- ============================================================== -->
-    <section class="relative overflow-hidden bg-[#1E080C] text-white min-h-[560px] sm:min-h-[680px] lg:min-h-[760px] flex items-center">
-        <!-- Hero Background Image (Regal bride in palace haveli archway) -->
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=85&w=2400&auto=format&fit=crop"
-                 alt="Gauri Suits & Jewel Timeless Traditions"
-                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=85&w=2400&auto=format&fit=crop';"
-                 class="w-full h-full object-cover object-center sm:object-[center_35%] filter brightness-[0.88]">
-            <!-- Luxury Vignette Gradients for Editorial Text Legibility -->
-            <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 to-transparent"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
-        </div>
+    @php
+        $activeBanners = ($heroBanners && $heroBanners->isNotEmpty()) ? $heroBanners : collect([
+            (object)[
+                'id' => 1,
+                'kicker' => 'TIMELESS TRADITIONS',
+                'title' => "HANDCRAFTED\nFOR TODAY",
+                'subtitle' => 'Punjabi Suits & Royal Jewels',
+                'button_text' => 'SHOP NEW ARRIVALS',
+                'link_url' => route('shop.new-arrivals'),
+                'tagline' => "Tradition\nMeets\nElegance",
+                'image_desktop' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=85&w=2400&auto=format&fit=crop',
+                'image_mobile' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=85&w=1000&auto=format&fit=crop',
+                'desktop_image_url' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=85&w=2400&auto=format&fit=crop',
+                'mobile_image_url' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=85&w=1000&auto=format&fit=crop',
+            ]
+        ]);
+        $totalSlides = count($activeBanners);
+    @endphp
 
-        <div class="relative z-10 max-w-7xl mx-auto w-full px-5 sm:px-8 lg:px-12 py-16 sm:py-24 flex items-center justify-between">
-            <!-- Left Overlay Copy matching screenshot -->
-            <div class="max-w-2xl space-y-2 sm:space-y-3">
-                <span class="text-[10px] sm:text-xs tracking-[0.35em] uppercase font-sans font-semibold text-[#E6CA65] block drop-shadow">
-                    TIMELESS TRADITIONS
-                </span>
+    <section class="relative overflow-hidden bg-[#1E080C] text-white min-h-[560px] sm:min-h-[680px] lg:min-h-[760px] flex items-center"
+             x-data="heroSlider({{ $totalSlides }})"
+             @mouseenter="stopTimer()"
+             @mouseleave="startTimer()">
 
-                <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal tracking-[0.06em] text-[#FAF7F2] uppercase leading-[1.05] drop-shadow-md">
-                    HANDCRAFTED<br>
-                    FOR TODAY
-                </h1>
+        <!-- Background Slides -->
+        @foreach($activeBanners as $index => $banner)
+            <div x-show="activeSlide === {{ $index }}"
+                 x-transition:enter="transition ease-out duration-700"
+                 x-transition:enter-start="opacity-0 scale-[1.03]"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-500"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-[0.98]"
+                 class="absolute inset-0 z-0">
+                <picture>
+                    @if(!empty($banner->image_mobile))
+                        <source media="(max-width: 640px)" srcset="{{ $banner->mobile_image_url ?? $banner->image_mobile }}">
+                    @endif
+                    <img src="{{ $banner->desktop_image_url }}"
+                         alt="{{ $banner->title }}"
+                         onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=85&w=2400&auto=format&fit=crop';"
+                         class="w-full h-full object-cover object-center sm:object-[center_35%] filter brightness-[0.88]">
+                </picture>
+                <!-- Luxury Editorial Vignette Gradients -->
+                <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/20"></div>
+            </div>
+        @endforeach
 
-                <p class="font-serif italic text-lg sm:text-2xl text-[#E3CE9B] drop-shadow font-light pt-1">
-                    Punjabi Suits &amp; Royal Jewels
-                </p>
+        <!-- Content Overlay for each slide -->
+        @foreach($activeBanners as $index => $banner)
+            <div x-show="activeSlide === {{ $index }}"
+                 x-transition:enter="transition ease-out duration-700 delay-100"
+                 x-transition:enter-start="opacity-0 translate-y-3"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-300"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 -translate-y-3"
+                 class="relative z-10 max-w-7xl mx-auto w-full px-5 sm:px-8 lg:px-12 py-16 sm:py-24 flex items-center justify-between">
 
-                <div class="pt-5 sm:pt-7">
-                    <a href="{{ route('shop.new-arrivals') }}"
-                       class="inline-flex items-center gap-2.5 px-6 sm:px-8 py-3 border border-[#E6CA65] text-[#FAF7F2] hover:bg-[#58111A] hover:border-[#D4AF37] text-xs font-sans uppercase tracking-[0.24em] font-semibold transition-all duration-300 shadow-lg group">
-                        <span>SHOP NEW ARRIVALS</span>
-                        <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
-                    </a>
+                <!-- Left Editorial Copy -->
+                <div class="max-w-2xl space-y-2 sm:space-y-3">
+                    <span class="text-[10px] sm:text-xs tracking-[0.35em] uppercase font-sans font-semibold text-[#E6CA65] block drop-shadow">
+                        {{ $banner->kicker ?: 'TIMELESS TRADITIONS' }}
+                    </span>
+
+                    <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal tracking-[0.06em] text-[#FAF7F2] uppercase leading-[1.05] drop-shadow-md">
+                        {!! nl2br(e($banner->title)) !!}
+                    </h1>
+
+                    <p class="font-serif italic text-lg sm:text-2xl text-[#E3CE9B] drop-shadow font-light pt-1">
+                        {{ $banner->subtitle ?: 'Punjabi Suits & Royal Jewels' }}
+                    </p>
+
+                    @if($banner->button_text)
+                    <div class="pt-5 sm:pt-7">
+                        <a href="{{ $banner->link_url ? (str_starts_with($banner->link_url, 'http') || str_starts_with($banner->link_url, '/') ? $banner->link_url : url($banner->link_url)) : route('shop.new-arrivals') }}"
+                           class="inline-flex items-center gap-2.5 px-6 sm:px-8 py-3 border border-[#E6CA65] text-[#FAF7F2] hover:bg-[#58111A] hover:border-[#D4AF37] text-xs font-sans uppercase tracking-[0.24em] font-semibold transition-all duration-300 shadow-lg group">
+                            <span>{{ $banner->button_text }}</span>
+                            <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                        </a>
+                    </div>
+                    @endif
+
+                    <!-- Slider Indicators: 01 — 02 — 03 -->
+                    @if($totalSlides > 1)
+                    <div class="pt-8 sm:pt-12 flex items-center gap-3 text-[11px] sm:text-xs font-sans tracking-[0.2em] text-[#E6CA65]/80 select-none">
+                        @foreach($activeBanners as $i => $b)
+                            <button type="button" @click="goTo({{ $i }})"
+                                    class="transition-all cursor-pointer flex items-center gap-3 group focus:outline-none"
+                                    :class="activeSlide === {{ $i }} ? 'font-bold text-[#E6CA65]' : 'opacity-50 hover:opacity-100 text-stone-300'">
+                                <span>{{ sprintf('%02d', $i + 1) }}</span>
+                                @if(!$loop->last)
+                                    <span class="w-6 h-[1px] transition-colors" :class="activeSlide === {{ $i }} ? 'bg-[#E6CA65]' : 'bg-[#E6CA65]/40'"></span>
+                                @endif
+                            </button>
+                        @endforeach
+                    </div>
+                    @else
+                    <div class="pt-8 sm:pt-12 flex items-center gap-3 text-[11px] sm:text-xs font-sans tracking-[0.2em] text-[#E6CA65] select-none">
+                        <span class="font-bold text-[#E6CA65]">01</span>
+                        <span class="w-6 h-[1px] bg-[#E6CA65]/60"></span>
+                    </div>
+                    @endif
                 </div>
 
-                <!-- Slider Indicator: 01 — 02 — 03 -->
-                <div class="pt-8 sm:pt-12 flex items-center gap-3 text-[11px] sm:text-xs font-sans tracking-[0.2em] text-[#E6CA65]/80 select-none">
-                    <span class="font-bold text-[#E6CA65]">01</span>
-                    <span class="w-6 h-[1px] bg-[#E6CA65]/60"></span>
-                    <span class="opacity-60">02</span>
-                    <span class="w-6 h-[1px] bg-[#E6CA65]/40"></span>
-                    <span class="opacity-40">03</span>
+                <!-- Right Calligraphic Watermark Accent -->
+                <div class="hidden lg:flex flex-col items-center text-center text-[#E6CA65] select-none pr-4">
+                    <div class="font-serif text-3xl xl:text-4xl text-[#E6CA65] drop-shadow-md leading-tight" style="font-style: italic; font-family: 'Playfair Display', Georgia, serif;">
+                        {!! nl2br(e($banner->tagline ?: "Tradition\nMeets\nElegance")) !!}
+                    </div>
+                    <div class="mt-3 text-[#D4AF37] text-xl drop-shadow">✦</div>
                 </div>
             </div>
-
-            <!-- Right Calligraphic Watermark Accent matching screenshot -->
-            <div class="hidden lg:flex flex-col items-center text-center text-[#E6CA65] select-none pr-4">
-                <div class="font-serif text-3xl xl:text-4xl text-[#E6CA65] drop-shadow-md leading-tight" style="font-style: italic; font-family: 'Playfair Display', Georgia, serif;">
-                    Tradition<br>
-                    Meets<br>
-                    Elegance
-                </div>
-                <!-- 4-Petal Ornamental Floret -->
-                <div class="mt-3 text-[#D4AF37] text-xl drop-shadow">✦</div>
-            </div>
-        </div>
+        @endforeach
     </section>
 
     <!-- ============================================================== -->
@@ -456,3 +514,43 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function heroSlider(total) {
+    return {
+        activeSlide: 0,
+        totalSlides: total || 1,
+        timer: null,
+        init() {
+            if (this.totalSlides > 1) {
+                this.startTimer();
+            }
+        },
+        startTimer() {
+            if (this.totalSlides <= 1) return;
+            this.stopTimer();
+            this.timer = setInterval(() => {
+                this.next();
+            }, 6500);
+        },
+        stopTimer() {
+            if (this.timer) {
+                clearInterval(this.timer);
+                this.timer = null;
+            }
+        },
+        goTo(index) {
+            this.activeSlide = index;
+            this.startTimer();
+        },
+        next() {
+            this.activeSlide = (this.activeSlide + 1) % this.totalSlides;
+        },
+        prev() {
+            this.activeSlide = (this.activeSlide - 1 + this.totalSlides) % this.totalSlides;
+        }
+    };
+}
+</script>
+@endpush
