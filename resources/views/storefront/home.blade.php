@@ -1,119 +1,127 @@
 @extends('layouts.app')
 
-@section('title', 'Gauri Suits & Jewel | Luxury Punjabi Couture & Heirloom Fine Jewellery')
-@section('meta_description', 'Discover authentic handcrafted Punjabi silhouettes, bespoke bridal anarkalis, pure velvet tilla couture, and heirloom Kundan & Polki fine jewellery at Gauri Suits & Jewel.')
+@section('title', 'Gauri Suits & Jewel | Luxury Punjabi Fashion & Heritage Fine Jewellery')
+@section('meta_description', 'Discover handcrafted Punjabi suits, royal Patiala salwars, bespoke bridal couture, and heirloom Kundan & Polki jewellery at Gauri Suits & Jewel. Tradition Meets Elegance.')
 
 @section('content')
-<div class="bg-vintage-parchment map-watermark-overlay relative text-[#2A1810]">
+<div class="bg-[#FAF7F2] text-[#2A1810]">
 
     <!-- ============================================================== -->
-    <!-- 1. HERO BANNER: ROOTED IN TRADITION                            -->
+    <!-- HERO SECTION: FULL-WIDTH CINEMATIC PUNJABI BRIDAL EDITORIAL    -->
     <!-- ============================================================== -->
-    <section class="relative overflow-hidden bg-[#241B16] text-white"
-             x-data="{
-                currentSlide: 0,
-                slides: [
-                    {
-                        title: 'ROOTED IN TRADITION',
-                        subtitle: 'THE VIRASAT HERITAGE EDIT',
-                        image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=2000&auto=format&fit=crop',
-                        url: '{{ route('shop.index') }}',
-                        button: 'EXPLORE COUTURE'
-                    },
-                    {
-                        title: 'HEIRLOOM KUNDAN & POLKI',
-                        subtitle: 'ROYAL BRIDAL ADORNMENTS',
-                        image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=2000&auto=format&fit=crop',
-                        url: '{{ route('shop.jewellery') }}',
-                        button: 'SHOP JEWELLERY'
-                    }
-                ],
-                init() {
-                    setInterval(() => {
-                        this.currentSlide = (this.currentSlide + 1) % this.slides.length;
-                    }, 6500);
-                }
-             }">
+    <section class="relative overflow-hidden bg-[#1E080C] text-white min-h-[560px] sm:min-h-[680px] lg:min-h-[760px] flex items-center">
+        <!-- Hero Background Image (Regal bride in palace haveli archway) -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=85&w=2400&auto=format&fit=crop"
+                 alt="Gauri Suits & Jewel Timeless Traditions"
+                 class="w-full h-full object-cover object-center sm:object-[center_35%] filter brightness-[0.88]">
+            <!-- Luxury Vignette Gradients for Editorial Text Legibility -->
+            <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
+        </div>
 
-        <div class="relative min-h-[580px] sm:min-h-[720px] lg:min-h-[820px] flex items-center justify-center">
-            <template x-for="(slide, idx) in slides" :key="idx">
-                <div x-show="currentSlide === idx"
-                     x-transition:enter="transition ease-out duration-1000"
-                     x-transition:enter-start="opacity-0 scale-105"
-                     x-transition:enter-end="opacity-100 scale-100"
-                     x-transition:leave="transition ease-in duration-500"
-                     x-transition:leave-start="opacity-100"
-                     x-transition:leave-end="opacity-0"
-                     class="absolute inset-0">
-                    <img :src="slide.image" :alt="slide.title" class="w-full h-full object-cover object-top opacity-70">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/40"></div>
-                </div>
-            </template>
+        <div class="relative z-10 max-w-7xl mx-auto w-full px-5 sm:px-8 lg:px-12 py-16 sm:py-24 flex items-center justify-between">
+            <!-- Left Overlay Copy matching screenshot -->
+            <div class="max-w-2xl space-y-2 sm:space-y-3">
+                <span class="text-[10px] sm:text-xs tracking-[0.35em] uppercase font-sans font-semibold text-[#E6CA65] block drop-shadow">
+                    TIMELESS TRADITIONS
+                </span>
 
-            <!-- Centered Editorial Typography matching reference -->
-            <div class="relative z-10 text-center max-w-4xl mx-auto px-4 space-y-4 pt-32 pb-24">
-                <p class="text-xs sm:text-sm tracking-[0.4em] uppercase text-[#E3CE9B] font-serif"
-                   x-text="slides[currentSlide].subtitle">
-                    THE VIRASAT HERITAGE EDIT
-                </p>
-                <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl xl:text-8xl tracking-[0.1em] font-normal text-white uppercase drop-shadow-lg"
-                    x-text="slides[currentSlide].title">
-                    ROOTED IN TRADITION
+                <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal tracking-[0.06em] text-[#FAF7F2] uppercase leading-[1.05] drop-shadow-md">
+                    HANDCRAFTED<br>
+                    FOR TODAY
                 </h1>
-                <div class="pt-6">
-                    <a :href="slides[currentSlide].url"
-                       class="inline-block px-8 py-3.5 border-2 border-[#D4AF37] text-[#F7EED9] hover:bg-[#58111A] hover:border-[#D4AF37] font-serif text-xs uppercase tracking-[0.3em] transition duration-300 shadow-xl">
-                        <span x-text="slides[currentSlide].button">EXPLORE COUTURE</span>
+
+                <p class="font-serif italic text-lg sm:text-2xl text-[#E3CE9B] drop-shadow font-light pt-1">
+                    Punjabi Suits &amp; Royal Jewels
+                </p>
+
+                <div class="pt-5 sm:pt-7">
+                    <a href="{{ route('shop.new-arrivals') }}"
+                       class="inline-flex items-center gap-2.5 px-6 sm:px-8 py-3 border border-[#E6CA65] text-[#FAF7F2] hover:bg-[#58111A] hover:border-[#D4AF37] text-xs font-sans uppercase tracking-[0.24em] font-semibold transition-all duration-300 shadow-lg group">
+                        <span>SHOP NEW ARRIVALS</span>
+                        <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
                     </a>
+                </div>
+
+                <!-- Slider Indicator: 01 — 02 — 03 -->
+                <div class="pt-8 sm:pt-12 flex items-center gap-3 text-[11px] sm:text-xs font-sans tracking-[0.2em] text-[#E6CA65]/80 select-none">
+                    <span class="font-bold text-[#E6CA65]">01</span>
+                    <span class="w-6 h-[1px] bg-[#E6CA65]/60"></span>
+                    <span class="opacity-60">02</span>
+                    <span class="w-6 h-[1px] bg-[#E6CA65]/40"></span>
+                    <span class="opacity-40">03</span>
                 </div>
             </div>
 
-            <!-- Slide Dots -->
-            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
-                <template x-for="(s, i) in slides" :key="i">
-                    <button @click="currentSlide = i"
-                            :class="currentSlide === i ? 'w-6 bg-[#D4AF37]' : 'w-2 bg-white/40'"
-                            class="h-1 rounded-full transition-all duration-300"></button>
-                </template>
+            <!-- Right Calligraphic Watermark Accent matching screenshot -->
+            <div class="hidden lg:flex flex-col items-center text-center text-[#E6CA65] select-none pr-4">
+                <div class="font-serif text-3xl xl:text-4xl text-[#E6CA65] drop-shadow-md leading-tight" style="font-style: italic; font-family: 'Playfair Display', Georgia, serif;">
+                    Tradition<br>
+                    Meets<br>
+                    Elegance
+                </div>
+                <!-- 4-Petal Ornamental Floret -->
+                <div class="mt-3 text-[#D4AF37] text-xl drop-shadow">✦</div>
             </div>
         </div>
     </section>
 
     <!-- ============================================================== -->
-    <!-- 2. ADORN EVERY PART OF YOU: 6-CATEGORY ADORNMENTS ROW          -->
+    <!-- SECTION 1: SHOP BY CATEGORY (6 HORIZONTAL LUXURY CARDS)        -->
     <!-- ============================================================== -->
-    <section class="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center space-y-1 mb-10 sm:mb-14">
-            <span class="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#A88B4D] font-semibold block">COLLECTIONS</span>
-            <h2 class="font-serif text-2xl sm:text-4xl text-[#3B0A11] font-normal tracking-wide">Adorn Every Part of You</h2>
-            <div class="ornament-flourish text-[#D4AF37] text-xs pt-1">✦</div>
-        </div>
+    @php
+        $categoryCards = [
+            [
+                'name' => 'PUNJABI SUITS',
+                'image' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop',
+                'url' => route('shop.suits')
+            ],
+            [
+                'name' => 'PATIALA SALWARS',
+                'image' => 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?q=80&w=600&auto=format&fit=crop',
+                'url' => route('shop.designer-suits')
+            ],
+            [
+                'name' => 'JEWELLERY',
+                'image' => 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=600&auto=format&fit=crop',
+                'url' => route('shop.jewellery')
+            ],
+            [
+                'name' => 'BRIDAL COUTURE',
+                'image' => 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=80&w=600&auto=format&fit=crop',
+                'url' => route('shop.wedding-collection')
+            ],
+            [
+                'name' => 'NEW IN ATELIER',
+                'image' => 'https://images.unsplash.com/photo-1583391733975-021c37b679b3?q=80&w=600&auto=format&fit=crop',
+                'url' => route('shop.new-arrivals')
+            ],
+            [
+                'name' => 'FESTIVE SALE',
+                'image' => 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=600&auto=format&fit=crop',
+                'url' => route('shop.sale')
+            ],
+        ];
+    @endphp
 
-        @php
-            $adornments = [
-                ['name' => 'NECKLACES', 'slug' => 'kundan-necklaces', 'image' => 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=600&auto=format&fit=crop'],
-                ['name' => 'NATH', 'slug' => 'nath-nose-rings', 'image' => 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=80&w=600&auto=format&fit=crop'],
-                ['name' => 'MAANG TIKKA', 'slug' => 'matha-patti-passa', 'image' => 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?q=80&w=600&auto=format&fit=crop'],
-                ['name' => 'CHANDBALIS', 'slug' => 'chandbalis-jhumkas', 'image' => 'https://images.unsplash.com/photo-1630019852942-f89202989a59?q=80&w=600&auto=format&fit=crop'],
-                ['name' => 'HATHPHOOL', 'slug' => 'hathphool-rings', 'image' => 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop'],
-                ['name' => 'PAYAL', 'slug' => 'payal-anklets', 'image' => 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?q=80&w=600&auto=format&fit=crop'],
-            ];
-        @endphp
-
-        <!-- 6-Grid Tiles with Dark Outline Frames Matching Screenshot -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-            @foreach($adornments as $adorn)
-                <a href="{{ route('shop.index', ['category' => $adorn['slug']]) }}"
-                   class="group flex flex-col bg-[#240A0F] border border-[#D4AF37]/35 hover:border-[#D4AF37] overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300">
-                    <div class="relative aspect-[3/4] overflow-hidden bg-[#240A0F]">
-                        <img src="{{ $adorn['image'] }}" alt="{{ $adorn['name'] }}"
-                             class="w-full h-full object-cover object-top opacity-85 group-hover:opacity-100 group-hover:scale-105 transition duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
-                        <div class="absolute bottom-2.5 inset-x-0 text-center">
-                            <span class="text-[11px] sm:text-xs font-serif uppercase tracking-[0.25em] text-[#F7EED9] font-medium group-hover:text-[#D4AF37] transition">
-                                {{ $adorn['name'] }}
-                            </span>
-                        </div>
+    <section class="py-8 sm:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- 6 Equal-Width Cards in one row on desktop, swipeable on mobile -->
+        <div class="flex overflow-x-auto snap-x lg:grid lg:grid-cols-6 gap-3 sm:gap-4 no-scrollbar pb-2">
+            @foreach($categoryCards as $card)
+                <a href="{{ $card['url'] }}"
+                   class="group shrink-0 w-44 sm:w-52 lg:w-auto snap-start flex flex-col bg-white border border-[#E3DACD] hover:border-[#58111A] transition-all duration-300 shadow-2xs hover:shadow-md">
+                    <!-- Category Image (3:4 Portrait Ratio matching screenshot) -->
+                    <div class="relative aspect-[3/4] overflow-hidden bg-[#EFE9DE]">
+                        <img src="{{ $card['image'] }}"
+                             alt="{{ $card['name'] }}"
+                             class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out">
+                    </div>
+                    <!-- Clean White Card Label with Title and Arrow -->
+                    <div class="py-2.5 px-2 text-center bg-white border-t border-[#E8DFD5] group-hover:bg-[#FAF7F2] transition-colors">
+                        <span class="text-[10px] sm:text-[11px] font-sans font-bold tracking-[0.16em] uppercase text-[#2A1810] group-hover:text-[#58111A] transition-colors inline-flex items-center justify-center gap-1.5">
+                            {{ $card['name'] }} <span class="text-[#8C713B] group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                        </span>
                     </div>
                 </a>
             @endforeach
@@ -121,316 +129,320 @@
     </section>
 
     <!-- ============================================================== -->
-    <!-- 3. SPOTTED ON ROYALTY: REAL GAURI MUSES (REELS CAROUSEL)       -->
+    <!-- SECTION 2: FEATURED PRODUCTS (OUR COLLECTION)                  -->
     <!-- ============================================================== -->
-    <section class="py-14 sm:py-20 relative"
-             x-data="{
-                scrollLeft() {
-                    this.$refs.reelTrack.scrollBy({ left: -320, behavior: 'smooth' });
-                },
-                scrollRight() {
-                    this.$refs.reelTrack.scrollBy({ left: 320, behavior: 'smooth' });
-                }
-             }">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center space-y-1 mb-10">
-                <span class="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#8C713B] font-semibold block">TAGGED BY TRADITION</span>
-                <h2 class="font-serif text-2xl sm:text-4xl text-[#2A1810] font-normal tracking-wide">Spotted on Royalty: Real Gauri Muses</h2>
-                <div class="ornament-flourish text-[#C5A869] text-xs pt-1">✦</div>
+    <section class="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header with Filigree Gold Flourishes & View All Link -->
+        <div class="relative flex items-center justify-center mb-8 sm:mb-12">
+            <div class="text-center space-y-1">
+                <span class="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#8C713B] font-bold block">OUR COLLECTION</span>
+                <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#3B0A11] font-normal tracking-wide flex items-center justify-center gap-3">
+                    <span class="text-sm sm:text-base text-[#C5A869]">❖</span>
+                    <span>Featured Products</span>
+                    <span class="text-sm sm:text-base text-[#C5A869]">❖</span>
+                </h2>
             </div>
+            <a href="{{ route('shop.index') }}" class="absolute right-0 top-1/2 -translate-y-1/2 hidden sm:inline-flex items-center gap-1.5 text-xs font-sans uppercase font-bold tracking-[0.2em] text-[#2A1810] hover:text-[#58111A] transition-colors">
+                <span>VIEW ALL</span> &rarr;
+            </a>
+        </div>
 
-            <!-- Carousel Wrapper with Left & Right Arrow Buttons -->
-            <div class="relative group/carousel">
-                <!-- Left Nav Button -->
-                <button @click="scrollLeft()"
-                        type="button"
-                        class="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/90 hover:bg-white text-[#2A1810] shadow-md flex items-center justify-center transition border border-[#EFE9DE] focus:outline-none"
-                        aria-label="Previous Reels">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                </button>
+        @php
+            // Curated showcase list matching screenshot down to names & prices
+            $curatedMock = [
+                ['name' => 'Royal Maroon Embroidered Suit', 'price' => 4999, 'image' => 'https://images.unsplash.com/photo-1583391733975-021c37b679b3?q=80&w=600&auto=format&fit=crop'],
+                ['name' => 'Pastel Pink Palazzo Suit', 'price' => 3899, 'image' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop'],
+                ['name' => 'Mehndi Green Designer Suit', 'price' => 4299, 'image' => 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=600&auto=format&fit=crop'],
+                ['name' => 'Classic Red Bridal Suit', 'price' => 5999, 'image' => 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=80&w=600&auto=format&fit=crop'],
+                ['name' => 'Ivory Handwork Suit', 'price' => 4499, 'image' => 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?q=80&w=600&auto=format&fit=crop'],
+                ['name' => 'Regal Purple Suit Set', 'price' => 3999, 'image' => 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop'],
+            ];
 
-                <!-- Right Nav Button -->
-                <button @click="scrollRight()"
-                        type="button"
-                        class="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/90 hover:bg-white text-[#2A1810] shadow-md flex items-center justify-center transition border border-[#EFE9DE] focus:outline-none"
-                        aria-label="Next Reels">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </button>
+            // Use dynamic database products if available
+            $displayProducts = $featuredProducts->take(6);
+        @endphp
 
-                <!-- Horizontal Reels Track -->
-                <div x-ref="reelTrack"
-                     class="flex gap-4 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2">
-                    @forelse($reels as $reel)
-                        @php
-                            $linkedProd = $reel->product;
-                        @endphp
-                        <div class="w-48 sm:w-56 lg:w-60 shrink-0 snap-start bg-[#1C1510] rounded-sm overflow-hidden shadow-sm relative group/reel">
-                            <!-- 9:16 Video / Thumbnail -->
-                            <div class="relative aspect-[9/16] bg-stone-900 overflow-hidden">
-                                @if($reel->video_url)
-                                    <video src="{{ $reel->video_url }}"
-                                           poster="{{ $reel->thumbnail_url ?: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop' }}"
-                                           loop muted playsinline
-                                           onmouseover="this.play()"
-                                           onmouseout="this.pause()"
-                                           class="w-full h-full object-cover"></video>
-                                @else
-                                    <img src="{{ $reel->thumbnail_url ?: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop' }}"
-                                         alt="{{ $reel->title }}"
-                                         class="w-full h-full object-cover">
-                                @endif
+        <!-- 6-Product Grid matching screenshot -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+            @for($i = 0; $i < 6; $i++)
+                @php
+                    $prod = $displayProducts->get($i);
+                    $fallback = $curatedMock[$i] ?? $curatedMock[0];
 
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none"></div>
+                    $prodId = $prod ? $prod->id : ($i + 1);
+                    $prodName = $prod ? $prod->name : $fallback['name'];
+                    $prodPrice = $prod ? ($prod->sale_price ?? $prod->price) : $fallback['price'];
+                    $prodUrl = $prod ? route('product.show', $prod->slug) : route('shop.index');
+                    $prodImg = $prod && $prod->images->isNotEmpty() ? $prod->primary_image : $fallback['image'];
+                @endphp
 
-                                <!-- Instagram Reel Glyphs -->
-                                <div class="absolute top-3 right-3 text-white/80">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                                </div>
+                <div class="group flex flex-col bg-white border border-[#E3DACD] hover:border-[#58111A] transition-all duration-300 shadow-2xs hover:shadow-md">
+                    <!-- Image with top-right wishlist heart -->
+                    <div class="relative aspect-[3/4] overflow-hidden bg-[#EFE9DE]">
+                        <a href="{{ $prodUrl }}" class="block w-full h-full">
+                            <img src="{{ $prodImg }}"
+                                 alt="{{ $prodName }}"
+                                 class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out">
+                        </a>
 
-                                <!-- Reel Title -->
-                                <div class="absolute top-3 left-3 pr-8">
-                                    <span class="text-[11px] font-serif text-white/90 line-clamp-1 drop-shadow">
-                                        {{ $reel->title }}
-                                    </span>
-                                </div>
+                        <!-- Wishlist Toggle Button (Top Right matching screenshot) -->
+                        <button type="button"
+                                @click="toggleWishlist({{ $prodId }}, $el)"
+                                class="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/80 hover:bg-[#58111A] hover:text-white text-[#2A1810] flex items-center justify-center transition-all duration-200 z-10 shadow-2xs border border-[#E3DACD]"
+                                title="Add to Wishlist"
+                                aria-label="Toggle Wishlist">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            </svg>
+                        </button>
+                    </div>
 
-                                <!-- Bottom Mini Product Chip matching reference screenshot -->
-                                @if($linkedProd)
-                                    <div class="absolute bottom-3 inset-x-3 bg-[#FAF6EE]/95 border border-[#D4AF37]/35 backdrop-blur-xs p-2 rounded-xs flex items-center gap-2.5 shadow-md">
-                                        <img src="{{ $linkedProd->primary_image_url }}" alt="{{ $linkedProd->name }}" class="w-9 h-11 object-cover rounded-xs shrink-0">
-                                        <div class="flex-1 min-w-0 text-left">
-                                            <div class="font-serif text-[11px] font-semibold text-[#2A1810] truncate">{{ $linkedProd->name }}</div>
-                                            <div class="text-[10px] font-bold text-[#58111A]">₹{{ number_format($linkedProd->effective_price) }}</div>
-                                        </div>
-                                        <a href="{{ route('product.show', $linkedProd->slug) }}" class="shrink-0 text-[10px] uppercase font-bold text-[#E6CA65] bg-[#0A3828] hover:bg-[#0D4732] px-2 py-0.5 rounded-xs border border-[#D4AF37]/40 transition shadow-xs">
-                                            Shop
-                                        </a>
-                                    </div>
-                                @endif
+                    <!-- Product Details: Name & Price -->
+                    <div class="p-3 flex-1 flex flex-col justify-between text-left space-y-1">
+                        <div>
+                            <h3 class="font-sans text-xs font-semibold text-[#2A1810] line-clamp-1 group-hover:text-[#58111A] transition-colors">
+                                <a href="{{ $prodUrl }}">{{ $prodName }}</a>
+                            </h3>
+                            <div class="text-xs font-bold text-[#2A1810] mt-1">
+                                ₹ {{ number_format($prodPrice) }}
                             </div>
                         </div>
-                    @empty
-                        <div class="py-12 text-center text-xs text-stone-400 w-full">Reels curated shortly.</div>
-                    @endforelse
+
+                        <!-- Clean ADD TO CART button below price -->
+                        <button type="button"
+                                @click="addToCartDirect({{ $prodId }}, null, 1, $el)"
+                                class="w-full mt-2.5 py-2 px-2 bg-[#FAF7F2] hover:bg-[#58111A] text-[#2A1810] hover:text-[#F7EED9] border border-[#D5CBC0] hover:border-[#58111A] text-[10px] sm:text-[10.5px] font-sans uppercase font-bold tracking-[0.16em] transition-all rounded-xs shadow-2xs text-center">
+                            ADD TO CART
+                        </button>
+                    </div>
                 </div>
-            </div>
-
-            <!-- View All Button (Maroon & Gold) -->
-            <div class="text-center pt-8">
-                <a href="{{ route('shop.index') }}"
-                   class="inline-block px-7 py-2.5 bg-[#58111A] hover:bg-[#3B0A11] border border-[#D4AF37]/50 text-[#F7EED9] font-serif text-xs uppercase tracking-[0.25em] transition shadow-md rounded-xs">
-                    VIEW ALL
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================== -->
-    <!-- 4. EDITORIAL LOOKBOOK COLLAGE: A SYMPHONY OF TRADITION & COUTURE -->
-    <!-- ============================================================== -->
-    <section class="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center space-y-1 mb-10">
-            <span class="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#8C713B] font-semibold block">HERITAGE ATELIER</span>
-            <h2 class="font-serif text-2xl sm:text-4xl text-[#2A1810] font-normal tracking-wide">A Symphony of Tradition & Couture</h2>
-            <div class="ornament-flourish text-[#C5A869] text-xs pt-1">✦</div>
+            @endfor
         </div>
 
-        <!-- 8-Photo Editorial Grid matching screenshot (4 on top, 4 on bottom) -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-            <!-- 1. Intricate bridal henna on hands -->
-            <div class="relative aspect-square overflow-hidden bg-stone-900 group">
-                <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=700&auto=format&fit=crop"
-                     alt="Artisanal Henna & Zari Craft"
-                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-            </div>
-
-            <!-- 2. Braided muse in ivory attire -->
-            <div class="relative aspect-square overflow-hidden bg-stone-900 group">
-                <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=80&w=700&auto=format&fit=crop"
-                     alt="Royal Punjabi Muse"
-                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-            </div>
-
-            <!-- 3. Bridal feet in brass urli with rose petals -->
-            <div class="relative aspect-square overflow-hidden bg-stone-900 group">
-                <img src="https://images.unsplash.com/photo-1609357605129-26f69add5d6e?q=80&w=700&auto=format&fit=crop"
-                     alt="Bridal Rose Rituals"
-                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-            </div>
-
-            <!-- 4. Muse in crimson couture & Kundan choker -->
-            <div class="relative aspect-square overflow-hidden bg-stone-900 group">
-                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=700&auto=format&fit=crop"
-                     alt="Bridal Kundan Splendour"
-                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-            </div>
-
-            <!-- 5. Muse in traditional floral swing -->
-            <div class="relative aspect-square overflow-hidden bg-stone-900 group">
-                <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=700&auto=format&fit=crop"
-                     alt="The Shahi Bride"
-                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-            </div>
-
-            <!-- 6. Stack of pure gold bangles on wrist -->
-            <div class="relative aspect-square overflow-hidden bg-stone-900 group">
-                <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=700&auto=format&fit=crop"
-                     alt="Gold Kadas & Bangles"
-                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-            </div>
-
-            <!-- 7. Emerald green silk kurta with tilla needlework -->
-            <div class="relative aspect-square overflow-hidden bg-stone-900 group">
-                <img src="https://images.unsplash.com/photo-1583391733975-021c37b679b3?q=80&w=700&auto=format&fit=crop"
-                     alt="Emerald Silk Tilla Embroidery"
-                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-            </div>
-
-            <!-- 8. Royal muse holding heirloom pearl strings -->
-            <div class="relative aspect-square overflow-hidden bg-stone-900 group">
-                <img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?q=80&w=700&auto=format&fit=crop"
-                     alt="Heirloom Pearls & Jadau"
-                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-            </div>
-        </div>
-
-        <!-- Explore Button (Emerald & Gold) -->
-        <div class="text-center pt-8">
-            <a href="{{ route('shop.bridal-collection') }}"
-               class="inline-block px-7 py-2.5 bg-[#0A3828] hover:bg-[#0D4732] border border-[#D4AF37]/50 text-[#F7EED9] font-serif text-xs uppercase tracking-[0.25em] transition shadow-md rounded-xs">
-                EXPLORE LOOKBOOK
+        <!-- Mobile View All Button -->
+        <div class="text-center mt-6 sm:hidden">
+            <a href="{{ route('shop.index') }}" class="inline-flex items-center gap-1.5 text-xs font-sans uppercase font-bold tracking-[0.2em] text-[#58111A] border-b border-[#58111A] pb-1">
+                <span>VIEW ALL PRODUCTS</span> &rarr;
             </a>
         </div>
     </section>
 
     <!-- ============================================================== -->
-    <!-- 5. MOST LOVED BY YOU (BEST SELLERS 4-COLUMN GRID)              -->
+    <!-- SECTION 3: THE ATELIER / HERITAGE STORY (CINEMATIC BANNER)     -->
     <!-- ============================================================== -->
-    <section class="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center space-y-1 mb-10">
-            <h2 class="font-serif text-2xl sm:text-4xl text-[#3B0A11] font-normal tracking-wide">Most Loved by You</h2>
-            <div class="ornament-flourish text-[#D4AF37] text-xs pt-1">✦</div>
+    <section class="relative overflow-hidden bg-[#1D090D] text-white py-14 sm:py-20 my-6">
+        <!-- Atmospheric Background of Woman with Gold Bangles & Rings -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=85&w=2200&auto=format&fit=crop"
+                 alt="The Atelier Heritage Craftsmanship"
+                 class="w-full h-full object-cover object-center filter brightness-[0.45]">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/70"></div>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
-            @foreach($bestSellers->take(4) as $product)
-                @include('storefront.partials.product-card', ['product' => $product])
+        <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
+            <!-- Left Side: Editorial Typography & Explore Button -->
+            <div class="max-w-xl space-y-2 sm:space-y-3">
+                <span class="text-[10px] sm:text-xs tracking-[0.35em] uppercase font-sans font-semibold text-[#E6CA65] block">
+                    THE ATELIER
+                </span>
+                <h2 class="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal tracking-[0.06em] text-[#FAF7F2] uppercase leading-[1.1]">
+                    A LEGACY<br>
+                    IN EVERY DETAIL
+                </h2>
+                <div class="pt-4 sm:pt-6">
+                    <a href="{{ route('pages.about') }}"
+                       class="inline-flex items-center gap-2 px-6 sm:px-8 py-3 border border-[#E6CA65] text-[#FAF7F2] hover:bg-[#58111A] hover:border-[#D4AF37] text-xs font-sans uppercase tracking-[0.22em] font-semibold transition-all duration-300 shadow-md">
+                        <span>EXPLORE OUR STORY</span> &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Side: 4 Luxury Gold Line Icon Pillars matching screenshot -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 lg:gap-8 text-center pt-4 lg:pt-0">
+                <!-- Pillar 1: Authentic Craftsmanship -->
+                <div class="flex flex-col items-center space-y-2">
+                    <div class="w-12 h-12 rounded-full border border-[#D4AF37]/50 flex items-center justify-center text-[#E6CA65] shadow-xs bg-black/30">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <span class="text-[10.5px] sm:text-[11px] font-sans font-medium tracking-[0.14em] uppercase text-[#E3CE9B] leading-tight">
+                        Authentic<br>Craftsmanship
+                    </span>
+                </div>
+
+                <!-- Pillar 2: Premium Fabrics -->
+                <div class="flex flex-col items-center space-y-2">
+                    <div class="w-12 h-12 rounded-full border border-[#D4AF37]/50 flex items-center justify-center text-[#E6CA65] shadow-xs bg-black/30">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                        </svg>
+                    </div>
+                    <span class="text-[10.5px] sm:text-[11px] font-sans font-medium tracking-[0.14em] uppercase text-[#E3CE9B] leading-tight">
+                        Premium<br>Fabrics
+                    </span>
+                </div>
+
+                <!-- Pillar 3: Traditional Techniques -->
+                <div class="flex flex-col items-center space-y-2">
+                    <div class="w-12 h-12 rounded-full border border-[#D4AF37]/50 flex items-center justify-center text-[#E6CA65] shadow-xs bg-black/30">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                        </svg>
+                    </div>
+                    <span class="text-[10.5px] sm:text-[11px] font-sans font-medium tracking-[0.14em] uppercase text-[#E3CE9B] leading-tight">
+                        Traditional<br>Techniques
+                    </span>
+                </div>
+
+                <!-- Pillar 4: Made in Punjab -->
+                <div class="flex flex-col items-center space-y-2">
+                    <div class="w-12 h-12 rounded-full border border-[#D4AF37]/50 flex items-center justify-center text-[#E6CA65] shadow-xs bg-black/30">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                    </div>
+                    <span class="text-[10.5px] sm:text-[11px] font-sans font-medium tracking-[0.14em] uppercase text-[#E3CE9B] leading-tight">
+                        Made in<br>Punjab
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SECTION 4: SHOP BY OCCASION (5 CARDS IN A ROW)                 -->
+    <!-- ============================================================== -->
+    @php
+        $occasions = [
+            [
+                'name' => 'WEDDING',
+                'image' => 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=80&w=600&auto=format&fit=crop',
+                'url' => route('shop.wedding-collection')
+            ],
+            [
+                'name' => 'FESTIVE',
+                'image' => 'https://images.unsplash.com/photo-1583391733975-021c37b679b3?q=80&w=600&auto=format&fit=crop',
+                'url' => route('shop.suits', ['occasion' => 'festive'])
+            ],
+            [
+                'name' => 'PARTY WEAR',
+                'image' => 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=600&auto=format&fit=crop',
+                'url' => route('shop.party-wear')
+            ],
+            [
+                'name' => 'CASUAL ELEGANCE',
+                'image' => 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?q=80&w=600&auto=format&fit=crop',
+                'url' => route('shop.designer-suits')
+            ],
+            [
+                'name' => 'JEWELLERY',
+                'image' => 'https://images.unsplash.com/photo-1630019852942-f89202989a59?q=80&w=600&auto=format&fit=crop',
+                'url' => route('shop.jewellery')
+            ],
+        ];
+    @endphp
+
+    <section class="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Centered Header with Gold ❖ Accents -->
+        <div class="text-center space-y-1 mb-8 sm:mb-12">
+            <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#3B0A11] font-normal tracking-wide flex items-center justify-center gap-3">
+                <span class="text-sm sm:text-base text-[#C5A869]">❖</span>
+                <span>Shop by Occasion</span>
+                <span class="text-sm sm:text-base text-[#C5A869]">❖</span>
+            </h2>
+        </div>
+
+        <!-- 5 Cards in one row on desktop matching screenshot -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+            @foreach($occasions as $occ)
+                <a href="{{ $occ['url'] }}"
+                   class="group flex flex-col bg-white border border-[#E3DACD] hover:border-[#58111A] transition-all duration-300 shadow-2xs hover:shadow-md">
+                    <div class="relative aspect-[3/4] overflow-hidden bg-[#EFE9DE]">
+                        <img src="{{ $occ['image'] }}"
+                             alt="{{ $occ['name'] }}"
+                             class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out">
+                    </div>
+                    <div class="py-2.5 px-2 text-center bg-white border-t border-[#E8DFD5] group-hover:bg-[#FAF7F2] transition-colors">
+                        <span class="text-[10px] sm:text-[11px] font-sans font-bold tracking-[0.16em] uppercase text-[#2A1810] group-hover:text-[#58111A] transition-colors inline-flex items-center justify-center gap-1.5">
+                            {{ $occ['name'] }} <span class="text-[#8C713B] group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                        </span>
+                    </div>
+                </a>
             @endforeach
         </div>
     </section>
 
     <!-- ============================================================== -->
-    <!-- 6. JEWELLERY EDIT (4-COLUMN GRID)                              -->
+    <!-- SECTION 5: NEW SEASON EDIT (SPLIT 50/50 EDITORIAL BANNER)      -->
     <!-- ============================================================== -->
-    <section class="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center space-y-1 mb-10">
-            <h2 class="font-serif text-2xl sm:text-4xl text-[#3B0A11] font-normal tracking-wide">Jewellery</h2>
-            <div class="ornament-flourish text-[#D4AF37] text-xs pt-1">✦</div>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
-            @if($jewelleryProducts->isNotEmpty())
-                @foreach($jewelleryProducts->take(4) as $product)
-                    @include('storefront.partials.product-card', ['product' => $product])
-                @endforeach
-            @else
-                @foreach($featuredProducts->take(4) as $product)
-                    @include('storefront.partials.product-card', ['product' => $product])
-                @endforeach
-            @endif
-        </div>
-    </section>
-
-    <!-- ============================================================== -->
-    <!-- 7. FULL-WIDTH CINEMATIC ATELIER VIDEO                          -->
-    <!-- ============================================================== -->
-    <section class="relative w-full overflow-hidden bg-black aspect-[16/9] max-h-[680px]">
-        @if($featuredVideo && $featuredVideo->video_url)
-            <video src="{{ $featuredVideo->video_url }}"
-                   poster="{{ $featuredVideo->poster_image ?: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=80&w=1600&auto=format&fit=crop' }}"
-                   controls
-                   playsinline
-                   class="w-full h-full object-cover"></video>
-        @else
-            <video src="https://assets.mixkit.co/videos/preview/mixkit-fashion-model-in-an-elegant-dress-41804-large.mp4"
-                   poster="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=80&w=1600&auto=format&fit=crop"
-                   controls
-                   playsinline
-                   class="w-full h-full object-cover"></video>
-        @endif
-    </section>
-
-    <!-- ============================================================== -->
-    <!-- 8. ARTISANAL HERITAGE BANNER (CRAFT SPOTLIGHT)                 -->
-    <!-- ============================================================== -->
-    <section class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <!-- Left: Close-up photo of hathphool & roses matching screenshot -->
-            <div class="relative aspect-[4/3] rounded-xs overflow-hidden shadow-md bg-stone-900 border border-[#D4AF37]/30">
-                <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1000&auto=format&fit=crop"
-                     alt="Artisanal Hathphool & Heritage Roses"
-                     class="w-full h-full object-cover">
-            </div>
-
-            <!-- Right: Ornate Framed Parchment Box with Gold Borders -->
-            <div class="border-2 border-[#D4AF37]/70 p-8 sm:p-12 bg-[#FAF6EE]/95 backdrop-blur-xs text-center space-y-4 shadow-md relative">
-                <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-4 bg-[#FAF6EE] text-[#D4AF37] text-xs">
-                    ❦
+    <section class="py-6 sm:py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <!-- Left 50% Banner: Festive Edit (Dark Couture) -->
+            <div class="relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[380px] flex items-center bg-[#1F070B] text-white border border-[#D5CBC0]">
+                <div class="absolute inset-0 z-0">
+                    <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=85&w=1200&auto=format&fit=crop"
+                         alt="Festive Edit"
+                         class="w-full h-full object-cover object-[center_25%] filter brightness-[0.65]">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent"></div>
                 </div>
-                <h3 class="font-serif text-2xl sm:text-3xl font-normal text-[#3B0A11] tracking-wide">
-                    Our Heritage Craftsmanship
-                </h3>
-                <p class="text-xs sm:text-sm text-[#54483A] leading-relaxed max-w-md mx-auto font-serif italic">
-                    "Every silhouette and ornament at Gauri Suits & Jewel is shaped by hereditary karigars who have preserved the poetry of Dabka, Kashmiri Tilla, Mukaish, and Jadau Kundan through centuries of Punjabi royal court culture."
-                </p>
-                <div class="pt-2">
-                    <a href="{{ route('pages.about') }}"
-                       class="inline-block text-xs uppercase font-bold tracking-[0.25em] text-[#58111A] hover:text-[#0A3828] border-b-2 border-[#58111A] pb-1 transition">
-                        Discover Our Story &rarr;
-                    </a>
+
+                <div class="relative z-10 p-6 sm:p-10 space-y-2 max-w-md">
+                    <span class="text-[10px] sm:text-[11px] tracking-[0.3em] uppercase font-sans font-semibold text-[#E6CA65] block">
+                        NEW SEASON
+                    </span>
+                    <h3 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#FAF7F2] leading-tight">
+                        Festive Edit
+                    </h3>
+                    <p class="font-serif italic text-sm sm:text-base text-[#E3CE9B] pb-3">
+                        Celebrate your roots in style
+                    </p>
+                    <div>
+                        <a href="{{ route('shop.new-arrivals') }}"
+                           class="inline-flex items-center gap-2 px-5 py-2.5 border border-[#E6CA65] text-[#FAF7F2] hover:bg-[#58111A] text-xs font-sans uppercase tracking-[0.2em] font-semibold transition-all shadow-sm">
+                            <span>SHOP NOW</span> &rarr;
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- ============================================================== -->
-    <!-- 9. THE ATELIER JOURNAL / "OUR STORIES" STRIP                   -->
-    <!-- ============================================================== -->
-    <section class="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center space-y-1 mb-10">
-            <h2 class="font-serif text-2xl sm:text-4xl text-[#2A1810] font-normal tracking-wide">Our Stories</h2>
-            <div class="ornament-flourish text-[#C5A869] text-xs pt-1">✦</div>
-        </div>
+            <!-- Right 50% Banner: Heirloom Jewellery (Champagne / Botanical Canvas) -->
+            <div class="relative overflow-hidden rounded-xs min-h-[320px] sm:min-h-[380px] flex items-center bg-[#F7F2E9] text-[#2A1810] border border-[#D5CBC0]">
+                <!-- Delicate Botanical Line Art Watermark in Bottom Right -->
+                <div class="absolute right-0 bottom-0 pointer-events-none opacity-20 w-48 h-48 sm:w-64 sm:h-64">
+                    <svg viewBox="0 0 200 200" fill="none" stroke="#8C713B" stroke-width="1.2">
+                        <path d="M20 180 C 60 140, 100 160, 140 100 C 160 70, 180 40, 190 10"/>
+                        <path d="M90 130 C 110 110, 130 115, 150 90"/>
+                        <path d="M60 150 C 75 135, 95 140, 110 120"/>
+                        <circle cx="140" cy="100" r="12" stroke-dasharray="3,3"/>
+                        <circle cx="110" cy="120" r="8"/>
+                    </svg>
+                </div>
 
-        <!-- 4 Cultural / Architectural Photos matching screenshot -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-            <a href="{{ route('blog.index') }}" class="group relative aspect-square overflow-hidden bg-stone-900">
-                <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop"
-                     alt="The Craft of Phulkari"
-                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition"></div>
-            </a>
+                <!-- Product Image of Emerald & Polki Necklace on Left/Center -->
+                <div class="absolute inset-y-0 left-0 w-3/5 z-0 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=85&w=900&auto=format&fit=crop"
+                         alt="Heirloom Jewellery"
+                         class="w-full h-full object-cover object-center filter brightness-[0.95]">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#F7F2E9]/60 to-[#F7F2E9]"></div>
+                </div>
 
-            <a href="{{ route('blog.index') }}" class="group relative aspect-square overflow-hidden bg-stone-900">
-                <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=600&auto=format&fit=crop"
-                     alt="Streets of Heritage Punjab"
-                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition"></div>
-            </a>
-
-            <a href="{{ route('blog.index') }}" class="group relative aspect-square overflow-hidden bg-stone-900">
-                <img src="https://images.unsplash.com/photo-1609357605129-26f69add5d6e?q=80&w=600&auto=format&fit=crop"
-                     alt="Royal Haveli Courtyards"
-                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition"></div>
-            </a>
-
-            <a href="{{ route('blog.index') }}" class="group relative aspect-square overflow-hidden bg-stone-900">
-                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=600&auto=format&fit=crop"
-                     alt="The Kundan Artisan Journal"
-                     class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition"></div>
-            </a>
+                <!-- Right Text Overlay matching screenshot -->
+                <div class="relative z-10 ml-auto p-6 sm:p-10 space-y-2 text-right max-w-xs sm:max-w-sm">
+                    <h3 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#3B0A11] leading-tight">
+                        Heirloom<br>Jewellery
+                    </h3>
+                    <p class="font-serif italic text-sm sm:text-base text-[#6B5E55] pb-3">
+                        Pieces that tell your story
+                    </p>
+                    <div>
+                        <a href="{{ route('shop.jewellery') }}"
+                           class="inline-flex items-center gap-2 px-5 py-2.5 border border-[#8C713B] text-[#3B0A11] hover:bg-[#3B0A11] hover:text-[#F7EED9] text-xs font-sans uppercase tracking-[0.2em] font-semibold transition-all shadow-sm">
+                            <span>EXPLORE</span> &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 

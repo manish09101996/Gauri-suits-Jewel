@@ -255,4 +255,47 @@ window.toggleWishlist = async function(productId, btnElement) {
     }
 };
 
+// Direct Add to Cart Function for Product Cards
+window.addToCartDirect = async function(productId, variantId = null, quantity = 1, btnElement = null) {
+    let originalText = '';
+    if (btnElement) {
+        originalText = btnElement.innerText;
+        btnElement.innerText = 'ADDING...';
+        btnElement.disabled = true;
+    }
+
+    try {
+        const res = await fetch('/cart/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                variant_id: variantId,
+                quantity: quantity
+            })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+            window.dispatchEvent(new CustomEvent('cart-updated'));
+            window.dispatchEvent(new CustomEvent('open-cart'));
+            window.showToast(data.message, 'success');
+        } else {
+            window.showToast(data.message, 'error');
+        }
+    } catch (e) {
+        window.showToast('Failed to add item to bag.', 'error');
+    } finally {
+        if (btnElement) {
+            btnElement.innerText = originalText;
+            btnElement.disabled = false;
+        }
+    }
+};
+
 Alpine.start();
+

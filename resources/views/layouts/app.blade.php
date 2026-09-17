@@ -471,28 +471,61 @@
         </svg>
     </a>
 
-    <!-- 4-Pillar Heritage Trust Bar (Refined Warm Champagne & Antique Gold) -->
-    <section class="bg-[#F4EFEA] text-[#2A1810] border-t border-b border-[#E6DFD5] py-10 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-            <div class="space-y-1.5 flex flex-col items-center">
-                <div class="text-[#C5A869] text-2xl font-serif">✦</div>
-                <h4 class="font-serif text-sm font-semibold tracking-wider text-[#4A0E17]">Handcrafted in Punjab</h4>
-                <p class="text-[11px] text-[#6B5E55] font-light">Artisanal weaves by generational karigars</p>
-            </div>
-            <div class="space-y-1.5 flex flex-col items-center">
-                <div class="text-[#C5A869] text-2xl font-serif">❦</div>
-                <h4 class="font-serif text-sm font-semibold tracking-wider text-[#4A0E17]">Complimentary Delivery</h4>
-                <p class="text-[11px] text-[#6B5E55] font-light">Free express shipping on orders above ₹2,999</p>
-            </div>
-            <div class="space-y-1.5 flex flex-col items-center">
-                <div class="text-[#C5A869] text-2xl font-serif">↺</div>
-                <h4 class="font-serif text-sm font-semibold tracking-wider text-[#4A0E17]">Easy 7-Day Exchange</h4>
-                <p class="text-[11px] text-[#6B5E55] font-light">Dedicated personal concierge assistance</p>
-            </div>
-            <div class="space-y-1.5 flex flex-col items-center">
-                <div class="text-[#C5A869] text-2xl font-serif">✈</div>
-                <h4 class="font-serif text-sm font-semibold tracking-wider text-[#4A0E17]">Worldwide Royal Shipping</h4>
-                <p class="text-[11px] text-[#6B5E55] font-light">Insured international express to 40+ countries</p>
+    <!-- Trust / Service Bar (4 Pillars matching screenshot) -->
+    <section class="bg-[#F9F6F0] border-t border-b border-[#E3DACD] py-8 sm:py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <!-- 1: Free Shipping -->
+                <div class="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
+                    <div class="text-[#8C713B] shrink-0">
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M8 17h8m-8 0a2 2 0 11-4 0 2 2 0 014 0zm8 0a2 2 0 11-4 0 2 2 0 014 0zm-8-3h12V7a2 2 0 00-2-2H4a2 2 0 00-2 2v8h2m14-5h3l3 4v3h-6v-7z"/>
+                        </svg>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="font-sans text-xs sm:text-[13px] font-bold text-[#3B0A11] uppercase tracking-wider">Free Shipping</h4>
+                        <p class="text-[11px] text-[#6B5E55]">Above ₹2,999</p>
+                    </div>
+                </div>
+
+                <!-- 2: Easy Returns -->
+                <div class="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
+                    <div class="text-[#8C713B] shrink-0">
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="font-sans text-xs sm:text-[13px] font-bold text-[#3B0A11] uppercase tracking-wider">Easy Returns</h4>
+                        <p class="text-[11px] text-[#6B5E55]">Hassle Free</p>
+                    </div>
+                </div>
+
+                <!-- 3: Authentic Products -->
+                <div class="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
+                    <div class="text-[#8C713B] shrink-0">
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="font-sans text-xs sm:text-[13px] font-bold text-[#3B0A11] uppercase tracking-wider">Authentic Products</h4>
+                        <p class="text-[11px] text-[#6B5E55]">Premium Quality</p>
+                    </div>
+                </div>
+
+                <!-- 4: Dedicated Support -->
+                <div class="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
+                    <div class="text-[#8C713B] shrink-0">
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="font-sans text-xs sm:text-[13px] font-bold text-[#3B0A11] uppercase tracking-wider">Dedicated Support</h4>
+                        <p class="text-[11px] text-[#6B5E55]">We're Here to Help</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

@@ -46,18 +46,19 @@ class StorefrontTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Gauri Suits & Jewel');
         $response->assertSee('Phulkari Georgette Suit');
-        // Redesigned visual hierarchy verification
-        $response->assertSee('ROOTED IN TRADITION');
-        $response->assertSee('Adorn Every Part of You');
-        $response->assertSee('Spotted on Royalty: Real Gauri Muses');
-        $response->assertSee('A Symphony of Tradition');
-        $response->assertSee('Most Loved by You');
-        $response->assertSee('Jewellery');
-        $response->assertSee('Our Heritage Craftsmanship');
-        $response->assertSee('Our Stories');
-        $response->assertSee('Handcrafted in Punjab');
-        $response->assertSee('Complimentary Delivery');
-        $response->assertSee('Worldwide Royal Shipping');
+        // Redesigned visual hierarchy verification (matching editorial blueprint)
+        $response->assertSee('TIMELESS TRADITIONS');
+        $response->assertSee('HANDCRAFTED');
+        $response->assertSee('PUNJABI SUITS');
+        $response->assertSee('PATIALA SALWARS');
+        $response->assertSee('OUR COLLECTION');
+        $response->assertSee('Featured Products');
+        $response->assertSee('The Atelier');
+        $response->assertSee('Authentic Craftsmanship');
+        $response->assertSee('Festive Edit');
+        $response->assertSee('Heirloom Jewellery');
+        $response->assertSee('Free Shipping');
+        $response->assertSee('Easy Returns');
     }
 
     public function test_catalog_and_category_pages_render(): void
