@@ -112,9 +112,9 @@ class HomeController extends Controller
 
         // 7. Reels / Instagram Visuals
         $reels = Reel::where('is_active', true)
-            ->with('product')
+            ->with(['product.images'])
             ->orderBy('sort_order')
-            ->limit(6)
+            ->limit(12)
             ->get();
 
         // 8. Approved Customer Reviews

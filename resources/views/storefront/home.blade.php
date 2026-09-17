@@ -512,6 +512,203 @@
         </div>
     </section>
 
+    <!-- ============================================================== -->
+    <!-- SECTION 6: SHOPPABLE INSTAGRAM REELS CAROUSEL                   -->
+    <!-- ============================================================== -->
+    @if(isset($reels) && $reels->isNotEmpty())
+    @php
+        $reelsJsonData = $reels->map(function($reel) {
+            return [
+                'id' => $reel->id,
+                'title' => $reel->title,
+                'video_url' => $reel->video_url,
+                'thumbnail_url' => $reel->thumbnail_url,
+                'product' => $reel->product ? [
+                    'id' => $reel->product->id,
+                    'name' => $reel->product->name,
+                    'price' => (float)$reel->product->effective_price,
+                    'image' => $reel->product->primary_image_url,
+                    'url' => route('product.show', $reel->product->slug),
+                ] : null,
+            ];
+        });
+    @endphp
+
+    <section class="py-12 sm:py-16 bg-[#FAF7F2] border-t border-[#E8DFD5] relative"
+             x-data="reelsCarousel()">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+
+            <!-- Section Header: Title & Controls -->
+            <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 border-b border-[#E8DFD5] pb-5">
+                <div>
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <span class="w-2 h-2 rounded-full bg-[#D4AF37]"></span>
+                        <span class="text-[10px] sm:text-[11px] font-sans font-bold uppercase tracking-[0.25em] text-[#8C713B]">
+                            ATELIER STORIES &amp; INSTAGRAM
+                        </span>
+                    </div>
+                    <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#2A1810] font-normal tracking-wide flex items-center gap-3">
+                        <span>Heritage In Motion</span>
+                        <span class="text-xs sm:text-sm text-[#C5A869]">❖</span>
+                    </h2>
+                    <p class="font-serif italic text-xs sm:text-sm text-[#7A6B63] mt-1">
+                        Watch royal Punjabi silhouettes and heirloom jewellery come to life &mdash; tap any reel to shop the look
+                    </p>
+                </div>
+
+                <!-- Right Side: Instagram Profile & Carousel Nav Controls -->
+                <div class="flex items-center gap-3 shrink-0">
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#D4AF37]/50 bg-white text-[#58111A] hover:bg-[#58111A] hover:text-[#FAF7F2] text-xs font-semibold transition shadow-2xs group">
+                        <svg class="w-3.5 h-3.5 fill-current text-[#D4AF37] group-hover:text-white transition-colors" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                        <span>@gauri.suits</span>
+                    </a>
+
+                    <!-- Left / Right Carousel Controls -->
+                    <button type="button" @click="scrollPrev()"
+                            class="w-9 h-9 rounded-full border border-[#D4AF37]/60 bg-white hover:bg-[#58111A] hover:text-white text-[#58111A] flex items-center justify-center transition shadow-xs focus:outline-none"
+                            aria-label="Previous Reels">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <button type="button" @click="scrollNext()"
+                            class="w-9 h-9 rounded-full border border-[#D4AF37]/60 bg-white hover:bg-[#58111A] hover:text-white text-[#58111A] flex items-center justify-center transition shadow-xs focus:outline-none"
+                            aria-label="Next Reels">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reels Carousel Track -->
+            <div x-ref="track"
+                 class="flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar py-2 -mx-4 px-4 sm:mx-0 sm:px-0">
+                @foreach($reels as $reel)
+                    <div class="w-[220px] sm:w-[260px] shrink-0 snap-start aspect-[9/16] relative rounded-lg overflow-hidden bg-[#1A0B0E] border border-[#E3DACD] hover:border-[#D4AF37] shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col justify-between select-none">
+
+                        <!-- Poster Image -->
+                        <div class="absolute inset-0 z-0">
+                            <img src="{{ $reel->thumbnail_url }}"
+                                 alt="{{ $reel->title }}"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out filter brightness-[0.88]">
+                            <!-- Gradient Overlays -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/30 pointer-events-none"></div>
+                        </div>
+
+                        <!-- Top Tag: Instagram Atelier Tag -->
+                        <div class="relative z-10 p-3 flex items-center justify-between pointer-events-none">
+                            <span class="bg-black/60 backdrop-blur-sm text-[10px] text-white px-2.5 py-1 rounded-full font-medium flex items-center gap-1.5 border border-white/20">
+                                <svg class="w-3 h-3 fill-current text-[#E6CA65]" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                                <span>Reel</span>
+                            </span>
+                            <span class="w-6 h-6 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white text-xs">
+                                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                            </span>
+                        </div>
+
+                        <!-- Center Play Button Overlay -->
+                        <div class="relative z-10 flex items-center justify-center cursor-pointer"
+                             @click="openReelModal({{ $reel->id }})">
+                            <div class="w-12 h-12 rounded-full bg-black/40 backdrop-blur-md border border-[#D4AF37] text-[#E6CA65] flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:bg-[#58111A] transition-all duration-300">
+                                <svg class="w-5 h-5 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Copy & Shoppable Card -->
+                        <div class="relative z-10 p-3 sm:p-3.5 space-y-2.5">
+                            <h3 class="font-serif text-xs sm:text-sm text-white font-semibold line-clamp-2 leading-snug drop-shadow cursor-pointer"
+                                @click="openReelModal({{ $reel->id }})">
+                                {{ $reel->title }}
+                            </h3>
+
+                            @if($reel->product)
+                                <div class="bg-white/95 backdrop-blur-md p-2 rounded border border-[#D4AF37]/50 shadow-md flex items-center justify-between gap-2 transition hover:bg-[#FAF7F2]">
+                                    <a href="{{ route('product.show', $reel->product->slug) }}" class="flex items-center gap-2 min-w-0 flex-1">
+                                        <img src="{{ $reel->product->primary_image_url }}"
+                                             alt="{{ $reel->product->name }}"
+                                             class="w-8 h-10 object-cover rounded shrink-0 border border-stone-200">
+                                        <div class="min-w-0 flex-1">
+                                            <div class="text-[11px] font-semibold text-[#2A1810] truncate">{{ $reel->product->name }}</div>
+                                            <div class="text-[11px] font-bold text-[#58111A]">₹{{ number_format($reel->product->effective_price) }}</div>
+                                        </div>
+                                    </a>
+                                    <button type="button"
+                                            @click.stop="$dispatch('open-quick-view', { id: {{ $reel->product->id }} })"
+                                            class="shrink-0 px-2 py-1 bg-[#58111A] hover:bg-[#781924] text-[#FAF7F2] text-[10px] font-bold uppercase tracking-wider rounded transition"
+                                            title="Quick View">
+                                        Shop
+                                    </button>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- Reel Video Modal Player -->
+        <div x-show="modalOpen"
+             x-cloak
+             class="fixed inset-0 z-50 overflow-y-auto bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6"
+             style="display: none;"
+             @keydown.escape.window="closeModal()">
+
+            <div @click.away="closeModal()"
+                 class="bg-[#190B0E] border border-[#C5A869]/40 w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden relative flex flex-col md:flex-row">
+
+                <!-- Close Button -->
+                <button type="button" @click="closeModal()"
+                        class="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/60 text-white hover:text-amber-400 flex items-center justify-center text-lg font-bold border border-white/20 transition">
+                    &times;
+                </button>
+
+                <!-- Left: 9:16 Video Player -->
+                <div class="w-full md:w-3/5 aspect-[9/16] bg-black relative flex items-center justify-center">
+                    <video x-ref="videoPlayer"
+                           :src="currentReel ? currentReel.video_url : ''"
+                           class="w-full h-full object-cover"
+                           playsinline loop autoplay controls></video>
+                </div>
+
+                <!-- Right: Linked Product Details -->
+                <div class="w-full md:w-2/5 p-6 flex flex-col justify-between bg-[#220D12] text-white border-t md:border-t-0 md:border-l border-[#C5A869]/30">
+                    <div class="space-y-4">
+                        <div class="text-[10px] tracking-[0.25em] uppercase text-[#E6CA65] font-bold">Featured in Reel</div>
+                        <h4 class="font-serif text-base sm:text-lg text-white font-bold leading-snug" x-text="currentReel ? currentReel.title : ''"></h4>
+
+                        <template x-if="currentReel && currentReel.product">
+                            <div class="p-3.5 bg-black/40 rounded-lg border border-[#C5A869]/30 space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <img :src="currentReel.product.image" class="w-12 aspect-[3/4] object-cover rounded border border-stone-600">
+                                    <div class="min-w-0 flex-1">
+                                        <div class="text-xs font-semibold text-white line-clamp-2" x-text="currentReel.product.name"></div>
+                                        <div class="text-sm font-bold text-[#E6CA65] mt-1" x-text="'₹' + Number(currentReel.product.price).toLocaleString('en-IN')"></div>
+                                    </div>
+                                </div>
+                                <div class="pt-1 flex flex-col gap-2">
+                                    <a :href="currentReel.product.url"
+                                       class="w-full py-2 bg-[#D4AF37] hover:bg-[#C5A869] text-slate-950 text-xs font-bold uppercase tracking-wider text-center rounded transition shadow">
+                                        View Product &rarr;
+                                    </a>
+                                    <button type="button"
+                                            @click="$dispatch('open-quick-view', { id: currentReel.product.id }); closeModal()"
+                                            class="w-full py-1.5 border border-white/20 hover:border-white text-white text-xs font-semibold uppercase tracking-wider text-center rounded transition">
+                                        Quick View
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="pt-4 text-center">
+                        <span class="text-[11px] text-stone-400 font-serif italic">Gauri Suits &amp; Jewel &bull; Tradition Meets Elegance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @endif
+
 </div>
 @endsection
 
@@ -549,6 +746,43 @@ function heroSlider(total) {
         },
         prev() {
             this.activeSlide = (this.activeSlide - 1 + this.totalSlides) % this.totalSlides;
+        }
+    };
+}
+
+function reelsCarousel() {
+    const reelsList = {!! json_encode($reelsJsonData ?? []) !!};
+    return {
+        modalOpen: false,
+        currentReel: null,
+        reels: reelsList,
+        scrollNext() {
+            if (this.$refs.track) {
+                this.$refs.track.scrollBy({ left: 320, behavior: 'smooth' });
+            }
+        },
+        scrollPrev() {
+            if (this.$refs.track) {
+                this.$refs.track.scrollBy({ left: -320, behavior: 'smooth' });
+            }
+        },
+        openReelModal(reelId) {
+            this.currentReel = this.reels.find(r => r.id === reelId) || null;
+            if (this.currentReel) {
+                this.modalOpen = true;
+                this.$nextTick(() => {
+                    if (this.$refs.videoPlayer) {
+                        this.$refs.videoPlayer.play().catch(() => {});
+                    }
+                });
+            }
+        },
+        closeModal() {
+            this.modalOpen = false;
+            if (this.$refs.videoPlayer) {
+                this.$refs.videoPlayer.pause();
+            }
+            this.currentReel = null;
         }
     };
 }
