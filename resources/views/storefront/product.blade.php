@@ -21,11 +21,11 @@
             this.selectedPrice = v.price || {{ $product->effective_price }};
         },
         addToCart(redirectCheckout = false) {
-            fetch('{{ route('cart.add') }}', {
+            fetch(window.apiUrl('/cart/add'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}',
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({
@@ -38,16 +38,20 @@
             .then(data => {
                 if (data.success) {
                     if (redirectCheckout) {
-                        window.location.href = '{{ route('checkout.index') }}';
+                        window.location.href = window.apiUrl('/checkout');
                     } else {
                         window.dispatchEvent(new CustomEvent('cart-updated', { detail: data }));
-                        window.dispatchEvent(new CustomEvent('open-cart-drawer'));
+                        window.dispatchEvent(new CustomEvent('open-cart'));
+                        window.showToast(data.message || 'Added to bag!', 'success');
                     }
                 } else {
-                    alert(data.message || 'Error adding item to bag.');
+                    window.showToast(data.message || 'Error adding item to bag.', 'error');
                 }
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                console.error(err);
+                window.showToast('Failed to add item to bag.', 'error');
+            });
         }
      }">
 

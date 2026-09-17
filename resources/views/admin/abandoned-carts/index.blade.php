@@ -58,10 +58,10 @@
                             <div class="flex -space-x-2 overflow-hidden">
                                 @foreach($cart->items->take(4) as $it)
                                     @php
-                                        $img = $it->product->images->first()?->image_path;
+                                        $img = $it->product->primary_image_url;
                                     @endphp
                                     @if($img)
-                                        <img class="inline-block h-8 w-8 rounded-full ring-2 ring-slate-900 object-cover" src="{{ asset('storage/' . $img) }}" alt="{{ $it->product->name }}" title="{{ $it->product->name }} (Qty: {{ $it->quantity }})">
+                                        <img class="inline-block h-8 w-8 rounded-full ring-2 ring-slate-900 object-cover" src="{{ $img }}" alt="{{ $it->product->name }}" title="{{ $it->product->name }} (Qty: {{ $it->quantity }})">
                                     @else
                                         <div class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-slate-800 ring-2 ring-slate-900 text-[10px] text-slate-300">
                                             {{ substr($it->product->name ?? 'P', 0, 1) }}

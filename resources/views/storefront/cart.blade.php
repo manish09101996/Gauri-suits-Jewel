@@ -12,11 +12,11 @@
                 return;
             }
             this.updating = true;
-            fetch('{{ route('cart.update') }}', {
+            fetch(window.apiUrl('/cart/update'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}',
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({ item_id: itemId, quantity: qty })
@@ -33,10 +33,10 @@
         removeItem(itemId) {
             if (!confirm('Remove this piece from your bag?')) return;
             this.updating = true;
-            fetch(`{{ url('/cart/remove') }}/${itemId}`, {
+            fetch(window.apiUrl('/cart/remove/' + itemId), {
                 method: 'POST',
                 headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}',
                     'Accept': 'application/json'
                 }
             })

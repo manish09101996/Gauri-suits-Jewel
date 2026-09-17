@@ -38,8 +38,8 @@
                 @if($reel->product)
                     <div class="absolute bottom-3 left-3 right-3 bg-slate-950/90 backdrop-blur border border-slate-700/60 p-2 rounded-lg flex items-center gap-2">
                         <div class="w-7 h-7 rounded bg-slate-800 overflow-hidden shrink-0">
-                            @if($reel->product->images->first())
-                                <img src="{{ asset('storage/' . $reel->product->images->first()->image_path) }}" class="w-full h-full object-cover">
+                            @if($reel->product->primary_image_url)
+                                <img src="{{ $reel->product->primary_image_url }}" class="w-full h-full object-cover">
                             @endif
                         </div>
                         <div class="min-w-0 flex-1">

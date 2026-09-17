@@ -27,22 +27,24 @@
     <!-- Global App Configuration & Dynamic URL Resolution for Subfolder Environments -->
     <script>
         window.AppConfig = {
-            baseUrl: "{{ rtrim(url('/'), '/') }}",
-            csrfToken: "{{ csrf_token() }}",
+            baseUrl: {!! json_encode(rtrim(url('/'), '/')) !!}.replace(/&amp;/g, '&'),
+            csrfToken: {!! json_encode(csrf_token()) !!},
             routes: {
-                cartSummary: "{{ route('cart.summary') }}",
-                cartAdd: "{{ route('cart.add') }}",
-                cartUpdate: "{{ route('cart.update') }}",
-                wishlistToggle: "{{ route('wishlist.toggle') }}",
+                cartSummary: {!! json_encode(route('cart.summary')) !!}.replace(/&amp;/g, '&'),
+                cartAdd: {!! json_encode(route('cart.add')) !!}.replace(/&amp;/g, '&'),
+                cartUpdate: {!! json_encode(route('cart.update')) !!}.replace(/&amp;/g, '&'),
+                wishlistToggle: {!! json_encode(route('wishlist.toggle')) !!}.replace(/&amp;/g, '&'),
             }
         };
 
         window.apiUrl = function(path) {
-            if (!path) return window.AppConfig.baseUrl;
-            if (path.startsWith('http://') || path.startsWith('https://')) return path;
+            if (!path) return ((window.AppConfig && window.AppConfig.baseUrl) || '').replace(/&amp;/g, '&');
+            var clean = path.replace(/&amp;/g, '&');
+            if (clean.startsWith('http://') || clean.startsWith('https://')) return clean;
             var base = (window.AppConfig && window.AppConfig.baseUrl) ? window.AppConfig.baseUrl : '';
-            var cleanPath = path.replace(/^\/+/, '');
-            return base ? (base + '/' + cleanPath) : ('/' + cleanPath);
+            base = base.replace(/\/+$/, '').replace(/&amp;/g, '&');
+            clean = clean.replace(/^\/+/, '');
+            return base ? (base + '/' + clean) : ('/' + clean);
         };
     </script>
 

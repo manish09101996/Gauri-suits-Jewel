@@ -30,7 +30,7 @@
           },
           async deleteImg(imgId, el) {
               if (!confirm('Permanently delete this image?')) return;
-              const res = await fetch('{{ url('/admin/products/images') }}/' + imgId, {
+              const res = await fetch(window.apiUrl('/admin/products/images/' + imgId), {
                   method: 'DELETE',
                   headers: {
                       'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
@@ -40,7 +40,7 @@
               if (res.ok) { el.remove(); }
           },
           async setPrimary(imgId) {
-              const res = await fetch('{{ url('/admin/products/images') }}/' + imgId + '/primary', {
+              const res = await fetch(window.apiUrl('/admin/products/images/' + imgId + '/primary'), {
                   method: 'POST',
                   headers: {
                       'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,

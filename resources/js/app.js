@@ -5,10 +5,12 @@ window.Alpine = Alpine;
 
 // Dynamic Base URL Resolver (supports subfolders like /Gauri suits & Jewel/public)
 window.apiUrl = window.apiUrl || function(path) {
-    if (!path) return (window.AppConfig && window.AppConfig.baseUrl) || '';
-    if (path.startsWith('http://') || path.startsWith('https://')) return path;
-    const base = (window.AppConfig && window.AppConfig.baseUrl) ? window.AppConfig.baseUrl.replace(/\/+$/, '') : '';
-    const cleanPath = path.replace(/^\/+/, '');
+    if (!path) return ((window.AppConfig && window.AppConfig.baseUrl) || '').replace(/&amp;/g, '&');
+    const clean = path.replace(/&amp;/g, '&');
+    if (clean.startsWith('http://') || clean.startsWith('https://')) return clean;
+    let base = (window.AppConfig && window.AppConfig.baseUrl) ? window.AppConfig.baseUrl.replace(/\/+$/, '') : '';
+    base = base.replace(/&amp;/g, '&');
+    const cleanPath = clean.replace(/^\/+/, '');
     return base ? `${base}/${cleanPath}` : `/${cleanPath}`;
 };
 
