@@ -271,3 +271,28 @@
     height: 1px;
     background-color: #C5A869;
 }
+
+/* Navigation Link Luxury Underline Animation */
+.nav-link-royal {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.25s ease;
+}
+
+.nav-link-royal::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background-color: #D4AF37;
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link-royal:hover::after,
+.nav-link-royal.is-active::after {
+    width: 100%;
+}
+
