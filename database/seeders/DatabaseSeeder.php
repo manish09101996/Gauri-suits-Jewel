@@ -34,7 +34,11 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        if (DB::getDriverName() === 'sqlite') {
+            DB::statement('PRAGMA foreign_keys = OFF;');
+        } else {
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        }
         
         // Truncate existing seed tables to allow clean re-runs
         Admin::truncate();
@@ -62,7 +66,11 @@ class DatabaseSeeder extends Seeder
         BlogPost::truncate();
         Setting::truncate();
         
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        if (DB::getDriverName() === 'sqlite') {
+            DB::statement('PRAGMA foreign_keys = ON;');
+        } else {
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        }
 
         // 1. Roles & Admin
         $superAdminRole = Role::create([
