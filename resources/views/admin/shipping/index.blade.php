@@ -23,13 +23,13 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Free Shipping Threshold (₹) *</label>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Free Shipping Threshold ({{ $currencySymbol ?? '$' }}) *</label>
                     <input type="number" step="0.01" name="free_shipping_threshold" value="{{ old('free_shipping_threshold', $freeShippingThreshold) }}" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
                     <p class="text-[11px] text-slate-500 mt-1">Orders at or above this value qualify for free delivery.</p>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Standard Flat Shipping Rate (₹) *</label>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Standard Flat Shipping Rate ({{ $currencySymbol ?? '$' }}) *</label>
                     <input type="number" step="0.01" name="flat_shipping_rate" value="{{ old('flat_shipping_rate', $flatShippingRate) }}" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
                     <p class="text-[11px] text-slate-500 mt-1">Default fee applied when order is below threshold.</p>
                 </div>
@@ -44,21 +44,21 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">COD Handling Fee (₹)</label>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">COD Handling Fee ({{ $currencySymbol ?? '$' }})</label>
                     <input type="number" step="0.01" name="cod_extra_fee" value="{{ old('cod_extra_fee', $codExtraFee) }}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
                     <p class="text-[11px] text-slate-500 mt-1">Extra fee added if customer selects COD (0 for free).</p>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">COD Min Order Limit (₹)</label>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">COD Min Order Limit ({{ $currencySymbol ?? '$' }})</label>
                     <input type="number" step="0.01" name="cod_min_order" value="{{ old('cod_min_order', $codMinOrder) }}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
                     <p class="text-[11px] text-slate-500 mt-1">Minimum cart total to unlock COD.</p>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">COD Max Order Limit (₹)</label>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">COD Max Order Limit ({{ $currencySymbol ?? '$' }})</label>
                     <input type="number" step="0.01" name="cod_max_order" value="{{ old('cod_max_order', $codMaxOrder) }}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
-                    <p class="text-[11px] text-slate-500 mt-1">Maximum allowed order value for COD (e.g. ₹25,000).</p>
+                    <p class="text-[11px] text-slate-500 mt-1">Maximum allowed order value for COD (e.g. {{ $currencySymbol ?? '$' }}2,500).</p>
                 </div>
             </div>
 
@@ -133,8 +133,8 @@
                                     @foreach($zone->rates as $rate)
                                     <tr>
                                         <td class="px-3 py-2 font-medium text-white">{{ $rate->name }}</td>
-                                        <td class="px-3 py-2">₹{{ number_format($rate->min_order_amount) }} - {{ $rate->max_order_amount ? '₹' . number_format($rate->max_order_amount) : 'Above' }}</td>
-                                        <td class="px-3 py-2 font-bold text-amber-400">{{ $rate->rate == 0 ? 'FREE' : '₹' . number_format($rate->rate) }}</td>
+                                        <td class="px-3 py-2">{{ $currencySymbol ?? '$' }}{{ number_format($rate->min_order_amount) }} - {{ $rate->max_order_amount ? ($currencySymbol ?? '$') . number_format($rate->max_order_amount) : 'Above' }}</td>
+                                        <td class="px-3 py-2 font-bold text-amber-400">{{ $rate->rate == 0 ? 'FREE' : ($currencySymbol ?? '$') . number_format($rate->rate) }}</td>
                                         <td class="px-3 py-2 text-slate-400">{{ $rate->estimated_days ?? '3-5 Days' }}</td>
                                         <td class="px-3 py-2 text-right">
                                             <form action="{{ route('admin.shipping.rates.destroy', $rate->id) }}" method="POST" class="inline" onsubmit="return confirm('Delete rate tier?');">
@@ -161,15 +161,15 @@
                         <input type="text" name="name" required placeholder="Standard / Express" class="w-full bg-slate-800 border border-slate-700 rounded px-2 py-1.5 text-xs text-white">
                     </div>
                     <div>
-                        <label class="block text-[10px] text-slate-400">Min Spend (₹)</label>
+                        <label class="block text-[10px] text-slate-400">Min Spend ({{ $currencySymbol ?? '$' }})</label>
                         <input type="number" step="0.01" name="min_order_amount" required value="0" class="w-full bg-slate-800 border border-slate-700 rounded px-2 py-1.5 text-xs text-white">
                     </div>
                     <div>
-                        <label class="block text-[10px] text-slate-400">Max Spend (₹)</label>
+                        <label class="block text-[10px] text-slate-400">Max Spend ({{ $currencySymbol ?? '$' }})</label>
                         <input type="number" step="0.01" name="max_order_amount" placeholder="Leave empty for ∞" class="w-full bg-slate-800 border border-slate-700 rounded px-2 py-1.5 text-xs text-white">
                     </div>
                     <div>
-                        <label class="block text-[10px] text-slate-400">Rate (₹)</label>
+                        <label class="block text-[10px] text-slate-400">Rate ({{ $currencySymbol ?? '$' }})</label>
                         <input type="number" step="0.01" name="rate" required value="0" class="w-full bg-slate-800 border border-slate-700 rounded px-2 py-1.5 text-xs text-white">
                     </div>
                     <div>

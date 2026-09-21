@@ -25,12 +25,19 @@ class SettingController extends Controller
             Setting::set($key, $value);
         }
 
+        if ($request->has('currency')) {
+            $curr = strtoupper(trim($request->input('currency', 'AUD')));
+            Setting::set('currency', $curr);
+            Setting::set('currency_code', $curr);
+            Setting::set('currency_symbol', $curr === 'INR' ? '₹' : '$');
+        }
+
         // Announcement Bar
         if ($request->has('announcement_text')) {
             Banner::updateOrCreate(
                 ['type' => 'announcement'],
                 [
-                    'title' => $request->input('announcement_text', 'FREE SHIPPING ON ORDERS ABOVE ₹2999'),
+                    'title' => $request->input('announcement_text', 'FREE SHIPPING ON ORDERS OVER $299 | WORLDWIDE COUTURE DELIVERY'),
                     'link_url' => $request->input('announcement_url', '/shop'),
                     'image_desktop' => '',
                     'is_active' => $request->boolean('announcement_active', true),

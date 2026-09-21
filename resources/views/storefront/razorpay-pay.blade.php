@@ -11,7 +11,7 @@
     <div class="space-y-2">
         <h1 class="font-serif text-2xl sm:text-3xl font-bold text-brand-charcoal">Opening Secure Payment Gateway</h1>
         <p class="text-xs sm:text-sm text-stone-500 font-light">
-            Order #{{ $order->order_number }} • Amount: <strong class="text-brand-maroon">₹{{ number_format($order->grand_total, 2) }}</strong>
+            Order #{{ $order->order_number }} • Amount: <strong class="text-brand-maroon">{{ $currencySymbol ?? '$' }}{{ number_format($order->grand_total, 2) }}</strong>
         </p>
     </div>
 
@@ -30,13 +30,13 @@
         </div>
         <div class="flex justify-between font-serif text-sm font-bold text-brand-charcoal pt-1">
             <span>Total to Pay:</span>
-            <span class="text-brand-maroon text-base">₹{{ number_format($order->grand_total, 2) }}</span>
+            <span class="text-brand-maroon text-base">{{ $currencySymbol ?? '$' }}{{ number_format($order->grand_total, 2) }}</span>
         </div>
     </div>
 
     <!-- Fallback Pay Button -->
     <button id="rzp-button" type="button" class="w-full py-4 bg-brand-maroon hover:bg-[#400c13] text-white font-bold text-xs uppercase tracking-widest rounded shadow-lg transition">
-        Click to Pay ₹{{ number_format($order->grand_total, 2) }} via Razorpay
+        Click to Pay {{ $currencySymbol ?? '$' }}{{ number_format($order->grand_total, 2) }} via Razorpay
     </button>
 
     <div>
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const options = {
         key: "{{ $keyId }}",
         amount: "{{ ($razorpayOrder['amount'] ?? ($order->grand_total * 100)) }}",
-        currency: "INR",
+        currency: "{{ $currencyCode ?? 'AUD' }}",
         name: "Gauri Suits & Jewel",
         description: "Order #{{ $order->order_number }} - Punjabi Couture & Fine Jewellery",
         image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=200&auto=format&fit=crop",

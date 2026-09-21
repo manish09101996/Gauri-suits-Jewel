@@ -187,10 +187,10 @@
                                 @if($item->variant)
                                     <div class="text-[11px] text-stone-500">{{ $item->variant->size ?: $item->variant->name }}</div>
                                 @endif
-                                <div class="text-[11px] font-semibold text-stone-600">₹{{ number_format($item->price) }} × {{ $item->quantity }}</div>
+                                <div class="text-[11px] font-semibold text-stone-600">{{ $currencySymbol ?? '$' }}{{ number_format($item->price, 2) }} × {{ $item->quantity }}</div>
                             </div>
                             <div class="font-serif text-xs font-bold text-brand-charcoal">
-                                ₹{{ number_format($item->subtotal) }}
+                                {{ $currencySymbol ?? '$' }}{{ number_format($item->subtotal, 2) }}
                             </div>
                         </div>
                         @endforeach
@@ -200,32 +200,32 @@
                     <div class="pt-4 border-t border-stone-100 space-y-2.5 text-xs sm:text-sm text-stone-600">
                         <div class="flex justify-between">
                             <span>Subtotal</span>
-                            <span class="font-semibold text-brand-charcoal">₹{{ number_format($totals['subtotal']) }}</span>
+                            <span class="font-semibold text-brand-charcoal">{{ $currencySymbol ?? '$' }}{{ number_format($totals['subtotal'], 2) }}</span>
                         </div>
 
                         @if(($totals['discount'] ?? 0) > 0)
                         <div class="flex justify-between text-emerald-600">
                             <span>Coupon Savings</span>
-                            <span class="font-bold">-₹{{ number_format($totals['discount']) }}</span>
+                            <span class="font-bold">-{{ $currencySymbol ?? '$' }}{{ number_format($totals['discount'], 2) }}</span>
                         </div>
                         @endif
 
                         <div class="flex justify-between">
                             <span>Insured Delivery</span>
-                            <span class="font-semibold" x-text="shippingFee === 0 ? 'FREE' : '₹' + Number(shippingFee).toLocaleString('en-IN')">
-                                {{ ($totals['shipping_fee'] ?? 0) == 0 ? 'FREE' : '₹' . number_format($totals['shipping_fee']) }}
+                            <span class="font-semibold" x-text="shippingFee === 0 ? 'FREE' : window.formatMoney(shippingFee)">
+                                {{ ($totals['shipping_fee'] ?? 0) == 0 ? 'FREE' : ($currencySymbol ?? '$') . number_format($totals['shipping_fee'], 2) }}
                             </span>
                         </div>
 
                         <div class="flex justify-between text-[11px] text-stone-400">
-                            <span>All-India GST (Included)</span>
+                            <span>Applicable Taxes (Included)</span>
                             <span>Included</span>
                         </div>
 
                         <div class="pt-3 border-t border-stone-100 flex justify-between items-baseline font-serif text-lg font-bold text-brand-charcoal">
                             <span>Amount Payable</span>
-                            <span class="text-brand-maroon text-2xl" x-text="'₹' + Number(grandTotal).toLocaleString('en-IN')">
-                                ₹{{ number_format($totals['grand_total']) }}
+                            <span class="text-brand-maroon text-2xl" x-text="window.formatMoney(grandTotal)">
+                                {{ $currencySymbol ?? '$' }}{{ number_format($totals['grand_total'], 2) }}
                             </span>
                         </div>
                     </div>

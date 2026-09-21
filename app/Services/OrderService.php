@@ -9,6 +9,7 @@ use App\Models\Shipment;
 use App\Models\CouponUsage;
 use App\Models\Cart;
 use App\Models\User;
+use App\Models\Setting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -121,7 +122,7 @@ class OrderService
                 'order_id' => $order->id,
                 'payment_method' => $paymentMethod,
                 'amount' => $totals['total'],
-                'currency' => 'INR',
+                'currency' => Setting::get('currency_code', 'AUD'),
                 'status' => 'pending',
             ]);
 
@@ -214,7 +215,7 @@ class OrderService
                 'order_id' => $order->id,
                 'payment_method' => $order->payment_method,
                 'amount' => $total,
-                'currency' => 'INR',
+                'currency' => Setting::get('currency_code', 'AUD'),
                 'status' => $order->payment_status === 'paid' ? 'successful' : 'pending',
                 'paid_at' => $order->payment_status === 'paid' ? Carbon::now() : null,
             ]);

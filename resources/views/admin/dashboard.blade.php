@@ -47,10 +47,10 @@
             </div>
             <div class="mt-4">
                 <div class="text-2xl sm:text-3xl font-bold font-serif text-[#2A1810]">
-                    ₹{{ number_format($kpis['total_sales'], 2) }}
+                    {{ $currencySymbol ?? '$' }}{{ number_format($kpis['total_sales'], 2) }}
                 </div>
                 <div class="flex items-center justify-between mt-2 text-xs">
-                    <span class="text-gray-500">Lifetime: ₹{{ number_format($kpis['lifetime_sales'], 0) }}</span>
+                    <span class="text-gray-500">Lifetime: {{ $currencySymbol ?? '$' }}{{ number_format($kpis['lifetime_sales'], 0) }}</span>
                     @if($kpis['sales_growth'] >= 0)
                         <span class="text-emerald-700 font-bold flex items-center gap-0.5">
                             ▲ +{{ $kpis['sales_growth'] }}%
@@ -141,7 +141,7 @@
                     <p class="text-xs text-[#8C713B]">Daily sales revenue trend for the selected period</p>
                 </div>
                 <div class="text-xs text-gray-500">
-                    Currency: <strong class="text-[#58111A]">INR (₹)</strong>
+                    Currency: <strong class="text-[#58111A]">AUD ($)</strong>
                 </div>
             </div>
             <div class="h-72">
@@ -276,7 +276,7 @@
                                     <div class="text-[11px] text-gray-500">{{ $order->created_at->format('d M Y, h:i A') }}</div>
                                 </td>
                                 <td class="px-5 py-3.5 font-bold text-[#2A1810]">
-                                    ₹{{ number_format($order->total_amount, 2) }}
+                                    {{ $currencySymbol ?? '$' }}{{ number_format($order->total_amount, 2) }}
                                 </td>
                                 <td class="px-5 py-3.5">
                                     <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase {{ $order->payment_badge_class }}">

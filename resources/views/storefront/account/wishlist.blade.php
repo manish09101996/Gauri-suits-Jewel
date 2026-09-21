@@ -42,7 +42,7 @@
                                 <a href="{{ route('product.show', $product->slug) }}">{{ $product->name }}</a>
                             </h3>
                             <div class="font-serif font-bold text-sm text-brand-maroon mt-1">
-                                ₹{{ number_format($product->effective_price) }}
+                                {{ $currencySymbol ?? '$' }}{{ number_format($product->effective_price, 2) }}
                             </div>
                         </div>
 

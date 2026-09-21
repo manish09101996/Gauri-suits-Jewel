@@ -81,6 +81,14 @@ Alpine.store('mobileMenu', {
     }
 });
 
+// Global Currency Formatter (defaults to AUD / $)
+window.currencySymbol = (window.AppConfig && window.AppConfig.currencySymbol) || '$';
+window.formatMoney = window.formatMoney || function(amount) {
+    const sym = (window.AppConfig && window.AppConfig.currencySymbol) || window.currencySymbol || '$';
+    const num = Number(amount) || 0;
+    return sym + num.toLocaleString('en-AU', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+};
+
 // Cart Drawer Store / Alpine Component
 Alpine.data('cartDrawer', () => ({
     open: false,
@@ -91,10 +99,12 @@ Alpine.data('cartDrawer', () => ({
         subtotal: 0,
         discount: 0,
         coupon_code: '',
-        free_shipping_threshold: 2999,
-        amount_needed_free_shipping: 2999,
+        free_shipping_threshold: 299,
+        amount_needed_free_shipping: 299,
         free_shipping_percent: 0,
         free_shipping_unlocked: false,
+        currency_symbol: '$',
+        currency: 'AUD',
     },
 
     init() {

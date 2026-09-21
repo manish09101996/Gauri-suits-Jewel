@@ -266,7 +266,7 @@
                                 <a href="{{ $prodUrl }}">{{ $prodName }}</a>
                             </h3>
                             <div class="text-xs font-bold text-[#2A1810] mt-1">
-                                ₹ {{ number_format($prodPrice) }}
+                                {{ $currencySymbol ?? '$' }}{{ number_format($prodPrice) }}
                             </div>
                         </div>
 
@@ -629,7 +629,7 @@
                                              class="w-8 h-10 object-cover rounded shrink-0 border border-stone-200">
                                         <div class="min-w-0 flex-1">
                                             <div class="text-[11px] font-semibold text-[#2A1810] truncate">{{ $reel->product->name }}</div>
-                                            <div class="text-[11px] font-bold text-[#58111A]">₹{{ number_format($reel->product->effective_price) }}</div>
+                                            <div class="text-[11px] font-bold text-[#58111A]">{{ $currencySymbol ?? '$' }}{{ number_format($reel->product->effective_price) }}</div>
                                         </div>
                                     </a>
                                     <button type="button"
@@ -682,7 +682,7 @@
                                     <img :src="currentReel.product.image" class="w-12 aspect-[3/4] object-cover rounded border border-stone-600">
                                     <div class="min-w-0 flex-1">
                                         <div class="text-xs font-semibold text-white line-clamp-2" x-text="currentReel.product.name"></div>
-                                        <div class="text-sm font-bold text-[#E6CA65] mt-1" x-text="'₹' + Number(currentReel.product.price).toLocaleString('en-IN')"></div>
+                                        <div class="text-sm font-bold text-[#E6CA65] mt-1" x-text="window.formatMoney(currentReel.product.price)"></div>
                                     </div>
                                 </div>
                                 <div class="pt-1 flex flex-col gap-2">

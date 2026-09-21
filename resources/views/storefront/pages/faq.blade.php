@@ -30,7 +30,7 @@
                 ],
                 [
                     'q' => 'Is Cash on Delivery (COD) available?',
-                    'a' => 'Yes, Cash on Delivery is available for all pin codes across India on orders up to ₹25,000. You can pay via cash or UPI QR at your doorstep upon parcel receipt.'
+                    'a' => 'Yes, Cash on Delivery is available on orders up to $2,500. You can pay at your doorstep upon parcel receipt.'
                 ],
                 [
                     'q' => 'Is your jewellery authentic Kundan and Polki?',

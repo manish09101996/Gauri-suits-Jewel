@@ -37,4 +37,9 @@ class Setting extends Model
             return static::pluck('value', 'key')->toArray();
         });
     }
+
+    public static function clearCache(): void
+    {
+        Cache::forget('all_settings');
+    }
 }

@@ -21,7 +21,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
             <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">Lifetime Spend</div>
-            <div class="text-2xl font-bold text-amber-400">₹{{ number_format($totalSpent, 2) }}</div>
+            <div class="text-2xl font-bold text-amber-400">{{ $currencySymbol ?? '$' }}{{ number_format($totalSpent, 2) }}</div>
             <div class="text-xs text-slate-500 mt-1">Total revenue from completed orders</div>
         </div>
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
@@ -135,7 +135,7 @@
                                 <div class="text-[11px] text-slate-500 uppercase">{{ $ord->payment_method }}</div>
                             </td>
                             <td class="px-6 py-4 text-right font-bold text-white">
-                                ₹{{ number_format($ord->grand_total, 2) }}
+                                {{ $currencySymbol ?? '$' }}{{ number_format($ord->grand_total, 2) }}
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <a href="{{ route('admin.orders.show', $ord->id) }}" class="text-xs text-amber-400 hover:text-amber-300 font-semibold">

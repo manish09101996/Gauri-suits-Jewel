@@ -48,7 +48,7 @@
             <select name="product_id" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
                 <option value="">-- No Product Pin (Inspirational Only) --</option>
                 @foreach($products as $p)
-                    <option value="{{ $p->id }}" {{ old('product_id') == $p->id ? 'selected' : '' }}>{{ $p->name }} (₹{{ number_format($p->sale_price ?? $p->base_price) }})</option>
+                    <option value="{{ $p->id }}" {{ old('product_id') == $p->id ? 'selected' : '' }}>{{ $p->name }} ({{ $currencySymbol ?? '$' }}{{ number_format($p->sale_price ?? $p->base_price) }})</option>
                 @endforeach
             </select>
         </div>

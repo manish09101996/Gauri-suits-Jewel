@@ -100,17 +100,17 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-[#2A1810] mb-1.5">Regular MRP (₹) *</label>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-[#2A1810] mb-1.5">Regular MRP ({{ $currencySymbol ?? '$' }}) *</label>
                         <input type="number" step="0.01" name="price" value="{{ old('price', $product->price) }}" required
                                class="w-full px-3.5 py-2.5 border border-[#EFE9DE] rounded text-sm font-bold">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-[#2A1810] mb-1.5">Sale Price (₹)</label>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-[#2A1810] mb-1.5">Sale Price ({{ $currencySymbol ?? '$' }})</label>
                         <input type="number" step="0.01" name="sale_price" value="{{ old('sale_price', $product->sale_price) }}"
                                class="w-full px-3.5 py-2.5 border border-[#EFE9DE] rounded text-sm font-bold text-[#58111A]">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-[#2A1810] mb-1.5">Cost Price (₹)</label>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-[#2A1810] mb-1.5">Cost Price ({{ $currencySymbol ?? '$' }})</label>
                         <input type="number" step="0.01" name="cost_price" value="{{ old('cost_price', $product->cost_price) }}"
                                class="w-full px-3.5 py-2.5 border border-[#EFE9DE] rounded text-sm text-gray-500">
                     </div>

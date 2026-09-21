@@ -29,7 +29,7 @@
                 </span>
             @else
                 <span class="text-stone-700 font-medium">
-                    Add <strong class="text-[#58111A] font-bold">₹{{ number_format($summary['amount_needed_free_shipping']) }}</strong> more to unlock <span class="font-bold text-[#0A3828]">FREE Insured Delivery</span>
+                    Add <strong class="text-[#58111A] font-bold">{{ $currencySymbol ?? '$' }}{{ number_format($summary['amount_needed_free_shipping']) }}</strong> more to unlock <span class="font-bold text-[#0A3828]">FREE Insured Delivery</span>
                 </span>
             @endif
             <span class="text-xs text-[#A88B4D] font-mono font-bold">{{ $summary['free_shipping_percent'] }}%</span>
@@ -56,7 +56,7 @@
                             <div class="text-xs text-stone-500">Size / Option: <span class="font-semibold text-stone-700">{{ $item['size'] }}</span></div>
                         @endif
                         <div class="text-xs font-semibold text-brand-maroon">
-                            ₹{{ number_format($item['price']) }} each
+                            {{ $currencySymbol ?? '$' }}{{ number_format($item['price']) }} each
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
 
                     <!-- Line Total -->
                     <div class="font-serif font-bold text-base text-brand-charcoal text-right min-w-[90px]">
-                        ₹{{ number_format($item['subtotal']) }}
+                        {{ $currencySymbol ?? '$' }}{{ number_format($item['subtotal']) }}
                     </div>
 
                     <!-- Delete Button -->
@@ -93,7 +93,7 @@
                     <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center justify-between">
                         <div>
                             <span class="text-xs font-bold text-emerald-800 font-mono tracking-wider">{{ $summary['coupon_code'] }}</span>
-                            <div class="text-[11px] text-emerald-600">Discount applied: ₹{{ number_format($summary['discount']) }}</div>
+                            <div class="text-[11px] text-emerald-600">Discount applied: {{ $currencySymbol ?? '$' }}{{ number_format($summary['discount']) }}</div>
                         </div>
                         <form action="{{ route('cart.coupon.remove') }}" method="POST">
                             @csrf
@@ -118,13 +118,13 @@
                 <div class="space-y-2.5 text-xs sm:text-sm text-stone-600">
                     <div class="flex justify-between">
                         <span>Bag Subtotal</span>
-                        <span class="font-semibold text-brand-charcoal">₹{{ number_format($summary['subtotal']) }}</span>
+                        <span class="font-semibold text-brand-charcoal">{{ $currencySymbol ?? '$' }}{{ number_format($summary['subtotal']) }}</span>
                     </div>
 
                     @if($summary['discount'] > 0)
                     <div class="flex justify-between text-emerald-600">
                         <span>Coupon Savings</span>
-                        <span class="font-bold">-₹{{ number_format($summary['discount']) }}</span>
+                        <span class="font-bold">-{{ $currencySymbol ?? '$' }}{{ number_format($summary['discount']) }}</span>
                     </div>
                     @endif
 
@@ -143,7 +143,7 @@
                     <div class="pt-3 border-t border-stone-100 flex justify-between items-baseline font-serif text-lg font-bold text-brand-charcoal">
                         <span>Estimated Total</span>
                         <span class="text-brand-maroon text-2xl">
-                            ₹{{ number_format(max(0, $summary['subtotal'] - $summary['discount'])) }}
+                            {{ $currencySymbol ?? '$' }}{{ number_format(max(0, $summary['subtotal'] - $summary['discount'])) }}
                         </span>
                     </div>
                 </div>

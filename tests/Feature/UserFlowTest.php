@@ -22,9 +22,10 @@ class UserFlowTest extends TestCase
         parent::setUp();
 
         Setting::create(['key' => 'store_name', 'value' => 'Gauri Suits & Jewel', 'group' => 'general']);
-        Setting::create(['key' => 'currency_symbol', 'value' => '₹', 'group' => 'general']);
-        Setting::create(['key' => 'free_shipping_threshold', 'value' => '2999', 'group' => 'shipping']);
-        Setting::create(['key' => 'flat_shipping_rate', 'value' => '150', 'group' => 'shipping']);
+        Setting::create(['key' => 'currency_symbol', 'value' => '$', 'group' => 'general']);
+        Setting::create(['key' => 'currency_code', 'value' => 'AUD', 'group' => 'general']);
+        Setting::create(['key' => 'free_shipping_threshold', 'value' => '299', 'group' => 'shipping']);
+        Setting::create(['key' => 'flat_shipping_rate', 'value' => '15', 'group' => 'shipping']);
         Setting::create(['key' => 'cod_enabled', 'value' => '1', 'group' => 'payment']);
 
         $zone = ShippingZone::create([
@@ -96,7 +97,7 @@ class UserFlowTest extends TestCase
         $productResponse = $this->get(route('product.show', $product->slug));
         $productResponse->assertStatus(200);
         $productResponse->assertSee('Kashmiri Tilla Velvet Anarkali');
-        $productResponse->assertSee('₹5,499');
+        $productResponse->assertSee('$5,499');
 
         // Step 4: Add Product to Cart
         $cartAddResponse = $this->postJson(route('cart.add'), [

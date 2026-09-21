@@ -94,10 +94,10 @@
 
                 <!-- Price Range -->
                 <div class="pt-4 border-t border-stone-100">
-                    <h3 class="text-xs uppercase tracking-wider font-bold text-brand-charcoal mb-3">Price Range (₹)</h3>
+                    <h3 class="text-xs uppercase tracking-wider font-bold text-brand-charcoal mb-3">Price Range ({{ $currencySymbol ?? '$' }})</h3>
                     <div class="grid grid-cols-2 gap-2">
-                        <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="Min ₹" class="bg-stone-50 border border-stone-300 rounded px-2.5 py-1.5 text-xs">
-                        <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="Max ₹" class="bg-stone-50 border border-stone-300 rounded px-2.5 py-1.5 text-xs">
+                        <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="Min {{ $currencySymbol ?? '$' }}" class="bg-stone-50 border border-stone-300 rounded px-2.5 py-1.5 text-xs">
+                        <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="Max {{ $currencySymbol ?? '$' }}" class="bg-stone-50 border border-stone-300 rounded px-2.5 py-1.5 text-xs">
                     </div>
                     <button type="submit" class="mt-2 w-full py-1.5 bg-[#58111A] hover:bg-[#3B0A11] border border-[#D4AF37]/40 text-[#F7EED9] text-xs font-bold uppercase tracking-wider rounded-xs transition shadow-xs">
                         Apply Price

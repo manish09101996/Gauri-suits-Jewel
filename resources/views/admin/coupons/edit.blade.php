@@ -39,7 +39,7 @@
                 <label class="block text-xs font-medium text-slate-300 mb-1">Discount Type *</label>
                 <select name="type" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
                     <option value="percentage" {{ old('type', $coupon->type) === 'percentage' ? 'selected' : '' }}>Percentage (%) Discount</option>
-                    <option value="fixed" {{ old('type', $coupon->type) === 'fixed' ? 'selected' : '' }}>Fixed Amount (₹) Discount</option>
+                    <option value="fixed" {{ old('type', $coupon->type) === 'fixed' ? 'selected' : '' }}>Fixed Amount ({{ $currencySymbol ?? '$' }}) Discount</option>
                 </select>
             </div>
 
@@ -49,12 +49,12 @@
             </div>
 
             <div>
-                <label class="block text-xs font-medium text-slate-300 mb-1">Maximum Discount Cap (₹)</label>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Maximum Discount Cap ({{ $currencySymbol ?? '$' }})</label>
                 <input type="number" step="0.01" name="max_discount_amount" value="{{ old('max_discount_amount', $coupon->max_discount_amount) }}" placeholder="Max discount for percentage coupons (optional)" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
             </div>
 
             <div>
-                <label class="block text-xs font-medium text-slate-300 mb-1">Minimum Order Amount (₹)</label>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Minimum Order Amount ({{ $currencySymbol ?? '$' }})</label>
                 <input type="number" step="0.01" name="min_order_amount" value="{{ old('min_order_amount', $coupon->min_order_amount) }}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
             </div>
 

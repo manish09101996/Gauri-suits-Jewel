@@ -39,14 +39,14 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="font-bold text-white">
-                                {{ $coupon->type === 'percentage' ? $coupon->value . '%' : '₹' . number_format($coupon->value) }} OFF
+                                {{ $coupon->type === 'percentage' ? $coupon->value . '%' : ($currencySymbol ?? '$') . number_format($coupon->value) }} OFF
                             </div>
                             @if($coupon->max_discount_amount)
-                                <div class="text-[11px] text-slate-400">Up to ₹{{ number_format($coupon->max_discount_amount) }}</div>
+                                <div class="text-[11px] text-slate-400">Up to {{ $currencySymbol ?? '$' }}{{ number_format($coupon->max_discount_amount) }}</div>
                             @endif
                         </td>
                         <td class="px-6 py-4 text-xs text-slate-300">
-                            {{ $coupon->min_order_amount > 0 ? '₹' . number_format($coupon->min_order_amount) : 'None' }}
+                            {{ $coupon->min_order_amount > 0 ? ($currencySymbol ?? '$') . number_format($coupon->min_order_amount) : 'None' }}
                         </td>
                         <td class="px-6 py-4">
                             <div class="text-xs text-slate-300">

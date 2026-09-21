@@ -44,7 +44,7 @@
                         </div>
                         <div class="min-w-0 flex-1">
                             <div class="text-[11px] font-bold text-white truncate">{{ $reel->product->name }}</div>
-                            <div class="text-[10px] text-amber-400 font-bold">₹{{ number_format($reel->product->sale_price ?? $reel->product->base_price) }}</div>
+                            <div class="text-[10px] text-amber-400 font-bold">{{ $currencySymbol ?? '$' }}{{ number_format($reel->product->sale_price ?? $reel->product->base_price) }}</div>
                         </div>
                     </div>
                 @endif

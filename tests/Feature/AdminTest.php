@@ -25,7 +25,8 @@ class AdminTest extends TestCase
         parent::setUp();
 
         Setting::create(['key' => 'store_name', 'value' => 'Gauri Suits & Jewel', 'group' => 'general']);
-        Setting::create(['key' => 'currency_symbol', 'value' => '₹', 'group' => 'general']);
+        Setting::create(['key' => 'currency_symbol', 'value' => '$', 'group' => 'general']);
+        Setting::create(['key' => 'currency_code', 'value' => 'AUD', 'group' => 'general']);
 
         $role = Role::create([
             'name' => 'super_admin',

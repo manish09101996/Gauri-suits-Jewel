@@ -19,7 +19,7 @@ window.initAdminDashboardCharts = function(revenueData, topProductsData, categor
             data: {
                 labels: revenueData.labels,
                 datasets: [{
-                    label: 'Revenue (₹)',
+                    label: 'Revenue ($)',
                     data: revenueData.revenue,
                     borderColor: '#C5A869',
                     backgroundColor: gradient,
@@ -40,7 +40,7 @@ window.initAdminDashboardCharts = function(revenueData, topProductsData, categor
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                return ' Revenue: ₹' + context.parsed.y.toLocaleString('en-IN');
+                                return ' Revenue: $' + context.parsed.y.toLocaleString('en-AU');
                             }
                         }
                     }
@@ -55,7 +55,7 @@ window.initAdminDashboardCharts = function(revenueData, topProductsData, categor
                         ticks: {
                             color: '#8C713B',
                             font: { size: 11 },
-                            callback: function(val) { return '₹' + val.toLocaleString('en-IN'); }
+                            callback: function(val) { return '$' + val.toLocaleString('en-AU'); }
                         }
                     }
                 }

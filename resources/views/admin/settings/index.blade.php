@@ -74,7 +74,7 @@
             <div class="space-y-4">
                 <div>
                     <label class="block text-xs font-medium text-slate-300 mb-1">Announcement Text / Promotion Notice</label>
-                    <input type="text" name="announcement_text" value="{{ $announcement?->title ?? 'COMPLIMENTARY SHIPPING ON ORDERS OVER ₹2,999 | WORLDWIDE COUTURE DELIVERY' }}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
+                    <input type="text" name="announcement_text" value="{{ $announcement?->title ?? 'COMPLIMENTARY SHIPPING ON ORDERS OVER $299 | WORLDWIDE COUTURE DELIVERY' }}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-slate-300 mb-1">Announcement Click Link URL</label>
@@ -110,7 +110,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-slate-300 mb-1">Store Base Currency</label>
-                    <input type="text" name="currency" value="{{ $settings['currency'] ?? 'INR' }}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
+                    <input type="text" name="currency" value="{{ $settings['currency'] ?? 'AUD' }}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
                 </div>
             </div>
         </div>

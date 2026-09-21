@@ -71,7 +71,7 @@
                             </div>
                         </td>
                         <td class="px-6 py-4">
-                            <div class="text-base font-bold text-amber-400">₹{{ number_format($cartTotal, 2) }}</div>
+                            <div class="text-base font-bold text-amber-400">{{ $currencySymbol ?? '$' }}{{ number_format($cartTotal, 2) }}</div>
                         </td>
                         <td class="px-6 py-4 text-xs text-slate-400">
                             {{ $cart->updated_at->diffForHumans() }}

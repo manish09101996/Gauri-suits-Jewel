@@ -26,7 +26,7 @@
 
         <h2 class="font-serif text-lg font-bold text-brand-charcoal pt-4">2. Pricing, Taxes & Availability</h2>
         <p>
-            All listed prices on the storefront are in Indian National Rupees (INR) and are inclusive of Goods and Services Tax (GST) as applicable under Indian commerce regulations. International shipping duties, customs levies, or local taxes levied by recipient countries are the responsibility of the recipient.
+            All listed prices on the storefront are in Australian Dollars (AUD) and are inclusive of applicable taxes. International shipping duties, customs levies, or local taxes levied by recipient countries are the responsibility of the recipient.
         </p>
 
         <h2 class="font-serif text-lg font-bold text-brand-charcoal pt-4">3. Intellectual Property</h2>

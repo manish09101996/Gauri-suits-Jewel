@@ -53,7 +53,7 @@
                             </div>
                         </div>
                         <div class="font-serif text-xs font-bold text-brand-charcoal">
-                            ₹{{ number_format($item->total, 2) }}
+                            {{ $currencySymbol ?? '$' }}{{ number_format($item->total, 2) }}
                         </div>
                     </div>
                     @endforeach
@@ -62,7 +62,7 @@
                 <!-- Footer Summary & Actions -->
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between pt-3 border-t border-stone-100 gap-3">
                     <div class="text-xs">
-                        Total Amount: <strong class="font-serif text-sm font-bold text-brand-maroon">₹{{ number_format($order->grand_total, 2) }}</strong>
+                        Total Amount: <strong class="font-serif text-sm font-bold text-brand-maroon">{{ $currencySymbol ?? '$' }}{{ number_format($order->grand_total, 2) }}</strong>
                     </div>
 
                     <div class="flex items-center gap-2">

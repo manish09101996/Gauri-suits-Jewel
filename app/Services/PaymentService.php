@@ -30,16 +30,17 @@ class PaymentService
     {
         $keyId = $this->getKeyId();
         $keySecret = $this->getKeySecret();
+        $currency = \App\Models\Setting::get('currency_code', 'AUD');
 
-        // Amount in paise (1 INR = 100 paise)
-        $amountInPaise = (int) round($order->total_amount * 100);
+        // Amount in cents / minor currency unit (e.g. 1 AUD = 100 cents)
+        $amountInMinorUnit = (int) round($order->total_amount * 100);
 
         try {
             $response = Http::withBasicAuth($keyId, $keySecret)
                 ->timeout(10)
                 ->post('https://api.razorpay.com/v1/orders', [
-                    'amount' => $amountInPaise,
-                    'currency' => 'INR',
+                    'amount' => $amountInMinorUnit,
+                    'currency' => $currency,
                     'receipt' => $order->order_number,
                     'notes' => [
                         'order_id' => $order->id,
@@ -57,7 +58,7 @@ class PaymentService
                     [
                         'razorpay_order_id' => $razorpayOrder['id'],
                         'amount' => $order->total_amount,
-                        'currency' => 'INR',
+                        'currency' => $currency,
                         'payment_method' => 'razorpay',
                         'status' => 'pending',
                         'payload' => $razorpayOrder,
@@ -67,8 +68,8 @@ class PaymentService
                 return [
                     'success' => true,
                     'razorpay_order_id' => $razorpayOrder['id'],
-                    'amount' => $amountInPaise,
-                    'currency' => 'INR',
+                    'amount' => $amountInMinorUnit,
+                    'currency' => $currency,
                     'key_id' => $keyId,
                     'order' => $order,
                 ];
@@ -85,7 +86,7 @@ class PaymentService
                     [
                         'razorpay_order_id' => $simulatedId,
                         'amount' => $order->total_amount,
-                        'currency' => 'INR',
+                        'currency' => $currency,
                         'payment_method' => 'razorpay',
                         'status' => 'pending',
                     ]
@@ -94,8 +95,8 @@ class PaymentService
                 return [
                     'success' => true,
                     'razorpay_order_id' => $simulatedId,
-                    'amount' => $amountInPaise,
-                    'currency' => 'INR',
+                    'amount' => $amountInMinorUnit,
+                    'currency' => $currency,
                     'key_id' => $keyId,
                     'order' => $order,
                     'mode' => 'sandbox_simulated',
@@ -111,7 +112,7 @@ class PaymentService
                 [
                     'razorpay_order_id' => $simulatedId,
                     'amount' => $order->total_amount,
-                    'currency' => 'INR',
+                    'currency' => $currency,
                     'payment_method' => 'razorpay',
                     'status' => 'pending',
                 ]
@@ -120,8 +121,8 @@ class PaymentService
             return [
                 'success' => true,
                 'razorpay_order_id' => $simulatedId,
-                'amount' => $amountInPaise,
-                'currency' => 'INR',
+                'amount' => $amountInMinorUnit,
+                'currency' => $currency,
                 'key_id' => $keyId,
                 'order' => $order,
                 'mode' => 'sandbox_simulated',

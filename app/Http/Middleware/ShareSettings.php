@@ -51,7 +51,12 @@ class ShareSettings
             $wishlistCount = $wishlist ? $wishlist->items_count : 0;
         }
 
+        $currencySymbol = $settings['currency_symbol'] ?? '$';
+        $currencyCode = $settings['currency_code'] ?? 'AUD';
+
         View::share('storeSettings', $settings);
+        View::share('currencySymbol', $currencySymbol);
+        View::share('currencyCode', $currencyCode);
         View::share('navCategories', $navCategories);
         View::share('announcement', $announcement);
         View::share('cartCount', $cartCount);

@@ -57,8 +57,8 @@ class CheckoutService
             'tax_rate' => $taxRate,
             'total' => $totalAmount,
             'grand_total' => $totalAmount,
-            'currency' => Setting::get('currency_code', 'INR'),
-            'currency_symbol' => Setting::get('currency_symbol', '₹'),
+            'currency' => Setting::get('currency_code', 'AUD'),
+            'currency_symbol' => Setting::get('currency_symbol', '$'),
         ];
     }
 }

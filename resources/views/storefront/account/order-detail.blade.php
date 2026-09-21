@@ -61,11 +61,11 @@
                                 @if($item->variant_title)
                                     <div class="text-xs text-stone-500">Option: {{ $item->variant_title }}</div>
                                 @endif
-                                <div class="text-xs text-stone-400">Qty: {{ $item->quantity }} × ₹{{ number_format($item->price, 2) }}</div>
+                                <div class="text-xs text-stone-400">Qty: {{ $item->quantity }} × {{ $currencySymbol ?? '$' }}{{ number_format($item->price, 2) }}</div>
                             </div>
                         </div>
                         <div class="font-serif font-bold text-sm text-brand-charcoal">
-                            ₹{{ number_format($item->total, 2) }}
+                            {{ $currencySymbol ?? '$' }}{{ number_format($item->total, 2) }}
                         </div>
                     </div>
                     @endforeach
@@ -99,21 +99,21 @@
                     </div>
                     <div class="flex justify-between pt-2 border-t">
                         <span>Subtotal</span>
-                        <span>₹{{ number_format($order->subtotal, 2) }}</span>
+                        <span>{{ $currencySymbol ?? '$' }}{{ number_format($order->subtotal, 2) }}</span>
                     </div>
                     @if($order->discount_amount > 0)
                     <div class="flex justify-between text-emerald-600">
                         <span>Discount</span>
-                        <span>-₹{{ number_format($order->discount_amount, 2) }}</span>
+                        <span>-{{ $currencySymbol ?? '$' }}{{ number_format($order->discount_amount, 2) }}</span>
                     </div>
                     @endif
                     <div class="flex justify-between">
                         <span>Shipping Delivery</span>
-                        <span>{{ $order->shipping_amount > 0 ? '₹' . number_format($order->shipping_amount, 2) : 'FREE' }}</span>
+                        <span>{{ $order->shipping_amount > 0 ? ($currencySymbol ?? '$') . number_format($order->shipping_amount, 2) : 'FREE' }}</span>
                     </div>
                     <div class="flex justify-between pt-2 border-t font-serif text-base font-bold text-brand-charcoal">
                         <span>Total Paid</span>
-                        <span class="text-brand-maroon">₹{{ number_format($order->grand_total, 2) }}</span>
+                        <span class="text-brand-maroon">{{ $currencySymbol ?? '$' }}{{ number_format($order->grand_total, 2) }}</span>
                     </div>
                 </div>
             </div>

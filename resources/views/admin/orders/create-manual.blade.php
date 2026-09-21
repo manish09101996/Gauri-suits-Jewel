@@ -124,7 +124,7 @@
                                             <option value="">-- Choose Product --</option>
                                             @foreach($products as $p)
                                                 <option value="{{ $p->id }}" data-name="{{ $p->name }}" data-price="{{ $p->sale_price ?? $p->base_price }}" data-sku="{{ $p->sku }}" data-variants="{{ json_encode($p->variants) }}">
-                                                    {{ $p->name }} (₹{{ number_format($p->sale_price ?? $p->base_price) }})
+                                                    {{ $p->name }} ({{ $currencySymbol ?? '$' }}{{ number_format($p->sale_price ?? $p->base_price) }})
                                                 </option>
                                             @endforeach
                                         </select>
@@ -134,7 +134,7 @@
                                         <select :name="`items[${index}][variant_id]`" x-model="item.variant_id" @change="onVariantSelect(index, $event.target.value)" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-amber-400 outline-none">
                                             <option value="">Default / Standard</option>
                                             <template x-for="v in item.availableVariants" :key="v.id">
-                                                <option :value="v.id" x-text="`${v.title || v.name || 'Variant'} (₹${v.price || item.price})`"></option>
+                                                <option :value="v.id" x-text="`${v.title || v.name || 'Variant'} (${window.currencySymbol || '$'}${v.price || item.price})`"></option>
                                             </template>
                                         </select>
                                     </div>
@@ -150,7 +150,7 @@
                                         <input type="text" :name="`items[${index}][sku]`" x-model="item.sku" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-amber-400 outline-none">
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-medium text-slate-400 mb-1">Unit Price (₹) *</label>
+                                        <label class="block text-xs font-medium text-slate-400 mb-1">Unit Price ({{ $currencySymbol ?? '$' }}) *</label>
                                         <input type="number" step="0.01" :name="`items[${index}][price]`" x-model.number="item.price" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-amber-400 outline-none">
                                     </div>
                                     <div>
@@ -162,7 +162,7 @@
                                 <input type="hidden" :name="`items[${index}][variant_title]`" :value="item.variant_title">
 
                                 <div class="text-right text-xs text-slate-400 font-medium">
-                                    Line Total: <span class="text-amber-400 font-bold text-sm" x-text="'₹' + (item.price * item.quantity).toLocaleString('en-IN')"></span>
+                                    Line Total: <span class="text-amber-400 font-bold text-sm" x-text="window.formatMoney ? window.formatMoney(item.price * item.quantity) : ('$' + Number(item.price * item.quantity).toFixed(2))"></span>
                                 </div>
                             </div>
                         </template>
@@ -238,31 +238,31 @@
                     <h2 class="text-base font-semibold text-white">Summary Breakdown</h2>
 
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Shipping Charges (₹)</label>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Shipping Charges ({{ $currencySymbol ?? '$' }})</label>
                         <input type="number" step="0.01" name="shipping_amount" x-model.number="shippingFee" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-amber-400 outline-none" placeholder="0.00">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Discount Amount (₹)</label>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Discount Amount ({{ $currencySymbol ?? '$' }})</label>
                         <input type="number" step="0.01" name="discount_amount" x-model.number="discountFee" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-amber-400 outline-none" placeholder="0.00">
                     </div>
 
                     <div class="pt-4 border-t border-slate-800 space-y-2 text-sm">
                         <div class="flex justify-between text-slate-400">
                             <span>Subtotal</span>
-                            <span x-text="'₹' + subtotal().toLocaleString('en-IN')">₹0</span>
+                            <span x-text="window.formatMoney ? window.formatMoney(subtotal()) : ('$' + Number(subtotal()).toFixed(2))">$0.00</span>
                         </div>
                         <div class="flex justify-between text-slate-400">
                             <span>Shipping</span>
-                            <span x-text="'₹' + (shippingFee || 0).toLocaleString('en-IN')">₹0</span>
+                            <span x-text="window.formatMoney ? window.formatMoney(shippingFee || 0) : ('$' + Number(shippingFee || 0).toFixed(2))">$0.00</span>
                         </div>
                         <div class="flex justify-between text-emerald-400" x-show="discountFee > 0">
                             <span>Discount</span>
-                            <span x-text="'-₹' + (discountFee || 0).toLocaleString('en-IN')">-₹0</span>
+                            <span x-text="'-' + (window.formatMoney ? window.formatMoney(discountFee || 0) : ('$' + Number(discountFee || 0).toFixed(2)))">-$0.00</span>
                         </div>
                         <div class="flex justify-between text-white font-bold text-lg pt-2 border-t border-slate-800">
                             <span>Grand Total</span>
-                            <span class="text-amber-400" x-text="'₹' + grandTotal().toLocaleString('en-IN')">₹0</span>
+                            <span class="text-amber-400" x-text="window.formatMoney ? window.formatMoney(grandTotal()) : ('$' + Number(grandTotal()).toFixed(2))">$0.00</span>
                         </div>
                     </div>
 

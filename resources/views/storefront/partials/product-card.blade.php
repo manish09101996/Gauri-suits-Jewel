@@ -76,11 +76,11 @@
 
         <div class="pt-0.5 flex items-baseline justify-center sm:justify-start gap-2">
             <span class="font-semibold text-xs sm:text-sm text-[#58111A]">
-                ₹{{ number_format($price) }}
+                {{ $currencySymbol ?? '$' }}{{ number_format($price) }}
             </span>
             @if($comparePrice && $comparePrice > $price)
                 <span class="text-[11px] text-[#A88B4D]/70 line-through">
-                    ₹{{ number_format($comparePrice) }}
+                    {{ $currencySymbol ?? '$' }}{{ number_format($comparePrice) }}
                 </span>
             @endif
         </div>

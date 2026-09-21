@@ -87,10 +87,10 @@
                             </td>
                             <td class="px-5 py-3 font-bold text-[#2A1810]">
                                 @if($product->sale_price && $product->sale_price < $product->price)
-                                    <span class="text-[#58111A]">₹{{ number_format($product->sale_price, 2) }}</span>
-                                    <span class="text-gray-400 line-through text-[11px] block">₹{{ number_format($product->price, 2) }}</span>
+                                    <span class="text-[#58111A]">{{ $currencySymbol ?? '$' }}{{ number_format($product->sale_price, 2) }}</span>
+                                    <span class="text-gray-400 line-through text-[11px] block">{{ $currencySymbol ?? '$' }}{{ number_format($product->price, 2) }}</span>
                                 @else
-                                    ₹{{ number_format($product->price, 2) }}
+                                    {{ $currencySymbol ?? '$' }}{{ number_format($product->price, 2) }}
                                 @endif
                             </td>
                             <td class="px-5 py-3">

@@ -25,7 +25,7 @@
 
                 <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm">
                     <div class="text-[11px] font-bold uppercase tracking-wider text-stone-400">Total Order Value</div>
-                    <div class="font-serif text-2xl font-bold text-brand-maroon mt-1">₹{{ number_format($totalSpent, 2) }}</div>
+                    <div class="font-serif text-2xl font-bold text-brand-maroon mt-1">{{ $currencySymbol ?? '$' }}{{ number_format($totalSpent, 2) }}</div>
                     <div class="text-xs text-stone-500 mt-0.5">Lifetime spend</div>
                 </div>
 
@@ -59,7 +59,7 @@
 
                     <div class="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto">
                         <div class="font-serif font-bold text-sm text-brand-charcoal">
-                            ₹{{ number_format($ord->grand_total, 2) }}
+                            {{ $currencySymbol ?? '$' }}{{ number_format($ord->grand_total, 2) }}
                         </div>
                         <a href="{{ route('account.orders.detail', $ord->id) }}" class="px-4 py-2 bg-brand-maroon hover:bg-[#400c13] text-white text-xs font-bold uppercase tracking-wider rounded transition">
                             Details

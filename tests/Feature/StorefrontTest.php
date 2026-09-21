@@ -19,8 +19,9 @@ class StorefrontTest extends TestCase
         parent::setUp();
 
         Setting::create(['key' => 'store_name', 'value' => 'Gauri Suits & Jewel', 'group' => 'general']);
-        Setting::create(['key' => 'currency_symbol', 'value' => '₹', 'group' => 'general']);
-        Setting::create(['key' => 'free_shipping_threshold', 'value' => '2999', 'group' => 'shipping']);
+        Setting::create(['key' => 'currency_symbol', 'value' => '$', 'group' => 'general']);
+        Setting::create(['key' => 'currency_code', 'value' => 'AUD', 'group' => 'general']);
+        Setting::create(['key' => 'free_shipping_threshold', 'value' => '299', 'group' => 'shipping']);
     }
 
     public function test_homepage_loads_successfully(): void

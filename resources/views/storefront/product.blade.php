@@ -88,16 +88,16 @@
             <!-- Price Breakdown -->
             <div class="p-4 bg-stone-50 rounded-xl border border-stone-200/70 space-y-1">
                 <div class="flex items-baseline gap-3">
-                    <span class="font-serif text-3xl font-bold text-brand-maroon" x-text="'₹' + Number(selectedPrice).toLocaleString('en-IN')">
-                        ₹{{ number_format($product->effective_price) }}
+                    <span class="font-serif text-3xl font-bold text-brand-maroon" x-text="window.formatMoney(selectedPrice)">
+                        {{ $currencySymbol ?? '$' }}{{ number_format($product->effective_price) }}
                     </span>
                     @if($product->compare_at_price)
                         <span class="text-base text-stone-400 line-through">
-                            ₹{{ number_format($product->compare_at_price) }}
+                            {{ $currencySymbol ?? '$' }}{{ number_format($product->compare_at_price) }}
                         </span>
                     @endif
                 </div>
-                <p class="text-[11px] text-stone-500">Inclusive of all Indian taxes (GST) • Complimentary delivery on ₹2,999+</p>
+                <p class="text-[11px] text-stone-500">Inclusive of all taxes • Complimentary delivery on {{ $currencySymbol ?? '$' }}{{ number_format($storeSettings['free_shipping_threshold'] ?? 299) }}+</p>
             </div>
 
             <!-- Variant Picker (Sizes / Stitching) -->
@@ -194,7 +194,7 @@
                         <p><strong>Care Instructions:</strong> {{ $product->care_instructions ?: 'Dry clean only to maintain the lustre of delicate fabrics and metallic threads.' }}</p>
                     </div>
                     <div x-show="activeTab === 'shipping'" class="space-y-2" style="display: none;">
-                        <p>Complimentary insured shipping across India for orders above ₹2,999. Standard delivery takes 3 to 5 business days.</p>
+                        <p>Complimentary insured shipping for orders above {{ $currencySymbol ?? '$' }}299. Standard delivery takes 3 to 5 business days.</p>
                         <p>International courier via DHL/FedEx takes 7 to 10 days. Easy returns and exchanges within 7 days of delivery.</p>
                     </div>
                 </div>

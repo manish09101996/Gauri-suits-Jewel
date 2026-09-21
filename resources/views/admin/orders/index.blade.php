@@ -83,7 +83,7 @@
                                 {{ $order->items->count() }} item{{ $order->items->count() === 1 ? '' : 's' }}
                             </td>
                             <td class="px-5 py-3.5 font-bold text-[#2A1810]">
-                                ₹{{ number_format($order->total_amount, 2) }}
+                                {{ $currencySymbol ?? '$' }}{{ number_format($order->total_amount, 2) }}
                             </td>
                             <td class="px-5 py-3.5">
                                 <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase {{ $order->payment_badge_class }}">

@@ -251,8 +251,8 @@
                     </td>
                     <td style="color: #78716c; font-size: 12px;">{{ $item->product_sku ?? 'N/A' }}</td>
                     <td class="qty">{{ $item->quantity }}</td>
-                    <td class="price">₹{{ number_format($item->price, 2) }}</td>
-                    <td class="price"><strong>₹{{ number_format($item->total, 2) }}</strong></td>
+                    <td class="price">{{ $currencySymbol ?? '$' }}{{ number_format($item->price, 2) }}</td>
+                    <td class="price"><strong>{{ $currencySymbol ?? '$' }}{{ number_format($item->total, 2) }}</strong></td>
                 </tr>
                 @endforeach
             </tbody>
@@ -262,21 +262,21 @@
             <div class="summary-table">
                 <div class="summary-row">
                     <span>Subtotal:</span>
-                    <span>₹{{ number_format($order->subtotal, 2) }}</span>
+                    <span>{{ $currencySymbol ?? '$' }}{{ number_format($order->subtotal, 2) }}</span>
                 </div>
                 @if($order->discount_amount > 0)
                 <div class="summary-row" style="color: #059669;">
                     <span>Discount ({{ $order->coupon_code ?? 'Coupon' }}):</span>
-                    <span>-₹{{ number_format($order->discount_amount, 2) }}</span>
+                    <span>-{{ $currencySymbol ?? '$' }}{{ number_format($order->discount_amount, 2) }}</span>
                 </div>
                 @endif
                 <div class="summary-row">
                     <span>Insured Delivery:</span>
-                    <span>{{ $order->shipping_amount > 0 ? '₹' . number_format($order->shipping_amount, 2) : 'FREE' }}</span>
+                    <span>{{ $order->shipping_amount > 0 ? ($currencySymbol ?? '$') . number_format($order->shipping_amount, 2) : 'FREE' }}</span>
                 </div>
                 <div class="summary-row total">
                     <span>Grand Total:</span>
-                    <span>₹{{ number_format($order->grand_total, 2) }}</span>
+                    <span>{{ $currencySymbol ?? '$' }}{{ number_format($order->grand_total, 2) }}</span>
                 </div>
             </div>
         </div>

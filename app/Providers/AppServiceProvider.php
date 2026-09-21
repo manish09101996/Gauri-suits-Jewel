@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        \Illuminate\Support\Facades\View::share('currencySymbol', '$');
+        \Illuminate\Support\Facades\View::share('currencyCode', 'AUD');
     }
 }

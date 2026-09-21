@@ -212,6 +212,8 @@ class CartService
             'amount_needed_free_shipping' => $amountNeededForFreeShipping,
             'free_shipping_percent' => $freeShippingPercent,
             'free_shipping_unlocked' => $amountNeededForFreeShipping <= 0,
+            'currency_symbol' => Setting::get('currency_symbol', '$'),
+            'currency' => Setting::get('currency_code', 'AUD'),
         ];
     }
 

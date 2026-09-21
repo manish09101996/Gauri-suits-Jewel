@@ -29,12 +29,21 @@
         window.AppConfig = {
             baseUrl: {!! json_encode(rtrim(url('/'), '/')) !!}.replace(/&amp;/g, '&'),
             csrfToken: {!! json_encode(csrf_token()) !!},
+            currencySymbol: {!! json_encode($currencySymbol ?? '$') !!},
+            currencyCode: {!! json_encode($currencyCode ?? 'AUD') !!},
             routes: {
                 cartSummary: {!! json_encode(route('cart.summary')) !!}.replace(/&amp;/g, '&'),
                 cartAdd: {!! json_encode(route('cart.add')) !!}.replace(/&amp;/g, '&'),
                 cartUpdate: {!! json_encode(route('cart.update')) !!}.replace(/&amp;/g, '&'),
                 wishlistToggle: {!! json_encode(route('wishlist.toggle')) !!}.replace(/&amp;/g, '&'),
             }
+        };
+
+        window.currencySymbol = (window.AppConfig && window.AppConfig.currencySymbol) || '$';
+        window.formatMoney = function(amount) {
+            var sym = (window.AppConfig && window.AppConfig.currencySymbol) || '$';
+            var num = Number(amount) || 0;
+            return sym + num.toLocaleString('en-AU', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
         };
 
         window.apiUrl = function(path) {
@@ -71,7 +80,7 @@
         </aside>
     @else
         <aside aria-label="Announcement" class="bg-[#083323] text-[#E6CA65] text-[10px] sm:text-[11px] py-1.5 px-3 sm:px-4 text-center font-sans tracking-[0.14em] sm:tracking-[0.22em] uppercase flex items-center justify-center flex-wrap gap-x-2 gap-y-0.5 border-b border-[#D4AF37]/25 shadow-xs">
-            <span>✨ COMPLIMENTARY EXPRESS SHIPPING ABOVE ₹2,999</span>
+            <span>✨ COMPLIMENTARY EXPRESS SHIPPING ABOVE {{ $currencySymbol ?? '$' }}{{ number_format($storeSettings['free_shipping_threshold'] ?? 299) }}</span>
             <a href="{{ route('shop.index') }}" class="underline hover:text-white transition-colors underline-offset-4 ml-0.5 font-semibold shrink-0">EXPLORE &rarr;</a>
         </aside>
     @endif
@@ -390,7 +399,7 @@
                             <span class="text-[#0A3828] font-bold">🎉 Congratulations! You have unlocked FREE Express Shipping!</span>
                         </template>
                         <template x-if="!summary.free_shipping_unlocked">
-                            <span>Add <strong class="text-[#58111A]">₹<span x-text="summary.amount_needed_free_shipping.toLocaleString('en-IN')"></span></strong> more to unlock <strong class="text-[#0A3828]">FREE SHIPPING</strong></span>
+                            <span>Add <strong class="text-[#58111A]"><span x-text="window.formatMoney(summary.amount_needed_free_shipping)"></span></strong> more to unlock <strong class="text-[#0A3828]">FREE SHIPPING</strong></span>
                         </template>
                     </div>
                     <div class="w-full bg-[#EFE9DE] rounded-full h-2 mt-2 overflow-hidden">
@@ -419,7 +428,7 @@
                                     <span x-show="item.size" x-text="'Size: ' + item.size"></span>
                                     <span x-show="item.colour" x-text="'Colour: ' + item.colour"></span>
                                 </div>
-                                <div class="text-sm font-bold text-[#58111A] mt-1" x-text="'₹' + item.price.toLocaleString('en-IN')"></div>
+                                <div class="text-sm font-bold text-[#58111A] mt-1" x-text="window.formatMoney(item.price)"></div>
 
                                 <!-- Quantity Stepper & Remove -->
                                 <div class="flex items-center justify-between mt-3">
@@ -440,11 +449,11 @@
                     <div class="space-y-2 mb-4 text-sm">
                         <div class="flex justify-between text-[#6B5E55]">
                             <span>Subtotal</span>
-                            <span class="font-bold text-[#2A1810]" x-text="'₹' + summary.subtotal.toLocaleString('en-IN')"></span>
+                            <span class="font-bold text-[#2A1810]" x-text="window.formatMoney(summary.subtotal)"></span>
                         </div>
                         <div class="flex justify-between text-emerald-700" x-show="summary.discount > 0">
                             <span>Discount <span x-show="summary.coupon_code" x-text="'(' + summary.coupon_code + ')'"></span></span>
-                            <span class="font-bold" x-text="'-₹' + summary.discount.toLocaleString('en-IN')"></span>
+                            <span class="font-bold" x-text="'-' + window.formatMoney(summary.discount)"></span>
                         </div>
                         <div class="flex justify-between text-xs text-[#8C713B]">
                             <span>Shipping &amp; Taxes</span>
@@ -510,7 +519,7 @@
                                     <h4 class="font-serif text-sm font-semibold text-[#2A1810]" x-text="prod.name"></h4>
                                     <span class="text-xs text-[#8C713B]" x-text="prod.category"></span>
                                 </div>
-                                <span class="text-sm font-bold text-[#58111A]" x-text="'₹' + prod.price.toLocaleString('en-IN')"></span>
+                                <span class="text-sm font-bold text-[#58111A]" x-text="window.formatMoney(prod.price)"></span>
                             </a>
                         </template>
                     </div>
@@ -557,8 +566,8 @@
                             <div class="text-xs text-[#8C713B] mt-1" x-text="'SKU: ' + product.sku"></div>
 
                             <div class="flex items-baseline gap-3 mt-3">
-                                <span class="text-xl font-bold text-[#58111A]" x-text="'₹' + (selectedVariant ? selectedVariant.price : product.effective_price).toLocaleString('en-IN')"></span>
-                                <span x-show="product.sale_price" class="text-sm text-gray-400 line-through" x-text="'₹' + product.price.toLocaleString('en-IN')"></span>
+                                <span class="text-xl font-bold text-[#58111A]" x-text="window.formatMoney(selectedVariant ? selectedVariant.price : product.effective_price)"></span>
+                                <span x-show="product.sale_price" class="text-sm text-gray-400 line-through" x-text="window.formatMoney(product.price)"></span>
                                 <span x-show="product.discount_percent > 0" class="text-xs font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded" x-text="product.discount_percent + '% OFF'"></span>
                             </div>
 
@@ -622,7 +631,7 @@
                     </div>
                     <div class="text-left">
                         <h4 class="font-sans text-xs sm:text-[13px] font-bold text-[#3B0A11] uppercase tracking-wider">Free Shipping</h4>
-                        <p class="text-[11px] text-[#6B5E55]">Above ₹2,999</p>
+                        <p class="text-[11px] text-[#6B5E55]">Above {{ $currencySymbol ?? '$' }}{{ number_format($storeSettings['free_shipping_threshold'] ?? 299) }}</p>
                     </div>
                 </div>
 
