@@ -113,6 +113,9 @@ Alpine.data('cartDrawer', () => ({
             this.open = true;
             this.fetchSummary();
         });
+        window.addEventListener('close-cart', () => {
+            this.open = false;
+        });
         window.addEventListener('cart-updated', () => {
             this.fetchSummary();
         });
@@ -251,6 +254,9 @@ Alpine.data('quickViewModal', () => ({
                 this.open = false;
                 window.dispatchEvent(new CustomEvent('cart-updated'));
                 window.dispatchEvent(new CustomEvent('open-cart'));
+                if (typeof window.openCart === 'function') {
+                    window.openCart();
+                }
                 window.showToast(data.message || 'Added to bag!', 'success');
             } else {
                 window.showToast(data.message || 'Unable to add item.', 'error');
@@ -344,6 +350,58 @@ window.toggleWishlist = async function(productId, btnElement) {
     }
 };
 
+// Global Cart Helpers for reliable opening/closing anywhere
+window.openCart = function() {
+    window.dispatchEvent(new CustomEvent('open-cart'));
+    const drawer = document.getElementById('cart-drawer-container') || document.querySelector('[x-data*="cartDrawer"]');
+    if (drawer) {
+        drawer.style.display = 'block';
+        if (window.Alpine && window.Alpine.$data) {
+            try {
+                const data = window.Alpine.$data(drawer);
+                if (data) {
+                    data.open = true;
+                    if (typeof data.fetchSummary === 'function') {
+                        data.fetchSummary();
+                    }
+                }
+            } catch (e) {
+                console.error('Alpine.$data cartDrawer error:', e);
+            }
+        }
+    }
+};
+
+window.closeCart = function() {
+    window.dispatchEvent(new CustomEvent('close-cart'));
+    const drawer = document.getElementById('cart-drawer-container') || document.querySelector('[x-data*="cartDrawer"]');
+    if (drawer) {
+        if (window.Alpine && window.Alpine.$data) {
+            try {
+                const data = window.Alpine.$data(drawer);
+                if (data) {
+                    data.open = false;
+                }
+            } catch (e) {}
+        }
+        drawer.style.display = 'none';
+    }
+};
+
+window.toggleCart = function() {
+    const drawer = document.getElementById('cart-drawer-container') || document.querySelector('[x-data*="cartDrawer"]');
+    if (drawer && window.Alpine && window.Alpine.$data) {
+        try {
+            const data = window.Alpine.$data(drawer);
+            if (data && data.open) {
+                window.closeCart();
+                return;
+            }
+        } catch (e) {}
+    }
+    window.openCart();
+};
+
 // Direct Add to Cart Function for Product Cards
 window.addToCartDirect = async function(productId, variantId = null, quantity = 1, btnElement = null) {
     let originalText = '';
@@ -381,6 +439,19 @@ window.addToCartDirect = async function(productId, variantId = null, quantity = 
         if (res.ok && data.success) {
             window.dispatchEvent(new CustomEvent('cart-updated'));
             window.dispatchEvent(new CustomEvent('open-cart'));
+            if (typeof window.openCart === 'function') {
+                window.openCart();
+            }
+            // Update badges immediately in DOM
+            const badge = document.getElementById('header-cart-badge');
+            if (badge && data.cart && data.cart.total_items !== undefined) {
+                badge.innerText = data.cart.total_items;
+                badge.style.display = data.cart.total_items > 0 ? 'flex' : 'none';
+            }
+            const mobileBadge = document.getElementById('mobile-menu-cart-badge');
+            if (mobileBadge && data.cart && data.cart.total_items !== undefined) {
+                mobileBadge.innerText = data.cart.total_items;
+            }
             window.showToast(data.message || 'Added to bag!', 'success');
         } else {
             window.showToast(data.message || 'Unable to add item to bag.', 'error');

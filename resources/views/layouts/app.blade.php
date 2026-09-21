@@ -159,7 +159,12 @@
                     </a>
 
                     <!-- Cart Drawer Trigger with Protected Safe Margins and Sharp Badge -->
-                    <button @click="$dispatch('open-cart')" type="button" class="p-2 sm:p-2.5 hover:text-[#8C713B] transition-colors relative focus:outline-none flex items-center justify-center rounded-sm hover:bg-black/5 shrink-0" title="Shopping Cart" aria-label="Shopping Bag">
+                    <button @click="$dispatch('open-cart')"
+                            onclick="window.openCart && window.openCart()"
+                            type="button"
+                            class="p-2 sm:p-2.5 hover:text-[#8C713B] transition-colors relative focus:outline-none flex items-center justify-center rounded-sm hover:bg-black/5 shrink-0 cursor-pointer"
+                            title="Shopping Cart"
+                            aria-label="Shopping Bag">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                         </svg>
@@ -235,6 +240,7 @@
                 <!-- Quick Links (Bag & Wishlist) -->
                 <div class="px-5 pt-3 grid grid-cols-2 gap-2">
                     <button @click="close(); $nextTick(() => $dispatch('open-cart'))"
+                            onclick="window.closeMobileMenu && window.closeMobileMenu(); window.openCart && window.openCart();"
                             type="button"
                             class="flex items-center justify-center gap-2 py-2 px-3 bg-[#FAF7F2] border border-[#E8DFD5] rounded-xs text-xs font-semibold uppercase tracking-wider text-[#3B0A11] hover:bg-[#58111A] hover:text-white transition-colors cursor-pointer">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
@@ -371,15 +377,19 @@
 
     <!-- Slide-over AJAX Cart Drawer -->
     <div x-data="cartDrawer"
+         id="cart-drawer-container"
+         @open-cart.window="open = true; fetchSummary()"
+         @close-cart.window="open = false"
+         @cart-updated.window="fetchSummary()"
          x-show="open"
          x-cloak
          class="fixed inset-0 z-50 overflow-hidden"
          style="display: none;">
 
-        <div @click="open = false" class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"></div>
+        <div @click="open = false" onclick="window.closeCart && window.closeCart()" class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity cursor-pointer"></div>
 
-        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
-            <div class="w-screen max-w-md bg-[#FDFBF7] shadow-2xl flex flex-col justify-between">
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-6 sm:pl-10">
+            <div class="w-screen max-w-md bg-[#FDFBF7] shadow-2xl flex flex-col justify-between relative z-10">
 
                 <!-- Drawer Header (Royal Maroon & Gold) -->
                 <div class="p-5 border-b border-[#D4AF37]/30 flex items-center justify-between bg-[#3B0A11] text-[#F7EED9]">
@@ -387,7 +397,7 @@
                         <h2 class="font-serif text-lg font-normal tracking-wider text-[#F7EED9]">YOUR SHOPPING BAG</h2>
                         <span class="text-xs bg-[#D4AF37] text-[#3B0A11] font-bold px-2 py-0.5 rounded-full shadow" x-text="summary.total_items"></span>
                     </div>
-                    <button @click="open = false" class="text-[#E6CA65] hover:text-white p-1">
+                    <button @click="open = false" onclick="window.closeCart && window.closeCart()" class="text-[#E6CA65] hover:text-white p-1 cursor-pointer" aria-label="Close Shopping Bag">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>

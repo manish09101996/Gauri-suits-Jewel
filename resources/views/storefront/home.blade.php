@@ -223,7 +223,7 @@
         @endphp
 
         <!-- 6-Product Grid matching screenshot -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4" x-data>
             @for($i = 0; $i < 6; $i++)
                 @php
                     $prod = $displayProducts->get($i);
@@ -237,7 +237,7 @@
                     $prodImg = ($prod && !empty($prod->primary_image_url)) ? $prod->primary_image_url : $fallback['image'];
                 @endphp
 
-                <div class="group flex flex-col bg-white border border-[#E3DACD] hover:border-[#58111A] transition-all duration-300 shadow-2xs hover:shadow-md">
+                <div class="group flex flex-col bg-white border border-[#E3DACD] hover:border-[#58111A] transition-all duration-300 shadow-2xs hover:shadow-md" x-data>
                     <!-- Image with top-right wishlist heart -->
                     <div class="relative aspect-[3/4] overflow-hidden bg-[#EFE9DE]">
                         <a href="{{ $prodUrl }}" class="block w-full h-full">
@@ -250,7 +250,8 @@
                         <!-- Wishlist Toggle Button (Top Right matching screenshot) -->
                         <button type="button"
                                 @click="toggleWishlist({{ $prodId }}, $el)"
-                                class="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/80 hover:bg-[#58111A] hover:text-white text-[#2A1810] flex items-center justify-center transition-all duration-200 z-10 shadow-2xs border border-[#E3DACD]"
+                                onclick="window.toggleWishlist && window.toggleWishlist({{ $prodId }}, this)"
+                                class="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/80 hover:bg-[#58111A] hover:text-white text-[#2A1810] flex items-center justify-center transition-all duration-200 z-10 shadow-2xs border border-[#E3DACD] cursor-pointer"
                                 title="Add to Wishlist"
                                 aria-label="Toggle Wishlist">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -273,7 +274,8 @@
                         <!-- Clean ADD TO CART button below price -->
                         <button type="button"
                                 @click="addToCartDirect({{ $prodId }}, {{ $prodVariantId }}, 1, $el)"
-                                class="w-full mt-2.5 py-2 px-2 bg-[#FAF7F2] hover:bg-[#58111A] text-[#2A1810] hover:text-[#F7EED9] border border-[#D5CBC0] hover:border-[#58111A] text-[10px] sm:text-[10.5px] font-sans uppercase font-bold tracking-[0.16em] transition-all rounded-xs shadow-2xs text-center">
+                                onclick="window.addToCartDirect && window.addToCartDirect({{ $prodId }}, {{ $prodVariantId }}, 1, this)"
+                                class="w-full mt-2.5 py-2 px-2 bg-[#FAF7F2] hover:bg-[#58111A] text-[#2A1810] hover:text-[#F7EED9] border border-[#D5CBC0] hover:border-[#58111A] text-[10px] sm:text-[10.5px] font-sans uppercase font-bold tracking-[0.16em] transition-all rounded-xs shadow-2xs text-center cursor-pointer active:scale-95">
                             ADD TO CART
                         </button>
                     </div>

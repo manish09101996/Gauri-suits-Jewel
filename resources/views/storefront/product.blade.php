@@ -383,6 +383,9 @@ function productPage() {
                     } else {
                         window.dispatchEvent(new CustomEvent('cart-updated', { detail: data }));
                         window.dispatchEvent(new CustomEvent('open-cart'));
+                        if (typeof window.openCart === 'function') {
+                            window.openCart();
+                        }
                         window.showToast(data.message || 'Added to bag!', 'success');
                     }
                 } else {
