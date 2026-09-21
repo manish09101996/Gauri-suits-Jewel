@@ -3,7 +3,7 @@
 @section('title', 'Shopping Bag | Gauri Suits & Jewel')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8" x-data="cartPage()">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-28 sm:py-8 space-y-8" x-data="cartPage()">
 
     <!-- Page Title -->
     <div class="border-b border-stone-200 pb-6 flex items-center justify-between">
@@ -148,7 +148,7 @@
                     </div>
                 </div>
 
-                <a href="{{ route('checkout.index') }}" class="w-full py-4 bg-[#58111A] hover:bg-[#3B0A11] border border-[#D4AF37]/50 text-[#F7EED9] font-bold text-xs uppercase tracking-[0.2em] text-center rounded-xs shadow-lg transition flex items-center justify-center gap-2">
+                <a href="{{ route('checkout.index') }}" class="w-full py-3.5 sm:py-4 bg-[#58111A] hover:bg-[#3B0A11] border border-[#D4AF37]/50 text-[#F7EED9] font-bold text-xs uppercase tracking-[0.12em] sm:tracking-[0.2em] text-center rounded-xs shadow-lg transition flex items-center justify-center gap-2">
                     Proceed to Secure Checkout →
                 </a>
 

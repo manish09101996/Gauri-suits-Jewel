@@ -3,7 +3,7 @@
 @section('title', 'Create Account | Gauri Suits & Jewel')
 
 @section('content')
-<div class="max-w-md mx-auto px-4 py-16 space-y-8">
+<div class="max-w-md mx-auto px-4 pt-10 pb-24 sm:py-16 space-y-8">
     <div class="text-center space-y-3">
         <div class="inline-block relative w-20 h-20 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#0A3828] to-[#D4AF37] shadow-xl">
             <img src="{{ asset('images/logo.png') }}" alt="Gauri Suits & Jewel" class="w-full h-full object-cover rounded-full">

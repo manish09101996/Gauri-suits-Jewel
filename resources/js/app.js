@@ -56,11 +56,15 @@ Alpine.data('cartDrawer', () => ({
             const res = await fetch(getApiUrl('/cart/summary'), { credentials: 'same-origin' });
             if (res.ok) {
                 this.summary = await res.json();
-                // Update badge in header
+                // Update badges in header and mobile drawer
                 const badge = document.getElementById('header-cart-badge');
                 if (badge) {
                     badge.innerText = this.summary.total_items;
                     badge.style.display = this.summary.total_items > 0 ? 'flex' : 'none';
+                }
+                const mobileBadge = document.getElementById('mobile-menu-cart-badge');
+                if (mobileBadge) {
+                    mobileBadge.innerText = this.summary.total_items;
                 }
             }
         } catch (e) {

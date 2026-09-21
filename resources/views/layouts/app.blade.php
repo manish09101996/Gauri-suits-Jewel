@@ -57,49 +57,55 @@
 
     @stack('styles')
 </head>
-<body class="bg-[#FDFBF7] text-[#2A1810] font-sans antialiased selection:bg-[#D4AF37] selection:text-[#3B0A11]"
-      x-data="{ mobileMenuOpen: false }">
+<body class="bg-[#FDFBF7] text-[#2A1810] font-sans antialiased selection:bg-[#D4AF37] selection:text-[#3B0A11]">
 
-    <!-- Top Announcement Bar (Slim Royal Emerald & Gold) -->
+    <!-- Top Announcement Bar (Slim Royal Emerald & Gold with Responsive Wrapping) -->
     @if(isset($announcement) && $announcement->is_active)
-        <aside aria-label="Announcement" class="bg-[#083323] text-[#E6CA65] text-[10.5px] sm:text-[11px] py-1.5 px-4 text-center font-sans tracking-[0.22em] uppercase flex items-center justify-center gap-2 sm:gap-3 border-b border-[#D4AF37]/25 shadow-xs">
+        <aside aria-label="Announcement" class="bg-[#083323] text-[#E6CA65] text-[10px] sm:text-[11px] py-1.5 px-3 sm:px-4 text-center font-sans tracking-[0.14em] sm:tracking-[0.22em] uppercase flex items-center justify-center flex-wrap gap-x-2 gap-y-0.5 border-b border-[#D4AF37]/25 shadow-xs">
             <span>✨ {{ $announcement->title }}</span>
             @if($announcement->link_url)
-                <a href="{{ $announcement->link_url }}" class="underline hover:text-white transition-colors underline-offset-4 ml-1 font-semibold">
+                <a href="{{ $announcement->link_url }}" class="underline hover:text-white transition-colors underline-offset-4 ml-0.5 font-semibold shrink-0">
                     {{ $announcement->button_text ?: 'Shop Now' }} &rarr;
                 </a>
             @endif
         </aside>
     @else
-        <aside aria-label="Announcement" class="bg-[#083323] text-[#E6CA65] text-[10.5px] sm:text-[11px] py-1.5 px-4 text-center font-sans tracking-[0.22em] uppercase flex items-center justify-center gap-2 sm:gap-3 border-b border-[#D4AF37]/25 shadow-xs">
-            <span>✨ COMPLIMENTARY EXPRESS SHIPPING ACROSS INDIA ON ORDERS ABOVE ₹2,999</span>
-            <a href="{{ route('shop.index') }}" class="underline hover:text-white transition-colors underline-offset-4 ml-1 font-semibold">EXPLORE &rarr;</a>
+        <aside aria-label="Announcement" class="bg-[#083323] text-[#E6CA65] text-[10px] sm:text-[11px] py-1.5 px-3 sm:px-4 text-center font-sans tracking-[0.14em] sm:tracking-[0.22em] uppercase flex items-center justify-center flex-wrap gap-x-2 gap-y-0.5 border-b border-[#D4AF37]/25 shadow-xs">
+            <span>✨ COMPLIMENTARY EXPRESS SHIPPING ABOVE ₹2,999</span>
+            <a href="{{ route('shop.index') }}" class="underline hover:text-white transition-colors underline-offset-4 ml-0.5 font-semibold shrink-0">EXPLORE &rarr;</a>
         </aside>
     @endif
 
     <!-- Main Navigation Header (Light Ivory / Champagne with Maroon Accents & Gold Details) -->
-    <header class="sticky top-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E8DFD5] text-[#2D1C1B] transition-all duration-300 shadow-[0_2px_15px_rgba(0,0,0,0.03)]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20 md:h-24">
+    <header class="sticky top-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E8DFD5] text-[#2D1C1B] transition-all duration-300 shadow-[0_2px_15px_rgba(0,0,0,0.03)]"
+            x-data="{ mobileMenuOpen: false }"
+            @open-mobile-menu.window="mobileMenuOpen = true"
+            @close-mobile-menu.window="mobileMenuOpen = false"
+            @keydown.escape.window="mobileMenuOpen = false">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-18 sm:h-20 md:h-24">
 
                 <!-- Left: Mobile Menu Toggle & Brand Logo -->
-                <div class="flex items-center gap-3 sm:gap-6">
-                    <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="lg:hidden p-2 text-[#2D1C1B] hover:text-[#58111A] focus:outline-none" aria-label="Open Navigation Menu">
+                <div class="flex items-center gap-1.5 sm:gap-6 min-w-0">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen"
+                            type="button"
+                            class="lg:hidden w-10 h-10 -ml-1 flex items-center justify-center text-[#2D1C1B] hover:text-[#58111A] hover:bg-black/5 active:bg-black/10 rounded-sm focus:outline-none transition-colors"
+                            aria-label="Open Navigation Menu">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                     </button>
 
                     <!-- Finalized Brand Logo -->
-                    <a href="{{ route('home') }}" class="flex items-center gap-2.5 sm:gap-3.5 group py-1" title="Gauri Suits & Jewel - Tradition Meets Elegance">
-                        <div class="relative w-11 h-11 sm:w-13 sm:h-13 md:w-14 md:h-14 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#0A3828] to-[#D4AF37] shadow-sm shrink-0 group-hover:scale-105 transition-transform duration-300">
+                    <a href="{{ route('home') }}" class="flex items-center gap-2 sm:gap-3.5 group py-1 min-w-0" title="Gauri Suits & Jewel - Tradition Meets Elegance">
+                        <div class="relative w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#0A3828] to-[#D4AF37] shadow-sm shrink-0 group-hover:scale-105 transition-transform duration-300">
                             <img src="{{ asset('images/logo.png') }}" alt="Gauri Suits & Jewel" class="w-full h-full object-cover rounded-full">
                         </div>
-                        <div class="flex flex-col items-start text-left">
-                            <span class="font-serif text-xl sm:text-2xl md:text-3xl tracking-[0.16em] text-[#3B0A11] uppercase font-normal leading-tight transition-colors group-hover:text-[#58111A]">
+                        <div class="flex flex-col items-start text-left min-w-0">
+                            <span class="font-serif text-lg sm:text-2xl md:text-3xl tracking-[0.12em] sm:tracking-[0.16em] text-[#3B0A11] uppercase font-normal leading-tight transition-colors group-hover:text-[#58111A] truncate">
                                 GAURI
                             </span>
-                            <span class="text-[8.5px] sm:text-[9.5px] md:text-[10px] tracking-[0.36em] text-[#8C713B] uppercase font-semibold font-sans -mt-0.5">
+                            <span class="text-[7.5px] sm:text-[9.5px] md:text-[10px] tracking-[0.24em] sm:tracking-[0.36em] text-[#8C713B] uppercase font-semibold font-sans -mt-0.5 whitespace-nowrap">
                                 SUITS &amp; JEWEL
                             </span>
                             <span class="hidden sm:inline-block text-[7.5px] md:text-[8px] tracking-[0.24em] text-[#6B5E55] uppercase font-sans mt-0.5 font-medium">
@@ -121,37 +127,39 @@
                 </nav>
 
                 <!-- Right: Minimal Refined Icons (Search, Account, Wishlist, Cart) -->
-                <div class="flex items-center space-x-2 sm:space-x-4 text-[#2D1C1B]">
+                <div class="flex items-center gap-0.5 sm:gap-2 text-[#2D1C1B] pr-0.5 sm:pr-0 shrink-0">
                     <!-- Search Trigger -->
-                    <button @click="$dispatch('open-search')" type="button" class="p-2 hover:text-[#8C713B] transition-colors focus:outline-none" title="Search" aria-label="Search Products">
+                    <button @click="$dispatch('open-search')" type="button" class="p-2 sm:p-2.5 hover:text-[#8C713B] transition-colors focus:outline-none rounded-sm hover:bg-black/5" title="Search" aria-label="Search Products">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                     </button>
 
-                    <!-- Account -->
-                    <a href="{{ auth()->check() ? route('account.dashboard') : route('customer.login') }}" class="p-2 hover:text-[#8C713B] transition-colors" title="Account" aria-label="Customer Account">
+                    <!-- Account (Shown on sm+ screens, easily accessed in mobile drawer on phones) -->
+                    <a href="{{ auth()->check() ? route('account.dashboard') : route('customer.login') }}" class="hidden sm:inline-flex p-2 sm:p-2.5 hover:text-[#8C713B] transition-colors rounded-sm hover:bg-black/5" title="Account" aria-label="Customer Account">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                         </svg>
                     </a>
 
                     <!-- Wishlist -->
-                    <a href="{{ route('wishlist.index') }}" class="p-2 hover:text-[#8C713B] transition-colors relative" title="Wishlist" aria-label="Customer Wishlist">
+                    <a href="{{ route('wishlist.index') }}" class="p-2 sm:p-2.5 hover:text-[#8C713B] transition-colors relative rounded-sm hover:bg-black/5" title="Wishlist" aria-label="Customer Wishlist">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                         </svg>
-                        <span id="header-wishlist-badge" class="absolute -top-0.5 -right-0.5 bg-[#0A3828] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold shadow-xs border border-white" style="display: {{ ($wishlistCount ?? 0) > 0 ? 'flex' : 'none' }};">
+                        <span id="header-wishlist-badge" class="absolute -top-0.5 -right-0.5 bg-[#0A3828] text-white text-[9px] sm:text-[10px] min-w-[16px] h-[16px] px-1 rounded-full flex items-center justify-center font-bold shadow-xs border border-white leading-none pointer-events-none" style="display: {{ ($wishlistCount ?? 0) > 0 ? 'flex' : 'none' }};">
                             {{ $wishlistCount ?? 0 }}
                         </span>
                     </a>
 
-                    <!-- Cart Drawer Trigger -->
-                    <button @click="$dispatch('open-cart')" type="button" class="p-2 hover:text-[#8C713B] transition-colors relative focus:outline-none" title="Shopping Cart" aria-label="Shopping Bag">
+                    <!-- Cart Drawer Trigger with Protected Safe Margins and Sharp Badge -->
+                    <button @click="$dispatch('open-cart')" type="button" class="p-2 sm:p-2.5 hover:text-[#8C713B] transition-colors relative focus:outline-none flex items-center justify-center rounded-sm hover:bg-black/5 shrink-0" title="Shopping Cart" aria-label="Shopping Bag">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                         </svg>
-                        <span id="header-cart-badge" class="absolute -top-0.5 -right-0.5 bg-[#58111A] text-[#F7EED9] text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold shadow-xs border border-[#D4AF37]/50" style="display: {{ ($cartCount ?? 0) > 0 ? 'flex' : 'none' }};">
+                        <span id="header-cart-badge"
+                              class="absolute -top-1 -right-1 bg-[#58111A] text-[#F7EED9] text-[9px] sm:text-[10px] min-w-[17px] h-[17px] sm:min-w-[18px] sm:h-[18px] px-1 rounded-full flex items-center justify-center font-bold shadow-xs border border-[#D4AF37]/50 pointer-events-none z-10 leading-none"
+                              style="display: {{ ($cartCount ?? 0) > 0 ? 'flex' : 'none' }};">
                             {{ $cartCount ?? 0 }}
                         </span>
                     </button>
@@ -161,68 +169,169 @@
 
         <!-- Mobile Navigation Drawer -->
         <div x-show="mobileMenuOpen"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="-translate-x-full opacity-0"
-             x-transition:enter-end="translate-x-0 opacity-100"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="translate-x-0 opacity-100"
-             x-transition:leave-end="-translate-x-full opacity-0"
-             class="fixed inset-0 z-50 lg:hidden flex"
+             x-cloak
+             class="fixed inset-0 z-50 lg:hidden"
              style="display: none;">
 
             <!-- Backdrop -->
-            <div @click="mobileMenuOpen = false" class="fixed inset-0 bg-black/60 backdrop-blur-sm"></div>
+            <div x-show="mobileMenuOpen"
+                 x-transition:enter="transition-opacity ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition-opacity ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="mobileMenuOpen = false"
+                 class="fixed inset-0 bg-black/60 backdrop-blur-xs"></div>
 
-            <!-- Drawer Panel (Light Luxury Ivory Style) -->
-            <div class="relative w-4/5 max-w-sm bg-[#FDFBF7] h-full shadow-2xl z-10 flex flex-col justify-between overflow-y-auto">
+            <!-- Drawer Panel (Light Luxury Ivory Style with Smooth Slide) -->
+            <div x-show="mobileMenuOpen"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="-translate-x-full"
+                 x-transition:enter-end="translate-x-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="translate-x-0"
+                 x-transition:leave-end="-translate-x-full"
+                 class="fixed inset-y-0 left-0 w-[86%] max-w-sm bg-[#FDFBF7] h-full shadow-2xl z-10 flex flex-col justify-between overflow-y-auto border-r border-[#D4AF37]/30">
+
                 <div>
-                    <div class="p-5 bg-[#FAF7F2] border-b border-[#E8DFD5] flex items-center justify-between text-[#2D1C1B]">
+                    <!-- Drawer Header -->
+                    <div class="p-4 sm:p-5 bg-[#FAF7F2] border-b border-[#E8DFD5] flex items-center justify-between text-[#2D1C1B]">
                         <div class="flex items-center gap-3">
-                            <div class="w-11 h-11 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#0A3828] to-[#D4AF37] shadow shrink-0">
+                            <div class="w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#0A3828] to-[#D4AF37] shadow shrink-0">
                                 <img src="{{ asset('images/logo.png') }}" alt="Gauri Suits & Jewel" class="w-full h-full object-cover rounded-full">
                             </div>
                             <div>
-                                <span class="font-serif text-xl tracking-[0.16em] text-[#3B0A11] font-normal block leading-tight">GAURI</span>
-                                <span class="block text-[8.5px] tracking-[0.32em] text-[#8C713B] uppercase font-semibold">SUITS &amp; JEWEL</span>
+                                <span class="font-serif text-lg tracking-[0.16em] text-[#3B0A11] font-normal block leading-tight">GAURI</span>
+                                <span class="block text-[8px] tracking-[0.32em] text-[#8C713B] uppercase font-semibold">SUITS &amp; JEWEL</span>
                             </div>
                         </div>
-                        <button @click="mobileMenuOpen = false" class="text-[#2D1C1B] hover:text-[#58111A] p-2" aria-label="Close Navigation Menu">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        <button @click="mobileMenuOpen = false"
+                                class="w-9 h-9 flex items-center justify-center text-[#2D1C1B] hover:text-[#58111A] hover:bg-black/5 rounded-full transition-colors focus:outline-none"
+                                aria-label="Close Navigation Menu">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                         </button>
                     </div>
 
-                    <div class="px-6 py-6 space-y-4 text-xs font-semibold tracking-[0.2em] uppercase text-[#2D1C1B]">
-                        <a href="{{ route('home') }}" class="block py-1 hover:text-[#58111A] {{ request()->routeIs('home') ? 'text-[#58111A] font-bold' : '' }}">Home</a>
-                        <a href="{{ route('shop.new-arrivals') }}" class="block py-1 text-[#0A3828] font-bold hover:text-[#125B40]">New Arrivals</a>
-                        <a href="{{ route('shop.suits') }}" class="block py-1 hover:text-[#58111A] {{ request()->is('suits*') || request()->is('punjabi-suits*') ? 'text-[#58111A] font-bold' : '' }}">Suits</a>
-                        <a href="{{ route('shop.jewellery') }}" class="block py-1 hover:text-[#58111A] {{ request()->is('jewellery*') ? 'text-[#58111A] font-bold' : '' }}">Jewellery</a>
-                        <a href="{{ route('shop.wedding-collection') }}" class="block py-1 hover:text-[#58111A] {{ request()->is('wedding*') || request()->is('bridal*') ? 'text-[#58111A] font-bold' : '' }}">Bridal</a>
-                        <a href="{{ route('shop.best-sellers') }}" class="block py-1 hover:text-[#58111A] {{ request()->routeIs('shop.best-sellers') ? 'text-[#58111A] font-bold' : '' }}">Best Sellers</a>
-                        <a href="{{ route('shop.sale') }}" class="block py-1 text-[#7A1D2A] font-bold">Sale</a>
-                        <div class="pt-4 border-t border-[#E8DFD5] space-y-2.5">
-                            <a href="{{ route('blog.index') }}" class="block text-xs text-[#6B5E55] tracking-wider normal-case">Editorial &amp; Stories</a>
-                            <a href="{{ route('pages.about') }}" class="block text-xs text-[#6B5E55] tracking-wider normal-case">Our Legacy &amp; Craft</a>
-                            <a href="{{ route('pages.contact') }}" class="block text-xs text-[#6B5E55] tracking-wider normal-case">Contact Concierge</a>
-                            <a href="{{ route('order.track') }}" class="block text-xs text-[#6B5E55] tracking-wider normal-case">Track Your Order</a>
-                        </div>
+                    <!-- Mobile Search Shortcut -->
+                    <div class="px-5 pt-4">
+                        <button @click="mobileMenuOpen = false; $nextTick(() => $dispatch('open-search'))"
+                                type="button"
+                                class="w-full flex items-center gap-2.5 px-3.5 py-2.5 bg-[#F5EFEB] border border-[#E8DFD5] rounded-xs text-[#8C713B] text-xs hover:border-[#C5A869] transition-colors text-left">
+                            <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <span class="text-stone-500 font-sans">Search suits, jewels, fabrics...</span>
+                        </button>
                     </div>
+
+                    <!-- Quick Links (Bag & Wishlist) -->
+                    <div class="px-5 pt-3 grid grid-cols-2 gap-2">
+                        <button @click="mobileMenuOpen = false; $nextTick(() => $dispatch('open-cart'))"
+                                type="button"
+                                class="flex items-center justify-center gap-2 py-2 px-3 bg-[#FAF7F2] border border-[#E8DFD5] rounded-xs text-xs font-semibold uppercase tracking-wider text-[#3B0A11] hover:bg-[#58111A] hover:text-white transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                            <span>Bag</span>
+                            <span id="mobile-menu-cart-badge" class="ml-0.5 px-1.5 py-0.2 bg-[#58111A] text-[#F7EED9] text-[9.5px] font-bold rounded-full">
+                                {{ $cartCount ?? 0 }}
+                            </span>
+                        </button>
+                        <a href="{{ route('wishlist.index') }}"
+                           class="flex items-center justify-center gap-2 py-2 px-3 bg-[#FAF7F2] border border-[#E8DFD5] rounded-xs text-xs font-semibold uppercase tracking-wider text-[#0A3828] hover:bg-[#0A3828] hover:text-white transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                            <span>Wishlist</span>
+                            <span class="ml-0.5 px-1.5 py-0.2 bg-[#0A3828] text-white text-[9.5px] font-bold rounded-full">
+                                {{ $wishlistCount ?? 0 }}
+                            </span>
+                        </a>
+                    </div>
+
+                    <!-- Navigation Links -->
+                    <nav class="px-5 py-4 space-y-1 text-xs font-semibold tracking-[0.16em] uppercase text-[#2D1C1B]">
+                        <a href="{{ route('home') }}" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->routeIs('home') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                            <span>Home</span>
+                            <span class="text-stone-400">&rsaquo;</span>
+                        </a>
+                        <a href="{{ route('shop.new-arrivals') }}" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] text-[#0A3828] font-bold">
+                            <div class="flex items-center gap-2">
+                                <span>New Arrivals</span>
+                                <span class="px-1.5 py-0.5 text-[8.5px] bg-[#0A3828] text-[#E6CA65] font-bold tracking-wider rounded-xs">NEW</span>
+                            </div>
+                            <span class="text-stone-400">&rsaquo;</span>
+                        </a>
+                        <a href="{{ route('shop.suits') }}" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('suits*') || request()->is('punjabi-suits*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                            <span>Punjabi Suits</span>
+                            <span class="text-stone-400">&rsaquo;</span>
+                        </a>
+                        <a href="{{ route('shop.jewellery') }}" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('jewellery*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                            <span>Heirloom Jewellery</span>
+                            <span class="text-stone-400">&rsaquo;</span>
+                        </a>
+                        <a href="{{ route('shop.wedding-collection') }}" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('wedding*') || request()->is('bridal*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                            <span>Bridal Couture</span>
+                            <span class="text-stone-400">&rsaquo;</span>
+                        </a>
+                        <a href="{{ route('shop.best-sellers') }}" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->routeIs('shop.best-sellers') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                            <span>Best Sellers</span>
+                            <span class="text-stone-400">&rsaquo;</span>
+                        </a>
+                        <a href="{{ route('shop.sale') }}" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] text-[#7A1D2A] font-bold">
+                            <div class="flex items-center gap-2">
+                                <span>Royal Sale</span>
+                                <span class="px-1.5 py-0.5 text-[8.5px] bg-[#7A1D2A] text-white font-bold tracking-wider rounded-xs">OFFERS</span>
+                            </div>
+                            <span class="text-stone-400">&rsaquo;</span>
+                        </a>
+
+                        <div class="pt-3 mt-2 border-t border-[#E8DFD5] space-y-1 text-xs font-normal normal-case tracking-normal">
+                            <a href="{{ route('order.track') }}" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
+                                <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h2"/></svg>
+                                <span>Track Your Order</span>
+                            </a>
+                            <a href="{{ route('pages.about') }}" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
+                                <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                                <span>Our Legacy &amp; Atelier Craft</span>
+                            </a>
+                            <a href="{{ route('pages.contact') }}" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
+                                <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                <span>Contact Concierge</span>
+                            </a>
+                        </div>
+                    </nav>
                 </div>
 
-                <div class="p-5 bg-[#F5EFEB] border-t border-[#E8DFD5]">
+                <!-- Bottom Auth & Concierge Section -->
+                <div class="p-5 bg-[#FAF7F2] border-t border-[#E8DFD5] space-y-3">
                     @auth
                         <div class="flex items-center justify-between text-xs">
-                            <span class="font-medium text-[#2A1810]">Signed in as {{ auth()->user()->name }}</span>
-                            <form action="{{ route('customer.logout') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="text-[#7A1D2A] font-bold hover:underline">Logout</button>
-                            </form>
+                            <div>
+                                <span class="text-[11px] text-stone-500 block">Signed in as</span>
+                                <span class="font-bold text-[#2A1810]">{{ auth()->user()->name }}</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <a href="{{ route('account.dashboard') }}" class="text-[#8C713B] font-bold hover:underline">My Account</a>
+                                <form action="{{ route('customer.logout') }}" method="POST" class="inline">
+                                    @csrf
+                                    <button type="submit" class="text-[#7A1D2A] font-bold hover:underline">Logout</button>
+                                </form>
+                            </div>
                         </div>
                     @else
-                        <div class="grid grid-cols-2 gap-3 text-center">
-                            <a href="{{ route('customer.login') }}" class="py-2.5 px-3 bg-[#58111A] text-white text-xs tracking-wider uppercase font-semibold rounded-xs hover:bg-[#4A0E17] transition-colors">Sign In</a>
-                            <a href="{{ route('customer.register') }}" class="py-2.5 px-3 border border-[#58111A] text-[#58111A] text-xs tracking-wider uppercase font-semibold rounded-xs hover:bg-[#58111A]/5 transition-colors">Register</a>
+                        <div class="grid grid-cols-2 gap-2.5 text-center">
+                            <a href="{{ route('customer.login') }}" class="py-2.5 px-3 bg-[#58111A] text-[#F7EED9] text-xs tracking-wider uppercase font-bold rounded-xs hover:bg-[#4A0E17] transition-colors shadow-xs">Sign In</a>
+                            <a href="{{ route('customer.register') }}" class="py-2.5 px-3 border border-[#58111A] text-[#58111A] text-xs tracking-wider uppercase font-bold rounded-xs hover:bg-[#58111A]/5 transition-colors">Register</a>
                         </div>
                     @endauth
+
+                    <!-- WhatsApp Quick Action inside Drawer -->
+                    @php
+                        $drawerWa = preg_replace('/[^0-9]/', '', \App\Models\Setting::get('whatsapp_number', '+919984700018'));
+                    @endphp
+                    <a href="https://wa.me/{{ $drawerWa }}?text={{ urlencode('Hello Gauri Suits & Jewel, I need personal stylist assistance.') }}"
+                       target="_blank"
+                       rel="noopener"
+                       class="w-full py-2 px-3 bg-[#0A3828] text-white text-xs font-semibold uppercase tracking-wider rounded-xs flex items-center justify-center gap-2 hover:bg-[#083323] transition-colors">
+                        <svg class="w-4 h-4 fill-current text-[#25D366]" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.861.174.086.275.072.376-.044.102-.115.434-.506.549-.679.116-.173.232-.145.39-.087s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/></svg>
+                        <span>Stylist on WhatsApp</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -493,9 +602,9 @@
     <a href="https://wa.me/{{ $cleanWa }}?text={{ urlencode('Hello Gauri Suits & Jewel, I would like to inquire about your collections.') }}"
        target="_blank"
        rel="noopener"
-       class="fixed bottom-6 right-6 z-30 w-14 h-14 bg-[#25D366] text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 group"
+       class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-30 w-12 h-12 sm:w-14 sm:h-14 bg-[#25D366] text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-transform duration-300 group"
        title="Chat with our Personal Stylist on WhatsApp">
-        <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
+        <svg class="w-6 h-6 sm:w-7 sm:h-7 fill-current" viewBox="0 0 24 24">
             <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
         </svg>
     </a>
