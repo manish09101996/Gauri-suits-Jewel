@@ -24,22 +24,60 @@ window.showToast = function(message, type = 'success') {
     }));
 };
 
-// Global Mobile Menu Store
-Alpine.store('mobileMenu', {
+// Mobile Navigation Drawer Component
+Alpine.data('mobileDrawer', () => ({
     open: false,
-    toggle() {
-        this.open = !this.open;
-    },
-    close() {
-        this.open = false;
-    },
     init() {
         window.addEventListener('open-mobile-menu', () => {
             this.open = true;
+            document.body.classList.add('overflow-hidden');
         });
         window.addEventListener('close-mobile-menu', () => {
             this.open = false;
+            document.body.classList.remove('overflow-hidden');
         });
+        window.addEventListener('toggle-mobile-menu', () => {
+            this.open = !this.open;
+            if (this.open) {
+                document.body.classList.add('overflow-hidden');
+            } else {
+                document.body.classList.remove('overflow-hidden');
+            }
+        });
+    },
+    toggle() {
+        this.open = !this.open;
+        if (this.open) {
+            document.body.classList.add('overflow-hidden');
+        } else {
+            document.body.classList.remove('overflow-hidden');
+        }
+    },
+    close() {
+        this.open = false;
+        document.body.classList.remove('overflow-hidden');
+    }
+}));
+
+// Global window helpers for instant execution anywhere
+window.openMobileMenu = function() {
+    window.dispatchEvent(new CustomEvent('open-mobile-menu'));
+};
+window.closeMobileMenu = function() {
+    window.dispatchEvent(new CustomEvent('close-mobile-menu'));
+};
+window.toggleMobileMenu = function() {
+    window.dispatchEvent(new CustomEvent('toggle-mobile-menu'));
+};
+
+// Global Mobile Menu Store fallback
+Alpine.store('mobileMenu', {
+    open: false,
+    toggle() {
+        window.toggleMobileMenu();
+    },
+    close() {
+        window.closeMobileMenu();
     }
 });
 

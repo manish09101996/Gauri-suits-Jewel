@@ -78,15 +78,15 @@
 
     <!-- Main Navigation Header (Light Ivory / Champagne with Maroon Accents & Gold Details) -->
     <!-- Main Navigation Header (Light Ivory / Champagne with Maroon Accents & Gold Details) -->
-    <header class="sticky top-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E8DFD5] text-[#2D1C1B] transition-all duration-300 shadow-[0_2px_15px_rgba(0,0,0,0.03)]">
+    <header x-data class="sticky top-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E8DFD5] text-[#2D1C1B] transition-all duration-300 shadow-[0_2px_15px_rgba(0,0,0,0.03)]">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-18 sm:h-20 md:h-24">
 
                 <!-- Left: Mobile Menu Toggle & Brand Logo -->
                 <div class="flex items-center gap-1.5 sm:gap-6 min-w-0">
-                    <button @click="$store.mobileMenu.toggle()"
+                    <button @click="$dispatch('toggle-mobile-menu')"
                             type="button"
-                            class="lg:hidden w-10 h-10 -ml-1 flex items-center justify-center text-[#2D1C1B] hover:text-[#58111A] hover:bg-black/5 active:bg-black/10 rounded-sm focus:outline-none transition-colors"
+                            class="lg:hidden w-11 h-11 -ml-1 flex items-center justify-center text-[#2D1C1B] hover:text-[#58111A] hover:bg-black/5 active:bg-black/10 rounded-sm focus:outline-none transition-colors cursor-pointer"
                             aria-label="Open Navigation Menu">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -165,25 +165,27 @@
         </div>
     </header>
 
-    <!-- Fullscreen Mobile Navigation Drawer (Placed at root body level, free from header containing block) -->
-    <div x-show="$store.mobileMenu.open"
+    <!-- Fullscreen Mobile Navigation Drawer (Root Body Level) -->
+    <div x-data="mobileDrawer"
+         x-show="open"
          x-cloak
+         @keydown.escape.window="close()"
          class="fixed inset-0 z-50 lg:hidden"
          style="display: none;">
 
         <!-- Backdrop with Smooth Fade -->
-        <div x-show="$store.mobileMenu.open"
+        <div x-show="open"
              x-transition:enter="transition-opacity ease-out duration-300"
              x-transition:enter-start="opacity-0"
              x-transition:enter-end="opacity-100"
              x-transition:leave="transition-opacity ease-in duration-200"
              x-transition:leave-start="opacity-100"
              x-transition:leave-end="opacity-0"
-             @click="$store.mobileMenu.close()"
+             @click="close()"
              class="fixed inset-0 bg-black/60 backdrop-blur-xs"></div>
 
         <!-- Drawer Panel with Smooth Slide from Left -->
-        <div x-show="$store.mobileMenu.open"
+        <div x-show="open"
              x-transition:enter="transition ease-out duration-300 transform"
              x-transition:enter-start="-translate-x-full"
              x-transition:enter-end="translate-x-0"
@@ -204,8 +206,8 @@
                             <span class="block text-[8px] tracking-[0.32em] text-[#8C713B] uppercase font-semibold">SUITS &amp; JEWEL</span>
                         </div>
                     </div>
-                    <button @click="$store.mobileMenu.close()"
-                            class="w-9 h-9 flex items-center justify-center text-[#2D1C1B] hover:text-[#58111A] hover:bg-black/5 rounded-full transition-colors focus:outline-none"
+                    <button @click="close()"
+                            class="w-9 h-9 flex items-center justify-center text-[#2D1C1B] hover:text-[#58111A] hover:bg-black/5 rounded-full transition-colors focus:outline-none cursor-pointer"
                             aria-label="Close Navigation Menu">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
@@ -213,9 +215,9 @@
 
                 <!-- Mobile Search Shortcut -->
                 <div class="px-5 pt-4">
-                    <button @click="$store.mobileMenu.close(); $nextTick(() => $dispatch('open-search'))"
+                    <button @click="close(); $nextTick(() => $dispatch('open-search'))"
                             type="button"
-                            class="w-full flex items-center gap-2.5 px-3.5 py-2.5 bg-[#F5EFEB] border border-[#E8DFD5] rounded-xs text-[#8C713B] text-xs hover:border-[#C5A869] transition-colors text-left">
+                            class="w-full flex items-center gap-2.5 px-3.5 py-2.5 bg-[#F5EFEB] border border-[#E8DFD5] rounded-xs text-[#8C713B] text-xs hover:border-[#C5A869] transition-colors text-left cursor-pointer">
                         <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         <span class="text-stone-500 font-sans">Search suits, jewels, fabrics...</span>
                     </button>
@@ -223,9 +225,9 @@
 
                 <!-- Quick Links (Bag & Wishlist) -->
                 <div class="px-5 pt-3 grid grid-cols-2 gap-2">
-                    <button @click="$store.mobileMenu.close(); $nextTick(() => $dispatch('open-cart'))"
+                    <button @click="close(); $nextTick(() => $dispatch('open-cart'))"
                             type="button"
-                            class="flex items-center justify-center gap-2 py-2 px-3 bg-[#FAF7F2] border border-[#E8DFD5] rounded-xs text-xs font-semibold uppercase tracking-wider text-[#3B0A11] hover:bg-[#58111A] hover:text-white transition-colors">
+                            class="flex items-center justify-center gap-2 py-2 px-3 bg-[#FAF7F2] border border-[#E8DFD5] rounded-xs text-xs font-semibold uppercase tracking-wider text-[#3B0A11] hover:bg-[#58111A] hover:text-white transition-colors cursor-pointer">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                         <span>Bag</span>
                         <span id="mobile-menu-cart-badge" class="ml-0.5 px-1.5 py-0.2 bg-[#58111A] text-[#F7EED9] text-[9.5px] font-bold rounded-full">
@@ -233,7 +235,7 @@
                         </span>
                     </button>
                     <a href="{{ route('wishlist.index') }}"
-                       @click="$store.mobileMenu.close()"
+                       @click="close()"
                        class="flex items-center justify-center gap-2 py-2 px-3 bg-[#FAF7F2] border border-[#E8DFD5] rounded-xs text-xs font-semibold uppercase tracking-wider text-[#0A3828] hover:bg-[#0A3828] hover:text-white transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                         <span>Wishlist</span>
@@ -245,34 +247,34 @@
 
                 <!-- Navigation Links -->
                 <nav class="px-5 py-4 space-y-1 text-xs font-semibold tracking-[0.16em] uppercase text-[#2D1C1B]">
-                    <a href="{{ route('home') }}" @click="$store.mobileMenu.close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->routeIs('home') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                    <a href="{{ route('home') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->routeIs('home') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
                         <span>Home</span>
                         <span class="text-stone-400">&rsaquo;</span>
                     </a>
-                    <a href="{{ route('shop.new-arrivals') }}" @click="$store.mobileMenu.close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] text-[#0A3828] font-bold">
+                    <a href="{{ route('shop.new-arrivals') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] text-[#0A3828] font-bold">
                         <div class="flex items-center gap-2">
                             <span>New Arrivals</span>
                             <span class="px-1.5 py-0.5 text-[8.5px] bg-[#0A3828] text-[#E6CA65] font-bold tracking-wider rounded-xs">NEW</span>
                         </div>
                         <span class="text-stone-400">&rsaquo;</span>
                     </a>
-                    <a href="{{ route('shop.suits') }}" @click="$store.mobileMenu.close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('suits*') || request()->is('punjabi-suits*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                    <a href="{{ route('shop.suits') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('suits*') || request()->is('punjabi-suits*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
                         <span>Punjabi Suits</span>
                         <span class="text-stone-400">&rsaquo;</span>
                     </a>
-                    <a href="{{ route('shop.jewellery') }}" @click="$store.mobileMenu.close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('jewellery*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                    <a href="{{ route('shop.jewellery') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('jewellery*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
                         <span>Heirloom Jewellery</span>
                         <span class="text-stone-400">&rsaquo;</span>
                     </a>
-                    <a href="{{ route('shop.wedding-collection') }}" @click="$store.mobileMenu.close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('wedding*') || request()->is('bridal*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                    <a href="{{ route('shop.wedding-collection') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('wedding*') || request()->is('bridal*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
                         <span>Bridal Couture</span>
                         <span class="text-stone-400">&rsaquo;</span>
                     </a>
-                    <a href="{{ route('shop.best-sellers') }}" @click="$store.mobileMenu.close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->routeIs('shop.best-sellers') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                    <a href="{{ route('shop.best-sellers') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->routeIs('shop.best-sellers') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
                         <span>Best Sellers</span>
                         <span class="text-stone-400">&rsaquo;</span>
                     </a>
-                    <a href="{{ route('shop.sale') }}" @click="$store.mobileMenu.close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] text-[#7A1D2A] font-bold">
+                    <a href="{{ route('shop.sale') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] text-[#7A1D2A] font-bold">
                         <div class="flex items-center gap-2">
                             <span>Royal Sale</span>
                             <span class="px-1.5 py-0.5 text-[8.5px] bg-[#7A1D2A] text-white font-bold tracking-wider rounded-xs">OFFERS</span>
@@ -281,15 +283,15 @@
                     </a>
 
                     <div class="pt-3 mt-2 border-t border-[#E8DFD5] space-y-1 text-xs font-normal normal-case tracking-normal">
-                        <a href="{{ route('order.track') }}" @click="$store.mobileMenu.close()" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
+                        <a href="{{ route('order.track') }}" @click="close()" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
                             <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h2"/></svg>
                             <span>Track Your Order</span>
                         </a>
-                        <a href="{{ route('pages.about') }}" @click="$store.mobileMenu.close()" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
+                        <a href="{{ route('pages.about') }}" @click="close()" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
                             <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                             <span>Our Legacy &amp; Atelier Craft</span>
                         </a>
-                        <a href="{{ route('pages.contact') }}" @click="$store.mobileMenu.close()" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
+                        <a href="{{ route('pages.contact') }}" @click="close()" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
                             <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                             <span>Contact Concierge</span>
                         </a>
@@ -306,7 +308,7 @@
                             <span class="font-bold text-[#2A1810]">{{ auth()->user()->name }}</span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <a href="{{ route('account.dashboard') }}" @click="$store.mobileMenu.close()" class="text-[#8C713B] font-bold hover:underline">My Account</a>
+                            <a href="{{ route('account.dashboard') }}" @click="close()" class="text-[#8C713B] font-bold hover:underline">My Account</a>
                             <form action="{{ route('customer.logout') }}" method="POST" class="inline">
                                 @csrf
                                 <button type="submit" class="text-[#7A1D2A] font-bold hover:underline">Logout</button>
@@ -315,8 +317,8 @@
                     </div>
                 @else
                     <div class="grid grid-cols-2 gap-2.5 text-center">
-                        <a href="{{ route('customer.login') }}" @click="$store.mobileMenu.close()" class="py-2.5 px-3 bg-[#58111A] text-[#F7EED9] text-xs tracking-wider uppercase font-bold rounded-xs hover:bg-[#4A0E17] transition-colors shadow-xs">Sign In</a>
-                        <a href="{{ route('customer.register') }}" @click="$store.mobileMenu.close()" class="py-2.5 px-3 border border-[#58111A] text-[#58111A] text-xs tracking-wider uppercase font-bold rounded-xs hover:bg-[#58111A]/5 transition-colors">Register</a>
+                        <a href="{{ route('customer.login') }}" @click="close()" class="py-2.5 px-3 bg-[#58111A] text-[#F7EED9] text-xs tracking-wider uppercase font-bold rounded-xs hover:bg-[#4A0E17] transition-colors shadow-xs">Sign In</a>
+                        <a href="{{ route('customer.register') }}" @click="close()" class="py-2.5 px-3 border border-[#58111A] text-[#58111A] text-xs tracking-wider uppercase font-bold rounded-xs hover:bg-[#58111A]/5 transition-colors">Register</a>
                     </div>
                 @endauth
 
