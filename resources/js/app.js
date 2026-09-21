@@ -24,6 +24,25 @@ window.showToast = function(message, type = 'success') {
     }));
 };
 
+// Global Mobile Menu Store
+Alpine.store('mobileMenu', {
+    open: false,
+    toggle() {
+        this.open = !this.open;
+    },
+    close() {
+        this.open = false;
+    },
+    init() {
+        window.addEventListener('open-mobile-menu', () => {
+            this.open = true;
+        });
+        window.addEventListener('close-mobile-menu', () => {
+            this.open = false;
+        });
+    }
+});
+
 // Cart Drawer Store / Alpine Component
 Alpine.data('cartDrawer', () => ({
     open: false,

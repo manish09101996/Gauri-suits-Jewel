@@ -77,17 +77,14 @@
     @endif
 
     <!-- Main Navigation Header (Light Ivory / Champagne with Maroon Accents & Gold Details) -->
-    <header class="sticky top-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E8DFD5] text-[#2D1C1B] transition-all duration-300 shadow-[0_2px_15px_rgba(0,0,0,0.03)]"
-            x-data="{ mobileMenuOpen: false }"
-            @open-mobile-menu.window="mobileMenuOpen = true"
-            @close-mobile-menu.window="mobileMenuOpen = false"
-            @keydown.escape.window="mobileMenuOpen = false">
+    <!-- Main Navigation Header (Light Ivory / Champagne with Maroon Accents & Gold Details) -->
+    <header class="sticky top-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E8DFD5] text-[#2D1C1B] transition-all duration-300 shadow-[0_2px_15px_rgba(0,0,0,0.03)]">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-18 sm:h-20 md:h-24">
 
                 <!-- Left: Mobile Menu Toggle & Brand Logo -->
                 <div class="flex items-center gap-1.5 sm:gap-6 min-w-0">
-                    <button @click="mobileMenuOpen = !mobileMenuOpen"
+                    <button @click="$store.mobileMenu.toggle()"
                             type="button"
                             class="lg:hidden w-10 h-10 -ml-1 flex items-center justify-center text-[#2D1C1B] hover:text-[#58111A] hover:bg-black/5 active:bg-black/10 rounded-sm focus:outline-none transition-colors"
                             aria-label="Open Navigation Menu">
@@ -166,176 +163,177 @@
                 </div>
             </div>
         </div>
+    </header>
 
-        <!-- Mobile Navigation Drawer -->
-        <div x-show="mobileMenuOpen"
-             x-cloak
-             class="fixed inset-0 z-50 lg:hidden"
-             style="display: none;">
+    <!-- Fullscreen Mobile Navigation Drawer (Placed at root body level, free from header containing block) -->
+    <div x-show="$store.mobileMenu.open"
+         x-cloak
+         class="fixed inset-0 z-50 lg:hidden"
+         style="display: none;">
 
-            <!-- Backdrop -->
-            <div x-show="mobileMenuOpen"
-                 x-transition:enter="transition-opacity ease-out duration-300"
-                 x-transition:enter-start="opacity-0"
-                 x-transition:enter-end="opacity-100"
-                 x-transition:leave="transition-opacity ease-in duration-200"
-                 x-transition:leave-start="opacity-100"
-                 x-transition:leave-end="opacity-0"
-                 @click="mobileMenuOpen = false"
-                 class="fixed inset-0 bg-black/60 backdrop-blur-xs"></div>
+        <!-- Backdrop with Smooth Fade -->
+        <div x-show="$store.mobileMenu.open"
+             x-transition:enter="transition-opacity ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition-opacity ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             @click="$store.mobileMenu.close()"
+             class="fixed inset-0 bg-black/60 backdrop-blur-xs"></div>
 
-            <!-- Drawer Panel (Light Luxury Ivory Style with Smooth Slide) -->
-            <div x-show="mobileMenuOpen"
-                 x-transition:enter="transition ease-out duration-300"
-                 x-transition:enter-start="-translate-x-full"
-                 x-transition:enter-end="translate-x-0"
-                 x-transition:leave="transition ease-in duration-200"
-                 x-transition:leave-start="translate-x-0"
-                 x-transition:leave-end="-translate-x-full"
-                 class="fixed inset-y-0 left-0 w-[86%] max-w-sm bg-[#FDFBF7] h-full shadow-2xl z-10 flex flex-col justify-between overflow-y-auto border-r border-[#D4AF37]/30">
+        <!-- Drawer Panel with Smooth Slide from Left -->
+        <div x-show="$store.mobileMenu.open"
+             x-transition:enter="transition ease-out duration-300 transform"
+             x-transition:enter-start="-translate-x-full"
+             x-transition:enter-end="translate-x-0"
+             x-transition:leave="transition ease-in duration-200 transform"
+             x-transition:leave-start="translate-x-0"
+             x-transition:leave-end="-translate-x-full"
+             class="fixed inset-y-0 left-0 w-[86%] max-w-sm bg-[#FDFBF7] h-full shadow-2xl z-50 flex flex-col justify-between overflow-y-auto border-r border-[#D4AF37]/30">
 
-                <div>
-                    <!-- Drawer Header -->
-                    <div class="p-4 sm:p-5 bg-[#FAF7F2] border-b border-[#E8DFD5] flex items-center justify-between text-[#2D1C1B]">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#0A3828] to-[#D4AF37] shadow shrink-0">
-                                <img src="{{ asset('images/logo.png') }}" alt="Gauri Suits & Jewel" class="w-full h-full object-cover rounded-full">
-                            </div>
-                            <div>
-                                <span class="font-serif text-lg tracking-[0.16em] text-[#3B0A11] font-normal block leading-tight">GAURI</span>
-                                <span class="block text-[8px] tracking-[0.32em] text-[#8C713B] uppercase font-semibold">SUITS &amp; JEWEL</span>
-                            </div>
+            <div>
+                <!-- Drawer Header -->
+                <div class="p-4 sm:p-5 bg-[#FAF7F2] border-b border-[#E8DFD5] flex items-center justify-between text-[#2D1C1B]">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#0A3828] to-[#D4AF37] shadow shrink-0">
+                            <img src="{{ asset('images/logo.png') }}" alt="Gauri Suits & Jewel" class="w-full h-full object-cover rounded-full">
                         </div>
-                        <button @click="mobileMenuOpen = false"
-                                class="w-9 h-9 flex items-center justify-center text-[#2D1C1B] hover:text-[#58111A] hover:bg-black/5 rounded-full transition-colors focus:outline-none"
-                                aria-label="Close Navigation Menu">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                        </button>
-                    </div>
-
-                    <!-- Mobile Search Shortcut -->
-                    <div class="px-5 pt-4">
-                        <button @click="mobileMenuOpen = false; $nextTick(() => $dispatch('open-search'))"
-                                type="button"
-                                class="w-full flex items-center gap-2.5 px-3.5 py-2.5 bg-[#F5EFEB] border border-[#E8DFD5] rounded-xs text-[#8C713B] text-xs hover:border-[#C5A869] transition-colors text-left">
-                            <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                            <span class="text-stone-500 font-sans">Search suits, jewels, fabrics...</span>
-                        </button>
-                    </div>
-
-                    <!-- Quick Links (Bag & Wishlist) -->
-                    <div class="px-5 pt-3 grid grid-cols-2 gap-2">
-                        <button @click="mobileMenuOpen = false; $nextTick(() => $dispatch('open-cart'))"
-                                type="button"
-                                class="flex items-center justify-center gap-2 py-2 px-3 bg-[#FAF7F2] border border-[#E8DFD5] rounded-xs text-xs font-semibold uppercase tracking-wider text-[#3B0A11] hover:bg-[#58111A] hover:text-white transition-colors">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                            <span>Bag</span>
-                            <span id="mobile-menu-cart-badge" class="ml-0.5 px-1.5 py-0.2 bg-[#58111A] text-[#F7EED9] text-[9.5px] font-bold rounded-full">
-                                {{ $cartCount ?? 0 }}
-                            </span>
-                        </button>
-                        <a href="{{ route('wishlist.index') }}"
-                           class="flex items-center justify-center gap-2 py-2 px-3 bg-[#FAF7F2] border border-[#E8DFD5] rounded-xs text-xs font-semibold uppercase tracking-wider text-[#0A3828] hover:bg-[#0A3828] hover:text-white transition-colors">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                            <span>Wishlist</span>
-                            <span class="ml-0.5 px-1.5 py-0.2 bg-[#0A3828] text-white text-[9.5px] font-bold rounded-full">
-                                {{ $wishlistCount ?? 0 }}
-                            </span>
-                        </a>
-                    </div>
-
-                    <!-- Navigation Links -->
-                    <nav class="px-5 py-4 space-y-1 text-xs font-semibold tracking-[0.16em] uppercase text-[#2D1C1B]">
-                        <a href="{{ route('home') }}" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->routeIs('home') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
-                            <span>Home</span>
-                            <span class="text-stone-400">&rsaquo;</span>
-                        </a>
-                        <a href="{{ route('shop.new-arrivals') }}" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] text-[#0A3828] font-bold">
-                            <div class="flex items-center gap-2">
-                                <span>New Arrivals</span>
-                                <span class="px-1.5 py-0.5 text-[8.5px] bg-[#0A3828] text-[#E6CA65] font-bold tracking-wider rounded-xs">NEW</span>
-                            </div>
-                            <span class="text-stone-400">&rsaquo;</span>
-                        </a>
-                        <a href="{{ route('shop.suits') }}" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('suits*') || request()->is('punjabi-suits*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
-                            <span>Punjabi Suits</span>
-                            <span class="text-stone-400">&rsaquo;</span>
-                        </a>
-                        <a href="{{ route('shop.jewellery') }}" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('jewellery*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
-                            <span>Heirloom Jewellery</span>
-                            <span class="text-stone-400">&rsaquo;</span>
-                        </a>
-                        <a href="{{ route('shop.wedding-collection') }}" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('wedding*') || request()->is('bridal*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
-                            <span>Bridal Couture</span>
-                            <span class="text-stone-400">&rsaquo;</span>
-                        </a>
-                        <a href="{{ route('shop.best-sellers') }}" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->routeIs('shop.best-sellers') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
-                            <span>Best Sellers</span>
-                            <span class="text-stone-400">&rsaquo;</span>
-                        </a>
-                        <a href="{{ route('shop.sale') }}" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] text-[#7A1D2A] font-bold">
-                            <div class="flex items-center gap-2">
-                                <span>Royal Sale</span>
-                                <span class="px-1.5 py-0.5 text-[8.5px] bg-[#7A1D2A] text-white font-bold tracking-wider rounded-xs">OFFERS</span>
-                            </div>
-                            <span class="text-stone-400">&rsaquo;</span>
-                        </a>
-
-                        <div class="pt-3 mt-2 border-t border-[#E8DFD5] space-y-1 text-xs font-normal normal-case tracking-normal">
-                            <a href="{{ route('order.track') }}" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
-                                <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h2"/></svg>
-                                <span>Track Your Order</span>
-                            </a>
-                            <a href="{{ route('pages.about') }}" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
-                                <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                                <span>Our Legacy &amp; Atelier Craft</span>
-                            </a>
-                            <a href="{{ route('pages.contact') }}" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
-                                <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                                <span>Contact Concierge</span>
-                            </a>
+                        <div>
+                            <span class="font-serif text-lg tracking-[0.16em] text-[#3B0A11] font-normal block leading-tight">GAURI</span>
+                            <span class="block text-[8px] tracking-[0.32em] text-[#8C713B] uppercase font-semibold">SUITS &amp; JEWEL</span>
                         </div>
-                    </nav>
+                    </div>
+                    <button @click="$store.mobileMenu.close()"
+                            class="w-9 h-9 flex items-center justify-center text-[#2D1C1B] hover:text-[#58111A] hover:bg-black/5 rounded-full transition-colors focus:outline-none"
+                            aria-label="Close Navigation Menu">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
                 </div>
 
-                <!-- Bottom Auth & Concierge Section -->
-                <div class="p-5 bg-[#FAF7F2] border-t border-[#E8DFD5] space-y-3">
-                    @auth
-                        <div class="flex items-center justify-between text-xs">
-                            <div>
-                                <span class="text-[11px] text-stone-500 block">Signed in as</span>
-                                <span class="font-bold text-[#2A1810]">{{ auth()->user()->name }}</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <a href="{{ route('account.dashboard') }}" class="text-[#8C713B] font-bold hover:underline">My Account</a>
-                                <form action="{{ route('customer.logout') }}" method="POST" class="inline">
-                                    @csrf
-                                    <button type="submit" class="text-[#7A1D2A] font-bold hover:underline">Logout</button>
-                                </form>
-                            </div>
-                        </div>
-                    @else
-                        <div class="grid grid-cols-2 gap-2.5 text-center">
-                            <a href="{{ route('customer.login') }}" class="py-2.5 px-3 bg-[#58111A] text-[#F7EED9] text-xs tracking-wider uppercase font-bold rounded-xs hover:bg-[#4A0E17] transition-colors shadow-xs">Sign In</a>
-                            <a href="{{ route('customer.register') }}" class="py-2.5 px-3 border border-[#58111A] text-[#58111A] text-xs tracking-wider uppercase font-bold rounded-xs hover:bg-[#58111A]/5 transition-colors">Register</a>
-                        </div>
-                    @endauth
+                <!-- Mobile Search Shortcut -->
+                <div class="px-5 pt-4">
+                    <button @click="$store.mobileMenu.close(); $nextTick(() => $dispatch('open-search'))"
+                            type="button"
+                            class="w-full flex items-center gap-2.5 px-3.5 py-2.5 bg-[#F5EFEB] border border-[#E8DFD5] rounded-xs text-[#8C713B] text-xs hover:border-[#C5A869] transition-colors text-left">
+                        <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <span class="text-stone-500 font-sans">Search suits, jewels, fabrics...</span>
+                    </button>
+                </div>
 
-                    <!-- WhatsApp Quick Action inside Drawer -->
-                    @php
-                        $drawerWa = preg_replace('/[^0-9]/', '', \App\Models\Setting::get('whatsapp_number', '+919984700018'));
-                    @endphp
-                    <a href="https://wa.me/{{ $drawerWa }}?text={{ urlencode('Hello Gauri Suits & Jewel, I need personal stylist assistance.') }}"
-                       target="_blank"
-                       rel="noopener"
-                       class="w-full py-2 px-3 bg-[#0A3828] text-white text-xs font-semibold uppercase tracking-wider rounded-xs flex items-center justify-center gap-2 hover:bg-[#083323] transition-colors">
-                        <svg class="w-4 h-4 fill-current text-[#25D366]" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.861.174.086.275.072.376-.044.102-.115.434-.506.549-.679.116-.173.232-.145.39-.087s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/></svg>
-                        <span>Stylist on WhatsApp</span>
+                <!-- Quick Links (Bag & Wishlist) -->
+                <div class="px-5 pt-3 grid grid-cols-2 gap-2">
+                    <button @click="$store.mobileMenu.close(); $nextTick(() => $dispatch('open-cart'))"
+                            type="button"
+                            class="flex items-center justify-center gap-2 py-2 px-3 bg-[#FAF7F2] border border-[#E8DFD5] rounded-xs text-xs font-semibold uppercase tracking-wider text-[#3B0A11] hover:bg-[#58111A] hover:text-white transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                        <span>Bag</span>
+                        <span id="mobile-menu-cart-badge" class="ml-0.5 px-1.5 py-0.2 bg-[#58111A] text-[#F7EED9] text-[9.5px] font-bold rounded-full">
+                            {{ $cartCount ?? 0 }}
+                        </span>
+                    </button>
+                    <a href="{{ route('wishlist.index') }}"
+                       @click="$store.mobileMenu.close()"
+                       class="flex items-center justify-center gap-2 py-2 px-3 bg-[#FAF7F2] border border-[#E8DFD5] rounded-xs text-xs font-semibold uppercase tracking-wider text-[#0A3828] hover:bg-[#0A3828] hover:text-white transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                        <span>Wishlist</span>
+                        <span class="ml-0.5 px-1.5 py-0.2 bg-[#0A3828] text-white text-[9.5px] font-bold rounded-full">
+                            {{ $wishlistCount ?? 0 }}
+                        </span>
                     </a>
                 </div>
+
+                <!-- Navigation Links -->
+                <nav class="px-5 py-4 space-y-1 text-xs font-semibold tracking-[0.16em] uppercase text-[#2D1C1B]">
+                    <a href="{{ route('home') }}" @click="$store.mobileMenu.close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->routeIs('home') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                        <span>Home</span>
+                        <span class="text-stone-400">&rsaquo;</span>
+                    </a>
+                    <a href="{{ route('shop.new-arrivals') }}" @click="$store.mobileMenu.close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] text-[#0A3828] font-bold">
+                        <div class="flex items-center gap-2">
+                            <span>New Arrivals</span>
+                            <span class="px-1.5 py-0.5 text-[8.5px] bg-[#0A3828] text-[#E6CA65] font-bold tracking-wider rounded-xs">NEW</span>
+                        </div>
+                        <span class="text-stone-400">&rsaquo;</span>
+                    </a>
+                    <a href="{{ route('shop.suits') }}" @click="$store.mobileMenu.close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('suits*') || request()->is('punjabi-suits*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                        <span>Punjabi Suits</span>
+                        <span class="text-stone-400">&rsaquo;</span>
+                    </a>
+                    <a href="{{ route('shop.jewellery') }}" @click="$store.mobileMenu.close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('jewellery*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                        <span>Heirloom Jewellery</span>
+                        <span class="text-stone-400">&rsaquo;</span>
+                    </a>
+                    <a href="{{ route('shop.wedding-collection') }}" @click="$store.mobileMenu.close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('wedding*') || request()->is('bridal*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                        <span>Bridal Couture</span>
+                        <span class="text-stone-400">&rsaquo;</span>
+                    </a>
+                    <a href="{{ route('shop.best-sellers') }}" @click="$store.mobileMenu.close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->routeIs('shop.best-sellers') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                        <span>Best Sellers</span>
+                        <span class="text-stone-400">&rsaquo;</span>
+                    </a>
+                    <a href="{{ route('shop.sale') }}" @click="$store.mobileMenu.close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] text-[#7A1D2A] font-bold">
+                        <div class="flex items-center gap-2">
+                            <span>Royal Sale</span>
+                            <span class="px-1.5 py-0.5 text-[8.5px] bg-[#7A1D2A] text-white font-bold tracking-wider rounded-xs">OFFERS</span>
+                        </div>
+                        <span class="text-stone-400">&rsaquo;</span>
+                    </a>
+
+                    <div class="pt-3 mt-2 border-t border-[#E8DFD5] space-y-1 text-xs font-normal normal-case tracking-normal">
+                        <a href="{{ route('order.track') }}" @click="$store.mobileMenu.close()" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
+                            <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h2"/></svg>
+                            <span>Track Your Order</span>
+                        </a>
+                        <a href="{{ route('pages.about') }}" @click="$store.mobileMenu.close()" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
+                            <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                            <span>Our Legacy &amp; Atelier Craft</span>
+                        </a>
+                        <a href="{{ route('pages.contact') }}" @click="$store.mobileMenu.close()" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
+                            <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            <span>Contact Concierge</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Bottom Auth & Concierge Section -->
+            <div class="p-5 bg-[#FAF7F2] border-t border-[#E8DFD5] space-y-3">
+                @auth
+                    <div class="flex items-center justify-between text-xs">
+                        <div>
+                            <span class="text-[11px] text-stone-500 block">Signed in as</span>
+                            <span class="font-bold text-[#2A1810]">{{ auth()->user()->name }}</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <a href="{{ route('account.dashboard') }}" @click="$store.mobileMenu.close()" class="text-[#8C713B] font-bold hover:underline">My Account</a>
+                            <form action="{{ route('customer.logout') }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="text-[#7A1D2A] font-bold hover:underline">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    <div class="grid grid-cols-2 gap-2.5 text-center">
+                        <a href="{{ route('customer.login') }}" @click="$store.mobileMenu.close()" class="py-2.5 px-3 bg-[#58111A] text-[#F7EED9] text-xs tracking-wider uppercase font-bold rounded-xs hover:bg-[#4A0E17] transition-colors shadow-xs">Sign In</a>
+                        <a href="{{ route('customer.register') }}" @click="$store.mobileMenu.close()" class="py-2.5 px-3 border border-[#58111A] text-[#58111A] text-xs tracking-wider uppercase font-bold rounded-xs hover:bg-[#58111A]/5 transition-colors">Register</a>
+                    </div>
+                @endauth
+
+                <!-- WhatsApp Quick Action inside Drawer -->
+                @php
+                    $drawerWa = preg_replace('/[^0-9]/', '', \App\Models\Setting::get('whatsapp_number', '+919984700018'));
+                @endphp
+                <a href="https://wa.me/{{ $drawerWa }}?text={{ urlencode('Hello Gauri Suits & Jewel, I need personal stylist assistance.') }}"
+                   target="_blank"
+                   rel="noopener"
+                   class="w-full py-2 px-3 bg-[#0A3828] text-white text-xs font-semibold uppercase tracking-wider rounded-xs flex items-center justify-center gap-2 hover:bg-[#083323] transition-colors">
+                    <svg class="w-4 h-4 fill-current text-[#25D366]" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.861.174.086.275.072.376-.044.102-.115.434-.506.549-.679.116-.173.232-.145.39-.087s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/></svg>
+                    <span>Stylist on WhatsApp</span>
+                </a>
             </div>
         </div>
-    </header>
+    </div>
 
     <!-- Main Page Content -->
     <main>
