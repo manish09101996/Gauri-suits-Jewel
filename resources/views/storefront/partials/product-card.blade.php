@@ -37,8 +37,7 @@
 
         <!-- Wishlist Toggle Button (Top Left) -->
         <button type="button"
-                @click="toggleWishlist({{ $product->id }}, $el)"
-                onclick="window.toggleWishlist && window.toggleWishlist({{ $product->id }}, this)"
+                @click.prevent="toggleWishlist({{ $product->id }}, $el)"
                 class="absolute top-2 left-2 w-7 h-7 rounded-full bg-white/80 hover:bg-[#0A3828] hover:text-[#E6CA65] text-[#2A1810] flex items-center justify-center transition-all duration-200 z-10 shadow-xs opacity-0 group-hover:opacity-100 border border-[#D4AF37]/30 cursor-pointer">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
@@ -53,8 +52,7 @@
                 </a>
             @else
                 <button type="button"
-                        @click="$dispatch('open-quick-view', { id: {{ $product->id }} })"
-                        onclick="window.dispatchEvent(new CustomEvent('open-quick-view', { detail: { id: {{ $product->id }} } }))"
+                        @click.prevent="$dispatch('open-quick-view', { id: {{ $product->id }} })"
                         class="w-full py-1.5 bg-[#FAF6EE] hover:bg-[#58111A] text-[#2A1810] hover:text-[#F7EED9] hover:border-[#D4AF37]/40 border border-transparent font-semibold text-[10px] uppercase tracking-widest text-center rounded-xs transition shadow-sm cursor-pointer">
                     Quick View
                 </button>

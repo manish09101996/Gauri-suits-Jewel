@@ -402,11 +402,25 @@ window.toggleCart = function() {
     window.openCart();
 };
 
+// Global lock to prevent concurrent/duplicate additions
+const inFlightCartAdds = new Set();
+
 // Direct Add to Cart Function for Product Cards
 window.addToCartDirect = async function(productId, variantId = null, quantity = 1, btnElement = null) {
-    let originalText = '';
+    const lockKey = `${productId}_${variantId || 'default'}`;
+    if (inFlightCartAdds.has(lockKey) || (btnElement && btnElement.dataset.loading === 'true')) {
+        return;
+    }
+    inFlightCartAdds.add(lockKey);
+
+    let originalText = 'ADD TO CART';
     if (btnElement) {
-        originalText = btnElement.innerText;
+        btnElement.dataset.loading = 'true';
+        const current = btnElement.innerText.trim();
+        if (current && !current.toUpperCase().includes('ADDING')) {
+            btnElement.dataset.originalText = current;
+        }
+        originalText = btnElement.dataset.originalText || 'ADD TO CART';
         btnElement.innerText = 'ADDING...';
         btnElement.disabled = true;
     }
@@ -461,9 +475,12 @@ window.addToCartDirect = async function(productId, variantId = null, quantity = 
         const msg = (e.message && !e.message.includes('Server returned')) ? e.message : 'Failed to add item to bag.';
         window.showToast(msg, 'error');
     } finally {
+        inFlightCartAdds.delete(lockKey);
         if (btnElement) {
             btnElement.innerText = originalText;
             btnElement.disabled = false;
+            btnElement.dataset.loading = 'false';
+            delete btnElement.dataset.originalText;
         }
     }
 };

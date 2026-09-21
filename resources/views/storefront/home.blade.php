@@ -249,8 +249,7 @@
 
                         <!-- Wishlist Toggle Button (Top Right matching screenshot) -->
                         <button type="button"
-                                @click="toggleWishlist({{ $prodId }}, $el)"
-                                onclick="window.toggleWishlist && window.toggleWishlist({{ $prodId }}, this)"
+                                @click.prevent="toggleWishlist({{ $prodId }}, $el)"
                                 class="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/80 hover:bg-[#58111A] hover:text-white text-[#2A1810] flex items-center justify-center transition-all duration-200 z-10 shadow-2xs border border-[#E3DACD] cursor-pointer"
                                 title="Add to Wishlist"
                                 aria-label="Toggle Wishlist">
@@ -273,8 +272,7 @@
 
                         <!-- Clean ADD TO CART button below price -->
                         <button type="button"
-                                @click="addToCartDirect({{ $prodId }}, {{ $prodVariantId }}, 1, $el)"
-                                onclick="window.addToCartDirect && window.addToCartDirect({{ $prodId }}, {{ $prodVariantId }}, 1, this)"
+                                @click.prevent="addToCartDirect({{ $prodId }}, {{ $prodVariantId }}, 1, $el)"
                                 class="w-full mt-2.5 py-2 px-2 bg-[#FAF7F2] hover:bg-[#58111A] text-[#2A1810] hover:text-[#F7EED9] border border-[#D5CBC0] hover:border-[#58111A] text-[10px] sm:text-[10.5px] font-sans uppercase font-bold tracking-[0.16em] transition-all rounded-xs shadow-2xs text-center cursor-pointer active:scale-95">
                             ADD TO CART
                         </button>
