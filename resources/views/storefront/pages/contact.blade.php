@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Contact Us & Boutique Concierge | Gauri Suits & Jewel')
-@section('meta_description', 'Connect with Gauri Suits & Jewel. Visit our flagship boutique in Ludhiana, Punjab or reach out to our bridal concierge via WhatsApp and email.')
+@section('meta_description', 'Connect with Gauri Suits & Jewel. Visit our boutique in Geelong, Melbourne, Australia or reach out to our bridal concierge via WhatsApp and email.')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
@@ -42,15 +42,14 @@
                     <svg class="w-5 h-5 text-brand-maroon shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     <div>
                         <strong>Flagship Atelier Address:</strong><br>
-                        Heritage Arcade, Mall Road,<br>
-                        Ludhiana, Punjab - 141001, India
+                        Geelong, Melbourne, Australia
                     </div>
                 </div>
 
                 <div class="flex items-center gap-3">
                     <svg class="w-5 h-5 text-brand-maroon shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                     <div>
-                        <strong>Phone:</strong> +91 98765 43210
+                        <strong>Phone:</strong> +61 400 000 000
                     </div>
                 </div>
 
@@ -65,8 +64,8 @@
                     <svg class="w-5 h-5 text-brand-maroon shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <div>
                         <strong>Boutique Timings:</strong><br>
-                        Monday – Saturday: 10:30 AM – 8:30 PM IST<br>
-                        Sunday: 11:30 AM – 7:00 PM IST
+                        Monday – Saturday: 10:00 AM – 7:00 PM AEST<br>
+                        Sunday: 11:00 AM – 5:00 PM AEST
                     </div>
                 </div>
             </div>
@@ -104,7 +103,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block font-bold text-stone-700 mb-1">Phone / WhatsApp</label>
-                        <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="+91 98765 43210" class="w-full bg-stone-50 border border-stone-300 rounded px-3.5 py-2.5 text-brand-charcoal focus:bg-white focus:outline-none focus:border-brand-maroon">
+                        <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="+61 400 000 000" class="w-full bg-stone-50 border border-stone-300 rounded px-3.5 py-2.5 text-brand-charcoal focus:bg-white focus:outline-none focus:border-brand-maroon">
                     </div>
 
                     <div>

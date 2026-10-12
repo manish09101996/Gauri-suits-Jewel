@@ -66,7 +66,7 @@
 
                         <div>
                             <label class="block text-xs font-bold text-stone-700 mb-1">Mobile Phone (For Courier Updates) *</label>
-                            <input type="tel" name="phone" value="{{ old('phone', $user?->phone ?? $defaultAddress?->phone) }}" required placeholder="+91 98765 43210" class="w-full bg-stone-50 border border-stone-300 rounded px-3.5 py-2.5 text-xs text-brand-charcoal focus:bg-white focus:outline-none focus:border-brand-maroon">
+                            <input type="tel" name="phone" value="{{ old('phone', $user?->phone ?? $defaultAddress?->phone) }}" required placeholder="+61 400 000 000" class="w-full bg-stone-50 border border-stone-300 rounded px-3.5 py-2.5 text-xs text-brand-charcoal focus:bg-white focus:outline-none focus:border-brand-maroon">
                         </div>
 
                         <div>
@@ -76,17 +76,17 @@
 
                         <div class="sm:col-span-2">
                             <label class="block text-xs font-bold text-stone-700 mb-1">Flat / House No. / Street Address *</label>
-                            <input type="text" name="address_line1" value="{{ old('address_line1', $defaultAddress?->address_line1) }}" required placeholder="Apartment 4B, Heritage Enclave" class="w-full bg-stone-50 border border-stone-300 rounded px-3.5 py-2.5 text-xs text-brand-charcoal focus:bg-white focus:outline-none focus:border-brand-maroon">
+                            <input type="text" name="address_line1" value="{{ old('address_line1', $defaultAddress?->address_line1) }}" required placeholder="Apartment 4B, 120 Moorabool St" class="w-full bg-stone-50 border border-stone-300 rounded px-3.5 py-2.5 text-xs text-brand-charcoal focus:bg-white focus:outline-none focus:border-brand-maroon">
                         </div>
 
                         <div class="sm:col-span-2">
                             <label class="block text-xs font-bold text-stone-700 mb-1">Colony / Landmark (Optional)</label>
-                            <input type="text" name="address_line2" value="{{ old('address_line2', $defaultAddress?->address_line2) }}" placeholder="Near Model Town Gurudwara" class="w-full bg-stone-50 border border-stone-300 rounded px-3.5 py-2.5 text-xs text-brand-charcoal focus:bg-white focus:outline-none focus:border-brand-maroon">
+                            <input type="text" name="address_line2" value="{{ old('address_line2', $defaultAddress?->address_line2) }}" placeholder="Level 2, Suite 4" class="w-full bg-stone-50 border border-stone-300 rounded px-3.5 py-2.5 text-xs text-brand-charcoal focus:bg-white focus:outline-none focus:border-brand-maroon">
                         </div>
 
                         <div>
                             <label class="block text-xs font-bold text-stone-700 mb-1">City / Town *</label>
-                            <input type="text" name="city" value="{{ old('city', $defaultAddress?->city) }}" required placeholder="Ludhiana" class="w-full bg-stone-50 border border-stone-300 rounded px-3.5 py-2.5 text-xs text-brand-charcoal focus:bg-white focus:outline-none focus:border-brand-maroon">
+                            <input type="text" name="city" value="{{ old('city', $defaultAddress?->city) }}" required placeholder="Geelong" class="w-full bg-stone-50 border border-stone-300 rounded px-3.5 py-2.5 text-xs text-brand-charcoal focus:bg-white focus:outline-none focus:border-brand-maroon">
                         </div>
 
                         <div>
@@ -99,13 +99,13 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-stone-700 mb-1">Pincode / Postal Code *</label>
-                            <input type="text" name="postal_code" value="{{ old('postal_code', $defaultAddress?->postal_code) }}" required placeholder="141001" class="w-full bg-stone-50 border border-stone-300 rounded px-3.5 py-2.5 text-xs text-brand-charcoal focus:bg-white focus:outline-none focus:border-brand-maroon">
+                            <label class="block text-xs font-bold text-stone-700 mb-1">Postcode / Postal Code *</label>
+                            <input type="text" name="postal_code" value="{{ old('postal_code', $defaultAddress?->postal_code) }}" required placeholder="3220" class="w-full bg-stone-50 border border-stone-300 rounded px-3.5 py-2.5 text-xs text-brand-charcoal focus:bg-white focus:outline-none focus:border-brand-maroon">
                         </div>
 
                         <div>
                             <label class="block text-xs font-bold text-stone-700 mb-1">Country</label>
-                            <input type="text" name="country" value="India" readonly class="w-full bg-stone-100 border border-stone-300 rounded px-3.5 py-2.5 text-xs text-stone-600 outline-none">
+                            <input type="text" name="country" value="Australia" readonly class="w-full bg-stone-100 border border-stone-300 rounded px-3.5 py-2.5 text-xs text-stone-600 outline-none">
                         </div>
                     </div>
 
@@ -127,16 +127,16 @@
                     </h2>
 
                     <div class="space-y-3">
-                        <!-- Razorpay Online Option -->
-                        <label :class="paymentMethod === 'razorpay' ? 'border-brand-maroon ring-2 ring-brand-maroon/10 bg-stone-50' : 'border-stone-200 hover:border-stone-300'" class="flex items-start gap-3 p-4 border rounded-xl cursor-pointer transition">
-                            <input type="radio" name="payment_method" value="razorpay" x-model="paymentMethod" @change="onStateOrPaymentChange()" class="mt-1 text-brand-maroon focus:ring-0">
+                        <!-- Stripe Online Option -->
+                        <label :class="paymentMethod === 'stripe' ? 'border-brand-maroon ring-2 ring-brand-maroon/10 bg-stone-50' : 'border-stone-200 hover:border-stone-300'" class="flex items-start gap-3 p-4 border rounded-xl cursor-pointer transition">
+                            <input type="radio" name="payment_method" value="stripe" x-model="paymentMethod" @change="onStateOrPaymentChange()" class="mt-1 text-brand-maroon focus:ring-0">
                             <div class="flex-1 space-y-1">
                                 <div class="flex items-center justify-between">
-                                    <span class="font-bold text-xs sm:text-sm text-brand-charcoal">Online Payment (UPI, Cards, NetBanking)</span>
+                                    <span class="font-bold text-xs sm:text-sm text-brand-charcoal">Credit / Debit Card (Stripe)</span>
                                     <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded uppercase">Instant & Secure</span>
                                 </div>
                                 <p class="text-xs text-stone-500">
-                                    Pay seamlessly via Google Pay, PhonePe, Paytm, all Debit & Credit cards, and NetBanking via Razorpay.
+                                    Pay securely with Visa, Mastercard, AMEX, Apple Pay, or Google Pay via Stripe.
                                 </p>
                             </div>
                         </label>
@@ -151,7 +151,7 @@
                                         <span class="px-2 py-0.5 bg-stone-200 text-stone-700 text-[10px] font-bold rounded uppercase">Pay at Doorstep</span>
                                     </template>
                                 </div>
-                                <p class="text-xs text-stone-500" x-text="codAvailable ? 'Pay in cash or UPI QR upon receiving your order parcel from the courier partner.' : 'COD is not available for this cart value or delivery location.'"></p>
+                                <p class="text-xs text-stone-500" x-text="codAvailable ? 'Pay in cash upon receiving your order parcel from the courier partner.' : 'COD is not available for this cart value or delivery location.'"></p>
                             </div>
                         </label>
                     </div>
@@ -232,7 +232,7 @@
 
                     <button type="submit" class="w-full py-3.5 sm:py-4 bg-[#58111A] hover:bg-[#3B0A11] border border-[#D4AF37]/50 text-[#F7EED9] font-bold text-xs uppercase tracking-[0.12em] sm:tracking-[0.2em] text-center rounded-xs shadow-lg transition flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                        <span x-text="paymentMethod === 'cod' ? 'Confirm Cash on Delivery Order' : 'Proceed to Razorpay Payment'"></span>
+                        <span x-text="paymentMethod === 'cod' ? 'Confirm Cash on Delivery Order' : 'Proceed to Stripe Card Payment'"></span>
                     </button>
 
                     <div class="text-center text-[11px] text-stone-400">
@@ -249,8 +249,8 @@
 <script>
 function checkoutPage() {
     return {
-        selectedState: {!! json_encode(old('state', $defaultAddress?->state ?? 'Punjab')) !!},
-        paymentMethod: {!! json_encode(old('payment_method', 'razorpay')) !!},
+        selectedState: {!! json_encode(old('state', $defaultAddress?->state ?? 'Victoria')) !!},
+        paymentMethod: {!! json_encode(old('payment_method', 'stripe')) !!},
         shippingFee: {{ $totals['shipping_fee'] ?? 0 }},
         subtotal: {{ $totals['subtotal'] ?? 0 }},
         discount: {{ $totals['discount'] ?? 0 }},
@@ -278,7 +278,7 @@ function checkoutPage() {
                     this.grandTotal = data.totals.grand_total;
                     this.codAvailable = data.cod_available;
                     if (!this.codAvailable && this.paymentMethod === 'cod') {
-                        this.paymentMethod = 'razorpay';
+                        this.paymentMethod = 'stripe';
                     }
                 }
                 this.updatingRates = false;
@@ -295,7 +295,7 @@ function checkoutPage() {
             document.querySelector('[name=address_line2]').value = addr.address_line2 || '';
             document.querySelector('[name=city]').value = addr.city || '';
             document.querySelector('[name=postal_code]').value = addr.postal_code || '';
-            this.selectedState = addr.state || 'Punjab';
+            this.selectedState = addr.state || 'Victoria';
             this.onStateOrPaymentChange();
         }
     };

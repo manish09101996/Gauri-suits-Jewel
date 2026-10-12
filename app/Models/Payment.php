@@ -10,6 +10,8 @@ class Payment extends Model
     protected $fillable = [
         'order_id',
         'transaction_id',
+        'stripe_session_id',
+        'stripe_payment_intent_id',
         'razorpay_order_id',
         'razorpay_payment_id',
         'razorpay_signature',

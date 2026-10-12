@@ -11,15 +11,15 @@
     </div>
 
     <div class="prose prose-stone max-w-none text-xs sm:text-sm text-stone-700 space-y-6 leading-relaxed">
-        <h2 class="font-serif text-lg font-bold text-brand-charcoal">1. Domestic Shipping Across India</h2>
+        <h2 class="font-serif text-lg font-bold text-brand-charcoal">1. Domestic Shipping Across Australia</h2>
         <p>
-            At <strong>Gauri Suits & Jewel</strong>, we provide insured, express shipping to all serviceable postal pincodes throughout India via premier logistics partners including Delhivery, BlueDart, DTDC, and Speed Post.
+            At <strong>Gauri Suits & Jewel</strong>, we provide insured, express shipping to all serviceable postcodes throughout Australia via premier logistics partners including Australia Post Express.
         </p>
         <ul class="list-disc list-inside space-y-1">
             <li><strong>Complimentary Free Shipping:</strong> All domestic orders valued at {{ $currencySymbol ?? '$' }}299 or above automatically receive free express delivery.</li>
             <li><strong>Standard Flat Courier Charge:</strong> A nominal flat fee of {{ $currencySymbol ?? '$' }}15 applies to domestic orders below {{ $currencySymbol ?? '$' }}299.</li>
             <li><strong>Dispatch Timeline:</strong> Ready-to-wear and unstitched fabric ensembles are dispatched within 24 to 48 business hours. Custom made-to-measure stitched orders require 5 to 7 working days for master tailoring before dispatch.</li>
-            <li><strong>Transit Duration:</strong> Metro cities (Delhi NCR, Chandigarh, Mumbai, Bangalore): 2–3 business days. Rest of India: 3–5 business days.</li>
+            <li><strong>Transit Duration:</strong> Melbourne & Victoria: 1–2 business days. Interstate metro (Sydney, Brisbane, Adelaide, Perth): 2–4 business days. Regional Australia: 3–5 business days.</li>
         </ul>
 
         <h2 class="font-serif text-lg font-bold text-brand-charcoal pt-4">2. International Shipping</h2>

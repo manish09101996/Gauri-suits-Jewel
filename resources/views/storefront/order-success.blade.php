@@ -110,7 +110,7 @@
     <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
         <div class="text-center sm:text-left">
             <div class="text-xs font-bold text-emerald-900">Need immediate customization or delivery update?</div>
-            <div class="text-[11px] text-emerald-700">Connect directly with our Ludhiana boutique concierge on WhatsApp.</div>
+            <div class="text-[11px] text-emerald-700">Connect directly with our Geelong, Melbourne boutique concierge on WhatsApp.</div>
         </div>
         <a href="https://wa.me/919876543210?text={{ urlencode("Hello, I am inquiring about Order #{$order->order_number}") }}" target="_blank" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider rounded-lg transition shrink-0">
             WhatsApp Support

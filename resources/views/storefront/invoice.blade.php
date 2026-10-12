@@ -190,8 +190,8 @@
                 <div class="brand-title">Gauri Suits & Jewel</div>
                 <div class="brand-sub">Luxury Punjabi Couture & Fine Jewellery</div>
                 <p style="font-size: 12px; color: #78716c; margin-top: 6px;">
-                    Heritage Arcade, Mall Road, Ludhiana, Punjab - 141001<br>
-                    GSTIN: 03AAAAA0000A1Z5 | contact@gaurisuits.com | +91 98765 43210
+                    Geelong, Melbourne, Australia<br>
+                    ABN: Registered Business | contact@gaurisuits.com | +61 400 000 000
                 </p>
             </div>
             <div class="invoice-title">

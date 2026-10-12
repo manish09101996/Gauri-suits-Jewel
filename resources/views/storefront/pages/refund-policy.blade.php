@@ -27,11 +27,11 @@
 
         <h2 class="font-serif text-lg font-bold text-brand-charcoal pt-4">2. Refund Processing & Timelines</h2>
         <p>
-            Once your returned package arrives at our quality audit warehouse in Punjab, our experts inspect the integrity of tags and fabrics within 48 business hours. Upon successful verification:
+            Once your returned package arrives at our quality audit warehouse in Geelong, Melbourne, Australia, our experts inspect the integrity of tags and fabrics within 48 business hours. Upon successful verification:
         </p>
         <ul class="list-disc list-inside space-y-2">
-            <li><strong>Prepaid Orders (UPI, Net Banking, Credit/Debit Cards, Razorpay):</strong> Refunds are credited directly back to the original source account within <strong>5 to 7 business days</strong> as per banking turnaround schedules.</li>
-            <li><strong>Cash on Delivery (COD):</strong> You may opt for an instant Store Credit Gift Card (valid for 12 months) or a direct NEFT/IMPS bank transfer upon providing beneficiary bank account details.</li>
+            <li><strong>Stripe Card Payments:</strong> Refunds are credited directly back to the original card or payment source within <strong>5 to 10 business days</strong> as per banking turnaround schedules.</li>
+            <li><strong>Cash on Delivery (COD):</strong> You may opt for an instant Store Credit Gift Card (valid for 12 months) or a direct bank transfer upon providing beneficiary bank account details.</li>
         </ul>
 
         <h2 class="font-serif text-lg font-bold text-brand-charcoal pt-4">3. Damaged or Defective Consignments</h2>

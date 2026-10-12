@@ -13,7 +13,7 @@ use App\Http\Controllers\Storefront\SearchController;
 use App\Http\Controllers\Storefront\ReviewController;
 use App\Http\Controllers\Storefront\BlogController;
 use App\Http\Controllers\Storefront\PageController;
-use App\Http\Controllers\Webhook\RazorpayWebhookController;
+use App\Http\Controllers\Webhook\StripeWebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,8 +65,11 @@ Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.in
 Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
 Route::post('/checkout/shipping-rate', [CheckoutController::class, 'calculateShippingRate'])->name('checkout.shipping-rate');
 
-// Order Confirmation, Payment Callback, Tracking
+// Order Confirmation, Stripe Payment, Tracking
 Route::get('/order/success/{order_number}', [OrderController::class, 'success'])->name('order.success');
+Route::get('/order/stripe/pay/{order_number}', [OrderController::class, 'stripePay'])->name('order.stripe.pay');
+Route::get('/order/stripe/success', [OrderController::class, 'stripeSuccess'])->name('order.stripe.success');
+Route::get('/order/stripe/cancel', [OrderController::class, 'stripeCancel'])->name('order.stripe.cancel');
 Route::post('/order/payment/callback', [OrderController::class, 'paymentCallback'])->name('order.payment.callback');
 Route::get('/track-order', [OrderController::class, 'trackOrder'])->name('order.track');
 Route::get('/orders/{id}/invoice', [OrderController::class, 'invoice'])->name('order.invoice');
@@ -97,8 +100,8 @@ Route::get('/refund-policy', [PageController::class, 'refundPolicy'])->name('pag
 Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('pages.privacy-policy');
 Route::get('/terms-and-conditions', [PageController::class, 'termsAndConditions'])->name('pages.terms');
 
-// Webhook for Razorpay
-Route::post('/razorpay/webhook', [RazorpayWebhookController::class, 'handle'])->name('razorpay.webhook');
+// Webhook for Stripe
+Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle'])->name('stripe.webhook');
 
 /*
 |--------------------------------------------------------------------------

@@ -16,7 +16,7 @@
                 Preserving Punjab's Royal Textile Heritage
             </h1>
             <p class="text-sm sm:text-base text-stone-300 font-light leading-relaxed">
-                Founded in the historic textile heartland of Ludhiana, Gauri Suits & Jewel was born from a deep devotion to authentic Punjabi craftsmanship, intricate needlework, and heirloom adornment.
+                Based in Geelong, Melbourne, Australia with deep devotion to authentic Punjabi craftsmanship, Gauri Suits & Jewel preserves the royal heritage of intricate needlework, regal silhouettes, and heirloom adornment.
             </p>
         </div>
     </div>
@@ -71,7 +71,7 @@
                 <div class="w-12 h-12 rounded-full bg-brand-maroon text-white font-serif font-bold text-lg flex items-center justify-center mx-auto">3</div>
                 <h3 class="font-serif font-bold text-lg text-brand-charcoal">Global Diaspora Delivery</h3>
                 <p class="text-xs text-stone-600 font-light leading-relaxed">
-                    From Ludhiana to London, Toronto, California, Melbourne, and Dubai, our couture pieces are shipped across 45+ countries with express insured courier.
+                    From Geelong and Melbourne to London, Toronto, California, Dubai, and worldwide, our couture pieces are shipped across 45+ countries with express insured courier.
                 </p>
             </div>
         </div>

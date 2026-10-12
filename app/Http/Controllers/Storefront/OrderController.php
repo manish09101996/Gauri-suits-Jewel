@@ -28,38 +28,79 @@ class OrderController extends Controller
         return view('storefront.order-success', compact('order'));
     }
 
-    public function paymentCallback(Request $request)
+    /**
+     * Stripe Checkout Return Callback (Success)
+     */
+    public function stripeSuccess(Request $request)
     {
-        $orderNumber = $request->input('order_number');
-        $razorpayPaymentId = $request->input('razorpay_payment_id');
-        $razorpayOrderId = $request->input('razorpay_order_id');
-        $razorpaySignature = $request->input('razorpay_signature');
+        $sessionId = $request->input('session_id');
+        $orderNumber = $request->input('order');
+
+        if (!$orderNumber) {
+            return redirect()->route('home');
+        }
 
         $order = Order::where('order_number', $orderNumber)->firstOrFail();
 
-        // Verify Razorpay signature
-        $isValid = $this->paymentService->verifyPaymentSignature(
-            $razorpayOrderId ?? '',
-            $razorpayPaymentId ?? '',
-            $razorpaySignature ?? ''
-        );
-
-        if ($isValid) {
-            $this->paymentService->markPaymentSuccessful(
-                $order,
-                $razorpayPaymentId,
-                $razorpaySignature,
-                $request->all()
-            );
-
-            return redirect()->route('order.success', $order->order_number)
-                ->with('success', 'Payment verified successfully! Your order is confirmed.');
-        } else {
-            $this->paymentService->markPaymentFailed($order, 'Signature Verification Mismatch');
-
-            return redirect()->route('order.success', $order->order_number)
-                ->with('error', 'Payment verification failed. Please contact support or try again.');
+        if ($sessionId) {
+            $verified = $this->paymentService->verifyAndCompleteStripeSession($sessionId, $order);
+            if ($verified) {
+                return redirect()->route('order.success', $order->order_number)
+                    ->with('success', 'Your Stripe payment was successful and your couture order is confirmed!');
+            }
         }
+
+        // If session was not verified yet
+        return redirect()->route('order.success', $order->order_number)
+            ->with('info', 'Your order has been recorded. Payment status will be confirmed shortly.');
+    }
+
+    /**
+     * Stripe Checkout Cancel Callback
+     */
+    public function stripeCancel(Request $request)
+    {
+        $orderNumber = $request->input('order');
+        if (!$orderNumber) {
+            return redirect()->route('home');
+        }
+
+        $order = Order::where('order_number', $orderNumber)->first();
+        if ($order) {
+            return redirect()->route('order.success', $order->order_number)
+                ->with('error', 'Stripe payment was cancelled. Your order remains pending. You can contact our boutique concierge to complete payment.');
+        }
+
+        return redirect()->route('home');
+    }
+
+    /**
+     * Stripe Sandbox Simulation Pay View (Used when sandbox/mock testing without live keys)
+     */
+    public function stripePay(string $orderNumber)
+    {
+        $order = Order::where('order_number', $orderNumber)
+            ->with(['items.product.images', 'payment'])
+            ->firstOrFail();
+
+        return view('storefront.stripe-pay', [
+            'order' => $order,
+            'publicKey' => $this->paymentService->getStripePublicKey(),
+            'sessionId' => $order->payment?->stripe_session_id ?? ('cs_sim_' . substr(md5($order->order_number), 0, 16)),
+        ]);
+    }
+
+    /**
+     * Legacy payment callback kept for compatibility
+     */
+    public function paymentCallback(Request $request)
+    {
+        $orderNumber = $request->input('order_number');
+        if (!$orderNumber) {
+            return redirect()->route('home');
+        }
+        $order = Order::where('order_number', $orderNumber)->firstOrFail();
+        return redirect()->route('order.success', $order->order_number);
     }
 
     public function trackOrder(Request $request)
@@ -95,7 +136,6 @@ class OrderController extends Controller
         $order = Order::with(['items', 'payment', 'shipment'])->findOrFail($id);
 
         if ($order->user_id && (!Auth::check() || Auth::id() !== $order->user_id)) {
-            // Check if admin is authenticated
             if (!Auth::guard('admin')->check()) {
                 abort(403);
             }

@@ -29,8 +29,8 @@ class UserFlowTest extends TestCase
         Setting::create(['key' => 'cod_enabled', 'value' => '1', 'group' => 'payment']);
 
         $zone = ShippingZone::create([
-            'name' => 'All India',
-            'states' => json_encode(['Punjab', 'Delhi', 'Chandigarh']),
+            'name' => 'Australia',
+            'states' => json_encode(['Victoria', 'New South Wales', 'Queensland', 'Punjab', 'Delhi']),
             'is_active' => true,
         ]);
 
@@ -128,12 +128,12 @@ class UserFlowTest extends TestCase
         $checkoutProcessResponse = $this->post(route('checkout.process'), [
             'name' => 'Harleen Kaur',
             'email' => 'harleen@example.com',
-            'phone' => '9876543210',
-            'address_line1' => 'House 42, Sector 8-C',
-            'city' => 'Chandigarh',
-            'state' => 'Punjab',
-            'postal_code' => '160018',
-            'country' => 'India',
+            'phone' => '+61400000000',
+            'address_line1' => '120 Moorabool Street',
+            'city' => 'Geelong',
+            'state' => 'Victoria',
+            'postal_code' => '3220',
+            'country' => 'Australia',
             'payment_method' => 'cod',
             'notes' => 'Please gift wrap in royal maroon velvet box.',
         ]);

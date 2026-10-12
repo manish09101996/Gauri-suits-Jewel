@@ -174,13 +174,69 @@ class CartAndCheckoutTest extends TestCase
         $successRes->assertSee($order->order_number);
     }
 
+    public function test_customer_can_place_stripe_order(): void
+    {
+        $this->postJson(route('cart.add'), [
+            'product_id' => $this->product->id,
+            'quantity' => 1,
+        ]);
+
+        $orderData = [
+            'name' => 'Simran Kaur',
+            'phone' => '+61400000000',
+            'email' => 'simran@example.com',
+            'address_line1' => '120 Moorabool Street',
+            'city' => 'Geelong',
+            'state' => 'Victoria',
+            'postal_code' => '3220',
+            'country' => 'Australia',
+            'payment_method' => 'stripe',
+        ];
+
+        $response = $this->post(route('checkout.process'), $orderData);
+        $response->assertRedirect();
+
+        $order = Order::where('shipping_email', 'simran@example.com')->first();
+        $this->assertNotNull($order);
+        $this->assertEquals('stripe', $order->payment_method);
+        $this->assertEquals(1, $order->items()->count());
+
+        // Verify Stripe pay view works
+        $payRes = $this->get(route('order.stripe.pay', $order->order_number));
+        $payRes->assertStatus(200);
+        $payRes->assertSee('Stripe');
+    }
+
+    public function test_only_stripe_and_cod_payment_methods_are_allowed(): void
+    {
+        $this->postJson(route('cart.add'), [
+            'product_id' => $this->product->id,
+            'quantity' => 1,
+        ]);
+
+        $invalidOrderData = [
+            'name' => 'Simran Kaur',
+            'phone' => '+61400000000',
+            'email' => 'simran@example.com',
+            'address_line1' => '120 Moorabool Street',
+            'city' => 'Geelong',
+            'state' => 'Victoria',
+            'postal_code' => '3220',
+            'country' => 'Australia',
+            'payment_method' => 'razorpay', // Not allowed anymore!
+        ];
+
+        $response = $this->post(route('checkout.process'), $invalidOrderData);
+        $response->assertSessionHasErrors('payment_method');
+    }
+
     public function test_order_tracking_portal_retrieves_order(): void
     {
         $order = Order::create([
             'order_number' => 'GSJ-99999999',
             'status' => 'shipped',
             'payment_status' => 'paid',
-            'payment_method' => 'cod',
+            'payment_method' => 'stripe',
             'subtotal' => 3200.00,
             'discount_amount' => 0.00,
             'shipping_amount' => 0.00,
@@ -188,11 +244,11 @@ class CartAndCheckoutTest extends TestCase
             'shipping_name' => 'Navneet Kaur',
             'shipping_phone' => '9888812345',
             'shipping_email' => 'navneet@example.com',
-            'shipping_address_line1' => 'Plot 88, Urban Estate Phase 2',
-            'shipping_city' => 'Jalandhar',
-            'shipping_state' => 'Punjab',
-            'shipping_postal_code' => '144022',
-            'shipping_country' => 'India',
+            'shipping_address_line1' => '120 Moorabool Street',
+            'shipping_city' => 'Geelong',
+            'shipping_state' => 'Victoria',
+            'shipping_postal_code' => '3220',
+            'shipping_country' => 'Australia',
         ]);
 
         $response = $this->get(route('order.track', [

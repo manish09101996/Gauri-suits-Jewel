@@ -36,7 +36,7 @@
 
         <h2 class="font-serif text-lg font-bold text-brand-charcoal pt-4">4. Governing Law & Jurisdiction</h2>
         <p>
-            These terms and conditions are governed by and construed in conformity with the laws of the Republic of India. Any legal disputes arising out of your purchase or interaction with the platform shall be subject exclusively to the courts of Punjab, India.
+            These terms and conditions are governed by and construed in conformity with the laws of Victoria, Australia. Any legal disputes arising out of your purchase or interaction with the platform shall be subject exclusively to the courts of Victoria, Australia.
         </p>
     </div>
 </div>

@@ -23,7 +23,7 @@ class CheckoutRequest extends FormRequest
             'state' => 'required|string|max:100',
             'postal_code' => 'required|string|max:20',
             'country' => 'nullable|string|max:100',
-            'payment_method' => 'required|in:razorpay,cod',
+            'payment_method' => 'required|in:stripe,cod',
             'notes' => 'nullable|string|max:1000',
             'save_address' => 'nullable|boolean',
         ];

@@ -99,7 +99,7 @@
 
                 <div>
                     <label class="block font-bold text-stone-700 mb-1">Phone Number *</label>
-                    <input type="tel" name="phone" required placeholder="+91 98765 43210" class="w-full bg-stone-50 border rounded px-3 py-2">
+                    <input type="tel" name="phone" required placeholder="+61 400 000 000" class="w-full bg-stone-50 border rounded px-3 py-2">
                 </div>
 
                 <div>
@@ -115,22 +115,22 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold text-stone-700 mb-1">City *</label>
-                        <input type="text" name="city" required class="w-full bg-stone-50 border rounded px-3 py-2">
+                        <input type="text" name="city" required placeholder="Geelong" class="w-full bg-stone-50 border rounded px-3 py-2">
                     </div>
                     <div>
                         <label class="block font-bold text-stone-700 mb-1">State *</label>
-                        <input type="text" name="state" required placeholder="Punjab" class="w-full bg-stone-50 border rounded px-3 py-2">
+                        <input type="text" name="state" required placeholder="Victoria" class="w-full bg-stone-50 border rounded px-3 py-2">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-bold text-stone-700 mb-1">Pincode *</label>
-                        <input type="text" name="postal_code" required class="w-full bg-stone-50 border rounded px-3 py-2">
+                        <label class="block font-bold text-stone-700 mb-1">Postcode *</label>
+                        <input type="text" name="postal_code" required placeholder="3220" class="w-full bg-stone-50 border rounded px-3 py-2">
                     </div>
                     <div>
                         <label class="block font-bold text-stone-700 mb-1">Country</label>
-                        <input type="text" name="country" value="India" readonly class="w-full bg-stone-100 border rounded px-3 py-2 text-stone-500">
+                        <input type="text" name="country" value="Australia" readonly class="w-full bg-stone-100 border rounded px-3 py-2 text-stone-500">
                     </div>
                 </div>
 
