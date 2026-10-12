@@ -14,7 +14,6 @@ use App\Http\Controllers\Storefront\ReviewController;
 use App\Http\Controllers\Storefront\BlogController;
 use App\Http\Controllers\Storefront\PageController;
 use App\Http\Controllers\Webhook\RazorpayWebhookController;
-use App\Http\Controllers\Webhook\StripeWebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,9 +67,6 @@ Route::post('/checkout/shipping-rate', [CheckoutController::class, 'calculateShi
 
 // Order Confirmation, Payment Callback, Tracking
 Route::get('/order/success/{order_number}', [OrderController::class, 'success'])->name('order.success');
-Route::get('/order/stripe/success', [OrderController::class, 'stripeSuccess'])->name('order.stripe.success');
-Route::get('/order/stripe/cancel', [OrderController::class, 'stripeCancel'])->name('order.stripe.cancel');
-Route::get('/order/{order_number}/stripe-pay', [OrderController::class, 'stripePay'])->name('order.stripe.pay');
 Route::post('/order/payment/callback', [OrderController::class, 'paymentCallback'])->name('order.payment.callback');
 Route::get('/track-order', [OrderController::class, 'trackOrder'])->name('order.track');
 Route::get('/orders/{id}/invoice', [OrderController::class, 'invoice'])->name('order.invoice');
@@ -101,9 +97,8 @@ Route::get('/refund-policy', [PageController::class, 'refundPolicy'])->name('pag
 Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('pages.privacy-policy');
 Route::get('/terms-and-conditions', [PageController::class, 'termsAndConditions'])->name('pages.terms');
 
-// Webhook for Razorpay & Stripe
+// Webhook for Razorpay
 Route::post('/razorpay/webhook', [RazorpayWebhookController::class, 'handle'])->name('razorpay.webhook');
-Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle'])->name('stripe.webhook');
 
 /*
 |--------------------------------------------------------------------------

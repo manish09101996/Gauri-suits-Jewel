@@ -105,7 +105,7 @@
 
                         <div>
                             <label class="block text-xs font-bold text-stone-700 mb-1">Country</label>
-                            <input type="text" name="country" value="Australia" readonly class="w-full bg-stone-100 border border-stone-300 rounded px-3.5 py-2.5 text-xs text-stone-600 outline-none">
+                            <input type="text" name="country" value="India" readonly class="w-full bg-stone-100 border border-stone-300 rounded px-3.5 py-2.5 text-xs text-stone-600 outline-none">
                         </div>
                     </div>
 
@@ -127,16 +127,16 @@
                     </h2>
 
                     <div class="space-y-3">
-                        <!-- Stripe Online Option -->
-                        <label :class="paymentMethod === 'stripe' ? 'border-brand-maroon ring-2 ring-brand-maroon/10 bg-stone-50' : 'border-stone-200 hover:border-stone-300'" class="flex items-start gap-3 p-4 border rounded-xl cursor-pointer transition">
-                            <input type="radio" name="payment_method" value="stripe" x-model="paymentMethod" @change="onStateOrPaymentChange()" class="mt-1 text-brand-maroon focus:ring-0">
+                        <!-- Razorpay Online Option -->
+                        <label :class="paymentMethod === 'razorpay' ? 'border-brand-maroon ring-2 ring-brand-maroon/10 bg-stone-50' : 'border-stone-200 hover:border-stone-300'" class="flex items-start gap-3 p-4 border rounded-xl cursor-pointer transition">
+                            <input type="radio" name="payment_method" value="razorpay" x-model="paymentMethod" @change="onStateOrPaymentChange()" class="mt-1 text-brand-maroon focus:ring-0">
                             <div class="flex-1 space-y-1">
                                 <div class="flex items-center justify-between">
-                                    <span class="font-bold text-xs sm:text-sm text-brand-charcoal">Card &amp; Digital Pay (Stripe)</span>
-                                    <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded uppercase">Instant &amp; Secure</span>
+                                    <span class="font-bold text-xs sm:text-sm text-brand-charcoal">Online Payment (UPI, Cards, NetBanking)</span>
+                                    <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded uppercase">Instant & Secure</span>
                                 </div>
                                 <p class="text-xs text-stone-500">
-                                    Pay securely with Visa, Mastercard, AMEX, Apple Pay, or Google Pay via Stripe.
+                                    Pay seamlessly via Google Pay, PhonePe, Paytm, all Debit & Credit cards, and NetBanking via Razorpay.
                                 </p>
                             </div>
                         </label>
@@ -232,7 +232,7 @@
 
                     <button type="submit" class="w-full py-3.5 sm:py-4 bg-[#58111A] hover:bg-[#3B0A11] border border-[#D4AF37]/50 text-[#F7EED9] font-bold text-xs uppercase tracking-[0.12em] sm:tracking-[0.2em] text-center rounded-xs shadow-lg transition flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                        <span x-text="paymentMethod === 'cod' ? 'Confirm Cash on Delivery Order' : 'Proceed to Stripe Payment'"></span>
+                        <span x-text="paymentMethod === 'cod' ? 'Confirm Cash on Delivery Order' : 'Proceed to Razorpay Payment'"></span>
                     </button>
 
                     <div class="text-center text-[11px] text-stone-400">
@@ -249,8 +249,8 @@
 <script>
 function checkoutPage() {
     return {
-        selectedState: {!! json_encode(old('state', $defaultAddress?->state ?? 'Victoria')) !!},
-        paymentMethod: {!! json_encode(old('payment_method', 'stripe')) !!},
+        selectedState: {!! json_encode(old('state', $defaultAddress?->state ?? 'Punjab')) !!},
+        paymentMethod: {!! json_encode(old('payment_method', 'razorpay')) !!},
         shippingFee: {{ $totals['shipping_fee'] ?? 0 }},
         subtotal: {{ $totals['subtotal'] ?? 0 }},
         discount: {{ $totals['discount'] ?? 0 }},
@@ -278,7 +278,7 @@ function checkoutPage() {
                     this.grandTotal = data.totals.grand_total;
                     this.codAvailable = data.cod_available;
                     if (!this.codAvailable && this.paymentMethod === 'cod') {
-                        this.paymentMethod = 'stripe';
+                        this.paymentMethod = 'razorpay';
                     }
                 }
                 this.updatingRates = false;

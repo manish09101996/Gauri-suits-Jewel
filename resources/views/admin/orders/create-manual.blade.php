@@ -187,10 +187,11 @@
                     <div>
                         <label class="block text-xs font-medium text-slate-300 mb-1">Payment Method *</label>
                         <select name="payment_method" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-amber-400 outline-none">
-                            <option value="stripe">Stripe Online / Card</option>
                             <option value="cod">Cash On Delivery (COD)</option>
+                            <option value="bank_transfer">Bank Wire / IMPS / NEFT</option>
+                            <option value="upi">UPI / GPay / PhonePe</option>
                             <option value="pos">In-Store POS Card</option>
-                            <option value="bank_transfer">Bank Wire Transfer</option>
+                            <option value="razorpay">Razorpay Online Link</option>
                         </select>
                     </div>
 

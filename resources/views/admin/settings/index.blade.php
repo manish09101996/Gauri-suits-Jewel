@@ -20,7 +20,7 @@
             Announcement Bar
         </button>
         <button type="button" @click="tab = 'payments'" :class="tab === 'payments' ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white bg-slate-800/60'" class="px-4 py-2 rounded-lg text-xs font-semibold transition">
-            Stripe &amp; COD Payments
+            Razorpay & Payments
         </button>
         <button type="button" @click="tab = 'tax'" :class="tab === 'tax' ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400 hover:text-white bg-slate-800/60'" class="px-4 py-2 rounded-lg text-xs font-semibold transition">
             GST & Taxes
@@ -91,37 +91,26 @@
 
         <!-- Payments Tab -->
         <div x-show="tab === 'payments'" class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm space-y-5" style="display: none;">
-            <h2 class="text-base font-semibold text-white">Stripe Payment Gateway &amp; Cash on Delivery (COD)</h2>
+            <h2 class="text-base font-semibold text-white">Razorpay Payment Gateway API Credentials</h2>
             <div class="p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl text-xs text-amber-300/90 leading-relaxed mb-4">
-                Configure your Stripe Payment Gateway credentials and Cash on Delivery (COD) parameters for Australian Dollars (AUD). For testing in sandbox, use Stripe test keys starting with <code class="bg-slate-800 px-1 py-0.5 rounded text-amber-400">pk_test_...</code> and <code class="bg-slate-800 px-1 py-0.5 rounded text-amber-400">sk_test_...</code>.
+                Enter your Razorpay Dashboard API keys. For testing in sandbox, use test keys starting with <code class="bg-slate-800 px-1 py-0.5 rounded text-amber-400">rzp_test_...</code>.
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Stripe Publishable Key</label>
-                    <input type="text" name="stripe_public_key" value="{{ $settings['stripe_public_key'] ?? env('STRIPE_KEY', '') }}" placeholder="pk_live_... or pk_test_..." class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white font-mono focus:border-amber-400 outline-none">
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Razorpay Key ID</label>
+                    <input type="text" name="razorpay_key_id" value="{{ $settings['razorpay_key_id'] ?? env('RAZORPAY_KEY_ID', '') }}" placeholder="rzp_test_..." class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white font-mono focus:border-amber-400 outline-none">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Stripe Secret Key</label>
-                    <input type="password" name="stripe_secret_key" value="{{ $settings['stripe_secret_key'] ?? env('STRIPE_SECRET', '') }}" placeholder="sk_live_... or sk_test_..." class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white font-mono focus:border-amber-400 outline-none">
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Razorpay Key Secret</label>
+                    <input type="password" name="razorpay_key_secret" value="{{ $settings['razorpay_key_secret'] ?? env('RAZORPAY_KEY_SECRET', '') }}" placeholder="••••••••••••••••" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white font-mono focus:border-amber-400 outline-none">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Stripe Webhook Signing Secret</label>
-                    <input type="password" name="stripe_webhook_secret" value="{{ $settings['stripe_webhook_secret'] ?? env('STRIPE_WEBHOOK_SECRET', '') }}" placeholder="whsec_..." class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white font-mono focus:border-amber-400 outline-none">
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Razorpay Webhook Secret</label>
+                    <input type="password" name="razorpay_webhook_secret" value="{{ $settings['razorpay_webhook_secret'] ?? env('RAZORPAY_WEBHOOK_SECRET', '') }}" placeholder="Secret string for validating webhooks" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white font-mono focus:border-amber-400 outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-slate-300 mb-1">Store Base Currency</label>
                     <input type="text" name="currency" value="{{ $settings['currency'] ?? 'AUD' }}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Cash on Delivery (COD)</label>
-                    <select name="cod_enabled" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
-                        <option value="1" {{ ($settings['cod_enabled'] ?? '1') == '1' ? 'selected' : '' }}>Enabled (Available on Checkout)</option>
-                        <option value="0" {{ ($settings['cod_enabled'] ?? '1') == '0' ? 'selected' : '' }}>Disabled</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">COD Maximum Order Limit ($)</label>
-                    <input type="number" step="1" name="cod_max_limit" value="{{ $settings['cod_max_limit'] ?? 2500 }}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
                 </div>
             </div>
         </div>

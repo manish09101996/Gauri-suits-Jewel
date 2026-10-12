@@ -37,16 +37,18 @@ class CheckoutController extends Controller
         $addresses = $user ? $user->addresses : collect();
         $defaultAddress = $user ? $user->defaultAddress : null;
 
-        $selectedState = $defaultAddress ? $defaultAddress->state : 'Victoria';
-        $totals = $this->checkoutService->calculateCheckoutTotals($cart, $selectedState, 'stripe');
+        $selectedState = $defaultAddress ? $defaultAddress->state : 'Punjab';
+        $totals = $this->checkoutService->calculateCheckoutTotals($cart, $selectedState, 'cod');
 
         $codAvailable = $this->shippingService->isCodAvailable($totals['subtotal']);
-        $stripePublicKey = $this->paymentService->getStripePublicKey();
+        $razorpayKeyId = $this->paymentService->getKeyId();
 
         $states = [
-            'Victoria', 'New South Wales', 'Queensland', 'Western Australia',
-            'South Australia', 'Tasmania', 'Australian Capital Territory', 'Northern Territory',
-            'Punjab', 'Chandigarh', 'Haryana', 'Delhi', 'Other'
+            'Punjab', 'Chandigarh', 'Haryana', 'Delhi', 'Himachal Pradesh',
+            'Jammu and Kashmir', 'Rajasthan', 'Uttar Pradesh', 'Uttarakhand',
+            'Maharashtra', 'Gujarat', 'Karnataka', 'Tamil Nadu', 'Telangana',
+            'West Bengal', 'Kerala', 'Madhya Pradesh', 'Bihar', 'Assam',
+            'Andhra Pradesh', 'Odisha', 'Goa', 'Other States'
         ];
 
         return view('storefront.checkout', compact(
@@ -56,15 +58,15 @@ class CheckoutController extends Controller
             'defaultAddress',
             'totals',
             'codAvailable',
-            'stripePublicKey',
+            'razorpayKeyId',
             'states'
         ));
     }
 
     public function calculateShippingRate(Request $request)
     {
-        $state = $request->input('state', 'Victoria');
-        $paymentMethod = $request->input('payment_method', 'stripe');
+        $state = $request->input('state', 'Punjab');
+        $paymentMethod = $request->input('payment_method', 'cod');
         $cart = $this->cartService->getCart();
 
         try {
@@ -103,7 +105,7 @@ class CheckoutController extends Controller
             'city' => $request->input('city'),
             'state' => $request->input('state'),
             'postal_code' => $request->input('postal_code'),
-            'country' => $request->input('country', 'Australia'),
+            'country' => $request->input('country', 'India'),
         ];
 
         $paymentMethod = $request->input('payment_method');
@@ -122,7 +124,7 @@ class CheckoutController extends Controller
                 'city' => $request->input('city'),
                 'state' => $request->input('state'),
                 'postal_code' => $request->input('postal_code'),
-                'country' => $request->input('country', 'Australia'),
+                'country' => $request->input('country', 'India'),
                 'is_default' => !Auth::user()->addresses()->exists(),
             ]);
         }
@@ -138,17 +140,17 @@ class CheckoutController extends Controller
 
             if ($paymentMethod === 'cod') {
                 return redirect()->route('order.success', $order->order_number)
-                    ->with('success', 'Your Cash on Delivery order has been placed successfully!');
+                    ->with('success', 'Your order has been placed successfully!');
             }
 
-            // Stripe Payment flow
-            $sessionData = $this->paymentService->createStripeCheckoutSession($order);
+            // Razorpay Payment flow
+            $razorpayOrder = $this->paymentService->createRazorpayOrder($order);
 
-            if (!empty($sessionData['redirect_url'])) {
-                return redirect()->away($sessionData['redirect_url']);
-            }
-
-            return redirect()->route('order.stripe.pay', $order->order_number);
+            return view('storefront.razorpay-pay', [
+                'order' => $order,
+                'razorpayOrder' => $razorpayOrder,
+                'keyId' => $this->paymentService->getKeyId(),
+            ]);
         } catch (Exception $e) {
             return back()->withInput()->with('error', $e->getMessage());
         }

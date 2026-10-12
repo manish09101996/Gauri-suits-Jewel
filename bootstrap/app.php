@@ -30,7 +30,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'razorpay/webhook',
             'order/payment/callback',
-            'stripe/webhook',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

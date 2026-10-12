@@ -745,7 +745,7 @@
                         Tradition Meets Elegance
                     </p>
                     <span class="text-[9px] tracking-[0.32em] text-[#0A3828] uppercase font-semibold block pt-0.5 font-sans">
-                        GEELONG • MELBOURNE • AUSTRALIA
+                        CHANDIGARH • AMRITSAR
                     </span>
                 </div>
 
@@ -793,9 +793,9 @@
             <div class="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-[#6B5E55] gap-4">
                 <p>&copy; {{ date('Y') }} Gauri Suits &amp; Jewel. All Rights Reserved. Handcrafted in Punjab.</p>
                 <div class="flex flex-wrap items-center justify-center gap-2 text-[10px] tracking-wider uppercase font-semibold text-[#4A3E38]">
-                    <span class="px-2.5 py-1 bg-white rounded-xs border border-[#D5CBC0] shadow-2xs">Stripe</span>
-                    <span class="px-2.5 py-1 bg-white rounded-xs border border-[#D5CBC0] shadow-2xs">Visa / Mastercard / Amex</span>
-                    <span class="px-2.5 py-1 bg-white rounded-xs border border-[#D5CBC0] shadow-2xs">Apple Pay / Google Pay</span>
+                    <span class="px-2.5 py-1 bg-white rounded-xs border border-[#D5CBC0] shadow-2xs">Razorpay</span>
+                    <span class="px-2.5 py-1 bg-white rounded-xs border border-[#D5CBC0] shadow-2xs">UPI</span>
+                    <span class="px-2.5 py-1 bg-white rounded-xs border border-[#D5CBC0] shadow-2xs">Visa / Mastercard</span>
                     <span class="px-2.5 py-1 bg-white rounded-xs border border-[#D5CBC0] shadow-2xs">Cash on Delivery</span>
                 </div>
             </div>

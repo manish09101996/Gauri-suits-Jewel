@@ -18,7 +18,7 @@
         <h2 class="font-serif text-lg font-bold text-brand-charcoal pt-4">1. Information We Collect</h2>
         <ul class="list-disc list-inside space-y-2">
             <li><strong>Personal Identity:</strong> Your full name, email address, telephone contact, billing and physical shipping addresses.</li>
-            <li><strong>Transactional Information:</strong> Payment method chosen, order summary, tracking details, and purchase history. Note: We do NOT store credit/debit card numbers or bank credentials on our servers; payments are processed securely via PCI-DSS compliant payment gateways (Stripe).</li>
+            <li><strong>Transactional Information:</strong> Payment method chosen, order summary, tracking details, and purchase history. Note: We do NOT store credit/debit card numbers or bank credentials on our servers; payments are processed securely via PCI-DSS compliant payment gateways (Razorpay).</li>
             <li><strong>Technical & Session Data:</strong> IP address, device specifications, browser environment, geographical region, and browsing behavior to personalize your tailoring experience.</li>
         </ul>
 
