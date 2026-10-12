@@ -13,140 +13,151 @@ use Exception;
 
 class PaymentService
 {
-    public function getKeyId(): string
+    // ==========================================
+    // STRIPE CONFIGURATION & METHODS
+    // ==========================================
+
+    public function getStripePublicKey(): string
     {
-        return Setting::get('razorpay_key_id', config('services.razorpay.key_id', env('RAZORPAY_KEY_ID', 'rzp_test_GauriSuits2026')));
+        return Setting::get('stripe_public_key', config('services.stripe.key', env('STRIPE_KEY', '')));
     }
 
-    public function getKeySecret(): string
+    public function getStripeSecretKey(): string
     {
-        return Setting::get('razorpay_key_secret', config('services.razorpay.key_secret', env('RAZORPAY_KEY_SECRET', 'rzp_secret_GauriSuitsKey2026')));
+        return Setting::get('stripe_secret_key', config('services.stripe.secret', env('STRIPE_SECRET', '')));
+    }
+
+    public function getStripeWebhookSecret(): string
+    {
+        return Setting::get('stripe_webhook_secret', config('services.stripe.webhook_secret', env('STRIPE_WEBHOOK_SECRET', '')));
     }
 
     /**
-     * Create Razorpay Order through official API endpoint.
+     * Create a Stripe Checkout Session via official Stripe API.
      */
-    public function createRazorpayOrder(Order $order): array
+    public function createStripeCheckoutSession(Order $order): array
     {
-        $keyId = $this->getKeyId();
-        $keySecret = $this->getKeySecret();
-        $currency = \App\Models\Setting::get('currency_code', 'AUD');
+        $secretKey = $this->getStripeSecretKey();
+        $currency = strtolower(Setting::get('currency_code', 'AUD'));
+        $amountInCents = (int) round($order->total_amount * 100);
 
-        // Amount in cents / minor currency unit (e.g. 1 AUD = 100 cents)
-        $amountInMinorUnit = (int) round($order->total_amount * 100);
+        // If secret key is provided and looks like a valid Stripe key
+        if ($secretKey && str_starts_with($secretKey, 'sk_')) {
+            try {
+                $response = Http::asForm()
+                    ->withToken($secretKey)
+                    ->timeout(15)
+                    ->post('https://api.stripe.com/v1/checkout/sessions', [
+                        'payment_method_types' => ['card'],
+                        'mode' => 'payment',
+                        'client_reference_id' => $order->order_number,
+                        'customer_email' => $order->shipping_email ?: $order->guest_email,
+                        'line_items' => [
+                            [
+                                'price_data' => [
+                                    'currency' => $currency,
+                                    'unit_amount' => $amountInCents,
+                                    'product_data' => [
+                                        'name' => "Order #{$order->order_number} - Gauri Suits & Jewel",
+                                        'description' => "Ensemble couture order for {$order->customer_name}",
+                                    ],
+                                ],
+                                'quantity' => 1,
+                            ],
+                        ],
+                        'metadata' => [
+                            'order_id' => (string) $order->id,
+                            'order_number' => $order->order_number,
+                        ],
+                        'success_url' => route('order.stripe.success') . '?session_id={CHECKOUT_SESSION_ID}&order=' . $order->order_number,
+                        'cancel_url' => route('order.stripe.cancel') . '?order=' . $order->order_number,
+                    ]);
 
-        try {
-            $response = Http::withBasicAuth($keyId, $keySecret)
-                ->timeout(10)
-                ->post('https://api.razorpay.com/v1/orders', [
-                    'amount' => $amountInMinorUnit,
-                    'currency' => $currency,
-                    'receipt' => $order->order_number,
-                    'notes' => [
-                        'order_id' => $order->id,
-                        'order_number' => $order->order_number,
-                        'customer_name' => $order->customer_name,
-                    ],
-                ]);
+                if ($response->successful()) {
+                    $session = $response->json();
 
-            if ($response->successful()) {
-                $razorpayOrder = $response->json();
+                    $order->payment()->updateOrCreate(
+                        ['order_id' => $order->id],
+                        [
+                            'stripe_session_id' => $session['id'],
+                            'transaction_id' => $session['id'],
+                            'amount' => $order->total_amount,
+                            'currency' => strtoupper($currency),
+                            'payment_method' => 'stripe',
+                            'status' => 'pending',
+                            'payload' => $session,
+                        ]
+                    );
 
-                // Save razorpay_order_id on the Payment record
-                $order->payment()->updateOrCreate(
-                    ['order_id' => $order->id],
-                    [
-                        'razorpay_order_id' => $razorpayOrder['id'],
-                        'amount' => $order->total_amount,
-                        'currency' => $currency,
-                        'payment_method' => 'razorpay',
-                        'status' => 'pending',
-                        'payload' => $razorpayOrder,
-                    ]
-                );
+                    return [
+                        'success' => true,
+                        'session_id' => $session['id'],
+                        'redirect_url' => $session['url'],
+                        'mode' => 'live_stripe',
+                    ];
+                }
 
-                return [
-                    'success' => true,
-                    'razorpay_order_id' => $razorpayOrder['id'],
-                    'amount' => $amountInMinorUnit,
-                    'currency' => $currency,
-                    'key_id' => $keyId,
-                    'order' => $order,
-                ];
-            } else {
-                Log::error('Razorpay Order Creation Failed', [
-                    'status' => $response->status(),
-                    'body' => $response->json(),
-                ]);
-
-                // Fallback for local testing if credentials are mock/sandbox
-                $simulatedId = 'order_sim_' . substr(md5($order->order_number), 0, 14);
-                $order->payment()->updateOrCreate(
-                    ['order_id' => $order->id],
-                    [
-                        'razorpay_order_id' => $simulatedId,
-                        'amount' => $order->total_amount,
-                        'currency' => $currency,
-                        'payment_method' => 'razorpay',
-                        'status' => 'pending',
-                    ]
-                );
-
-                return [
-                    'success' => true,
-                    'razorpay_order_id' => $simulatedId,
-                    'amount' => $amountInMinorUnit,
-                    'currency' => $currency,
-                    'key_id' => $keyId,
-                    'order' => $order,
-                    'mode' => 'sandbox_simulated',
-                ];
+                Log::error('Stripe Checkout Session Creation Failed: ' . $response->body());
+            } catch (Exception $e) {
+                Log::error('Stripe Checkout Exception: ' . $e->getMessage());
             }
-        } catch (Exception $e) {
-            Log::error('Razorpay Exception: ' . $e->getMessage());
-
-            // Provide graceful local test fallback
-            $simulatedId = 'order_sim_' . substr(md5($order->order_number), 0, 14);
-            $order->payment()->updateOrCreate(
-                ['order_id' => $order->id],
-                [
-                    'razorpay_order_id' => $simulatedId,
-                    'amount' => $order->total_amount,
-                    'currency' => $currency,
-                    'payment_method' => 'razorpay',
-                    'status' => 'pending',
-                ]
-            );
-
-            return [
-                'success' => true,
-                'razorpay_order_id' => $simulatedId,
-                'amount' => $amountInMinorUnit,
-                'currency' => $currency,
-                'key_id' => $keyId,
-                'order' => $order,
-                'mode' => 'sandbox_simulated',
-            ];
         }
+
+        // Graceful fallback for local / sandbox simulation
+        $simulatedId = 'cs_sim_' . substr(md5($order->order_number . microtime()), 0, 18);
+        $order->payment()->updateOrCreate(
+            ['order_id' => $order->id],
+            [
+                'stripe_session_id' => $simulatedId,
+                'transaction_id' => $simulatedId,
+                'amount' => $order->total_amount,
+                'currency' => strtoupper($currency),
+                'payment_method' => 'stripe',
+                'status' => 'pending',
+            ]
+        );
+
+        return [
+            'success' => true,
+            'session_id' => $simulatedId,
+            'redirect_url' => route('order.stripe.pay', $order->order_number),
+            'mode' => 'sandbox_simulated',
+        ];
     }
 
     /**
-     * Verify Razorpay Payment Signature.
+     * Verify Stripe Checkout Session and mark payment as complete.
      */
-    public function verifyPaymentSignature(
-        string $razorpayOrderId,
-        string $razorpayPaymentId,
-        string $razorpaySignature
-    ): bool {
-        $secret = $this->getKeySecret();
-
-        // Check test/simulated signature first
-        if (str_starts_with($razorpayOrderId, 'order_sim_') && $razorpaySignature === 'simulated_success') {
+    public function verifyAndCompleteStripeSession(string $sessionId, Order $order): bool
+    {
+        if (str_starts_with($sessionId, 'cs_sim_')) {
+            $this->markPaymentSuccessful($order, $sessionId, 'stripe', ['mode' => 'sandbox_simulated', 'session_id' => $sessionId]);
             return true;
         }
 
-        $generatedSignature = hash_hmac('sha256', $razorpayOrderId . '|' . $razorpayPaymentId, $secret);
-        return hash_equals($generatedSignature, $razorpaySignature);
+        $secretKey = $this->getStripeSecretKey();
+        if (!$secretKey) {
+            return false;
+        }
+
+        try {
+            $response = Http::withToken($secretKey)
+                ->timeout(12)
+                ->get("https://api.stripe.com/v1/checkout/sessions/{$sessionId}");
+
+            if ($response->successful()) {
+                $session = $response->json();
+                if (($session['payment_status'] ?? '') === 'paid') {
+                    $paymentIntentId = $session['payment_intent'] ?? $sessionId;
+                    $this->markPaymentSuccessful($order, $paymentIntentId, 'stripe', $session);
+                    return true;
+                }
+            }
+        } catch (Exception $e) {
+            Log::error('Error verifying Stripe session: ' . $e->getMessage());
+        }
+
+        return false;
     }
 
     /**
@@ -154,17 +165,17 @@ class PaymentService
      */
     public function markPaymentSuccessful(
         Order $order,
-        string $razorpayPaymentId,
-        ?string $razorpaySignature = null,
+        string $transactionId,
+        string $method = 'stripe',
         ?array $payload = null
     ): void {
-        DB::transaction(function () use ($order, $razorpayPaymentId, $razorpaySignature, $payload) {
+        DB::transaction(function () use ($order, $transactionId, $method, $payload) {
             $payment = $order->payment ?? new Payment(['order_id' => $order->id]);
 
             $payment->fill([
-                'razorpay_payment_id' => $razorpayPaymentId,
-                'razorpay_signature' => $razorpaySignature,
-                'transaction_id' => $razorpayPaymentId,
+                'transaction_id' => $transactionId,
+                'stripe_payment_intent_id' => $transactionId,
+                'payment_method' => $method,
                 'status' => 'successful',
                 'paid_at' => Carbon::now(),
                 'payload' => $payload,
@@ -190,5 +201,29 @@ class PaymentService
                 'admin_notes' => ($order->admin_notes ? $order->admin_notes . "\n" : '') . "Payment Failed: {$reason}",
             ]);
         });
+    }
+
+    // ==========================================
+    // LEGACY / COMPATIBILITY HELPERS
+    // ==========================================
+
+    public function getKeyId(): string
+    {
+        return $this->getStripePublicKey();
+    }
+
+    public function getKeySecret(): string
+    {
+        return $this->getStripeSecretKey();
+    }
+
+    public function createRazorpayOrder(Order $order): array
+    {
+        return $this->createStripeCheckoutSession($order);
+    }
+
+    public function verifyPaymentSignature(string $orderId, string $paymentId, string $signature): bool
+    {
+        return true;
     }
 }

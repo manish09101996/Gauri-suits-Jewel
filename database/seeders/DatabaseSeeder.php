@@ -110,8 +110,9 @@ class DatabaseSeeder extends Seeder
             ['key' => 'flat_shipping_rate', 'value' => '15', 'group' => 'shipping'],
             ['key' => 'cod_enabled', 'value' => '1', 'group' => 'payment'],
             ['key' => 'cod_max_limit', 'value' => '2500', 'group' => 'payment'],
-            ['key' => 'razorpay_key_id', 'value' => 'rzp_test_gauri_mock_key', 'group' => 'payment'],
-            ['key' => 'razorpay_key_secret', 'value' => 'mock_secret_gauri_12345', 'group' => 'payment'],
+            ['key' => 'stripe_public_key', 'value' => 'pk_test_gauri_mock_key', 'group' => 'payment'],
+            ['key' => 'stripe_secret_key', 'value' => 'sk_test_mock_secret_12345', 'group' => 'payment'],
+            ['key' => 'stripe_webhook_secret', 'value' => '', 'group' => 'payment'],
             ['key' => 'announcement_bar', 'value' => 'COMPLIMENTARY SHIPPING ON ORDERS OVER $299 | WORLDWIDE COUTURE DELIVERY', 'group' => 'general'],
             ['key' => 'instagram_url', 'value' => 'https://instagram.com/gaurisuitsjewel', 'group' => 'social'],
             ['key' => 'facebook_url', 'value' => 'https://facebook.com/gaurisuitsjewel', 'group' => 'social'],
@@ -121,6 +122,22 @@ class DatabaseSeeder extends Seeder
         }
 
         // 3. Shipping Zones & Rates
+        $australiaZone = ShippingZone::create([
+            'name' => 'Australia Nationwide Delivery',
+            'states' => json_encode(['Victoria', 'New South Wales', 'Queensland', 'Western Australia', 'South Australia', 'Tasmania', 'Australian Capital Territory', 'Northern Territory']),
+            'is_active' => true,
+        ]);
+
+        ShippingRate::create([
+            'zone_id' => $australiaZone->id,
+            'name' => 'Express Australia Post',
+            'min_order_amount' => 0,
+            'max_order_amount' => 298.99,
+            'rate' => 15.00,
+            'estimated_days' => '2-4 Business Days',
+            'is_active' => true,
+        ]);
+
         $allIndiaZone = ShippingZone::create([
             'name' => 'Domestic India (All States & UTs)',
             'states' => json_encode(['Punjab', 'Delhi', 'Haryana', 'Chandigarh', 'Maharashtra', 'Karnataka', 'Rajasthan', 'Uttar Pradesh', 'Gujarat', 'West Bengal', 'Tamil Nadu', 'Telangana']),
