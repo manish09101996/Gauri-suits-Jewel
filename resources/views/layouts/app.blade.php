@@ -745,7 +745,7 @@
                         Tradition Meets Elegance
                     </p>
                     <span class="text-[9px] tracking-[0.32em] text-[#0A3828] uppercase font-semibold block pt-0.5 font-sans">
-                        CHANDIGARH • AMRITSAR
+                        GEELONG • MELBOURNE • AUSTRALIA
                     </span>
                 </div>
 
