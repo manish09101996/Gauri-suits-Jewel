@@ -724,61 +724,61 @@ class DatabaseSeeder extends Seeder
         $prod6 = $allProds->get(5);
 
         Reel::create([
-            'title' => 'Gulab Noor Zardozi Patiala in Motion',
-            'video_url' => 'https://assets.mixkit.co/videos/preview/mixkit-woman-modeling-a-traditional-indian-dress-42415-large.mp4',
-            'thumbnail_url' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop',
+            'title' => 'A Touch of Tradition • Mustard Gold Festive Suit',
+            'video_url' => 'https://www.instagram.com/reel/DfmAFStIOwp/',
+            'thumbnail_url' => 'images/reels/reel_DfmAFStIOwp.jpg',
             'product_id' => $prod1?->id,
-            'link_url' => 'https://www.instagram.com/gaurisuits',
+            'link_url' => 'https://www.instagram.com/reel/DfmAFStIOwp/',
             'is_active' => true,
             'sort_order' => 1,
         ]);
 
         Reel::create([
-            'title' => 'Artisanal Emerald Kundan Choker',
-            'video_url' => 'https://assets.mixkit.co/videos/preview/mixkit-golden-jewelry-necklace-and-earrings-43093-large.mp4',
-            'thumbnail_url' => 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=600&auto=format&fit=crop',
-            'product_id' => $prod4?->id,
-            'link_url' => 'https://www.instagram.com/gaurisuits',
+            'title' => 'Designer Dhoti Style Suit Set • Royal Occasion Wear',
+            'video_url' => 'https://www.instagram.com/reel/Dfl0zgWI64g/',
+            'thumbnail_url' => 'images/reels/reel_Dfl0zgWI64g.jpg',
+            'product_id' => $prod2?->id,
+            'link_url' => 'https://www.instagram.com/reel/Dfl0zgWI64g/',
             'is_active' => true,
             'sort_order' => 2,
         ]);
 
         Reel::create([
-            'title' => 'The Royal 28-Kali Bridal Flared Anarkali',
-            'video_url' => 'https://assets.mixkit.co/videos/preview/mixkit-fashion-model-in-an-elegant-dress-41804-large.mp4',
-            'thumbnail_url' => 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=80&w=600&auto=format&fit=crop',
+            'title' => 'Festival of Lights • Festive Suit Edition',
+            'video_url' => 'https://www.instagram.com/reel/DflrxVfImpv/',
+            'thumbnail_url' => 'images/reels/reel_DflrxVfImpv.jpg',
             'product_id' => $prod3?->id,
-            'link_url' => 'https://www.instagram.com/gaurisuits',
+            'link_url' => 'https://www.instagram.com/reel/DflrxVfImpv/',
             'is_active' => true,
             'sort_order' => 3,
         ]);
 
         Reel::create([
-            'title' => 'Noor-e-Kashmir Micro-Velvet Tilla Elegance',
-            'video_url' => 'https://assets.mixkit.co/videos/preview/mixkit-woman-modeling-a-traditional-indian-dress-42415-large.mp4',
-            'thumbnail_url' => 'https://images.unsplash.com/photo-1583391733975-021c37b679b3?q=80&w=600&auto=format&fit=crop',
-            'product_id' => $prod2?->id,
-            'link_url' => 'https://www.instagram.com/gaurisuits',
+            'title' => 'Festive Suit Collection • Traditional Flare & Embroidery',
+            'video_url' => 'https://www.instagram.com/reel/DfbNbD4ImpZ/',
+            'thumbnail_url' => 'images/reels/reel_DfbNbD4ImpZ.jpg',
+            'product_id' => $prod4?->id,
+            'link_url' => 'https://www.instagram.com/reel/DfbNbD4ImpZ/',
             'is_active' => true,
             'sort_order' => 4,
         ]);
 
         Reel::create([
-            'title' => 'Chandrika Meenakari Chandbalis Sway',
-            'video_url' => 'https://assets.mixkit.co/videos/preview/mixkit-golden-jewelry-necklace-and-earrings-43093-large.mp4',
-            'thumbnail_url' => 'https://images.unsplash.com/photo-1630019852942-f89202989a59?q=80&w=600&auto=format&fit=crop',
-            'product_id' => $prod5?->id,
-            'link_url' => 'https://www.instagram.com/gaurisuits',
+            'title' => 'Cream Embroidered Sophistication & Grace',
+            'video_url' => 'https://www.instagram.com/reel/DfY90Orokii/',
+            'thumbnail_url' => 'images/reels/reel_DfY90Orokii.jpg',
+            'product_id' => $prod6?->id,
+            'link_url' => 'https://www.instagram.com/reel/DfY90Orokii/',
             'is_active' => true,
             'sort_order' => 5,
         ]);
 
         Reel::create([
-            'title' => 'Heritage Courtyards of Patiala',
-            'video_url' => 'https://assets.mixkit.co/videos/preview/mixkit-fashion-model-in-an-elegant-dress-41804-large.mp4',
-            'thumbnail_url' => 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?q=80&w=600&auto=format&fit=crop',
-            'product_id' => $prod6?->id,
-            'link_url' => 'https://www.instagram.com/gaurisuits',
+            'title' => 'Soft Ivory & Pink Dupatta Delicate Embroidery',
+            'video_url' => 'https://www.instagram.com/reel/DfZEwHOgLdX/',
+            'thumbnail_url' => 'images/reels/reel_DfZEwHOgLdX.jpg',
+            'product_id' => $prod5?->id,
+            'link_url' => 'https://www.instagram.com/reel/DfZEwHOgLdX/',
             'is_active' => true,
             'sort_order' => 6,
         ]);

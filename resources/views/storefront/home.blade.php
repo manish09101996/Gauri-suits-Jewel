@@ -522,7 +522,7 @@
                 'id' => $reel->id,
                 'title' => $reel->title,
                 'video_url' => $reel->video_url,
-                'thumbnail_url' => $reel->thumbnail_url,
+                'thumbnail_url' => Str::startsWith($reel->thumbnail_url, ['http://', 'https://']) ? $reel->thumbnail_url : asset($reel->thumbnail_url),
                 'link_url' => $reel->link_url ?: 'https://www.instagram.com/gaurisuits',
                 'product' => $reel->product ? [
                     'id' => $reel->product->id,
@@ -594,7 +594,7 @@
 
                         <!-- Poster Image -->
                         <div class="absolute inset-0 z-0">
-                            <img src="{{ $reel->thumbnail_url }}"
+                            <img src="{{ Str::startsWith($reel->thumbnail_url, ['http://', 'https://']) ? $reel->thumbnail_url : asset($reel->thumbnail_url) }}"
                                  alt="{{ $reel->title }}"
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out filter brightness-[0.88]">
                             <!-- Gradient Overlays -->
@@ -701,11 +701,14 @@
                 </button>
 
                 <!-- Left: 9:16 Video Player or Instagram Embed -->
-                <div class="w-full md:w-3/5 aspect-[9/16] bg-black relative flex items-center justify-center">
+                <div class="w-full md:w-3/5 min-h-[480px] sm:min-h-[580px] bg-black relative flex items-center justify-center overflow-hidden">
                     <template x-if="currentReel && isInstagramReel(currentReel.video_url)">
                         <iframe :src="getInstagramEmbedUrl(currentReel.video_url)"
-                                class="w-full h-full border-0"
-                                allow="autoplay; encrypted-media"
+                                class="w-full h-full min-h-[480px] sm:min-h-[580px] border-0"
+                                frameborder="0"
+                                scrolling="no"
+                                allowtransparency="true"
+                                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
                                 allowfullscreen></iframe>
                     </template>
                     <template x-if="currentReel && !isInstagramReel(currentReel.video_url)">

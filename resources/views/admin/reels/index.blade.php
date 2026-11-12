@@ -20,7 +20,7 @@
         <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-sm flex flex-col group">
             <div class="relative aspect-[9/16] bg-slate-800 overflow-hidden">
                 @if($reel->thumbnail_url)
-                    <img src="{{ $reel->thumbnail_url }}" alt="{{ $reel->title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                    <img src="{{ Str::startsWith($reel->thumbnail_url, ['http://', 'https://']) ? $reel->thumbnail_url : asset($reel->thumbnail_url) }}" alt="{{ $reel->title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                 @else
                     <div class="w-full h-full flex flex-col items-center justify-center text-slate-500">
                         <svg class="w-10 h-10 text-slate-600 mb-2" fill="currentColor" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 6l-5-3.5v7l5-3.5z"/></svg>
