@@ -7,7 +7,7 @@
 <div class="bg-[#FBF6EF] text-[#2A1810]">
 
     <!-- ============================================================== -->
-    <!-- 1. HERO BANNER: ROYAL BURGUNDY & GOLD WITH INDIAN FASHION MODEL -->
+    <!-- 1. HERO BANNER: ROYAL BURGUNDY & GOLD WITH HD INDIAN MODEL     -->
     <!-- ============================================================== -->
     <section class="relative overflow-hidden bg-gradient-to-r from-[#4A0612] via-[#5C0B18] to-[#3B030D] text-white min-h-[520px] sm:min-h-[580px] lg:min-h-[640px] flex items-center border-b border-[#D4AF37]/30">
         
@@ -18,7 +18,6 @@
                 <path d="M20 30 Q 50 10, 70 40 T 110 50 T 80 90 T 40 80 Z" opacity="0.6"/>
                 <path d="M30 140 Q 60 120, 80 150 T 120 160 T 90 200 T 50 190 Z" opacity="0.6"/>
                 <path d="M25 250 Q 55 230, 75 260 T 115 270 T 85 310 T 45 300 Z" opacity="0.6"/>
-                <!-- Ornamental Paisley Motifs -->
                 <circle cx="50" cy="50" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
                 <circle cx="60" cy="160" r="22" fill="none" stroke="currentColor" stroke-width="2"/>
                 <circle cx="55" cy="270" r="20" fill="none" stroke="currentColor" stroke-width="2"/>
@@ -62,12 +61,12 @@
                     </div>
                 </div>
 
-                <!-- Right Side: Heritage Palace Archway with Indian Fashion Model (5 cols on desktop) -->
+                <!-- Right Side: Heritage Palace Archway with HD Indian Fashion Model (5 cols on desktop) -->
                 <div class="lg:col-span-5 flex justify-center lg:justify-end">
                     <div class="relative w-full max-w-[340px] sm:max-w-[400px] lg:max-w-[440px] aspect-[4/5] rounded-t-full overflow-hidden border-2 border-[#E8C581]/70 shadow-2xl bg-[#2A060C] group">
-                        <img src="{{ asset('images/reference/hero_model_2x.jpg') }}"
+                        <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=90&w=1600&auto=format&fit=crop"
                              alt="Gauri Suits & Jewel Heritage Model in Maroon Embroidered Royal Suit"
-                             class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out">
+                             class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out filter brightness-[0.98]">
                         <!-- Subtle Gold Gradient Inner Rim -->
                         <div class="absolute inset-0 ring-1 ring-inset ring-[#E8C581]/30 rounded-t-full pointer-events-none"></div>
                         <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
@@ -79,33 +78,33 @@
     </section>
 
     <!-- ============================================================== -->
-    <!-- 2. SECTION: OUR COLLECTIONS (6 ATTRACTIVE CATEGORY CARDS)       -->
+    <!-- 2. SECTION: OUR COLLECTIONS (6 HD ATTRACTIVE CATEGORY CARDS)   -->
     <!-- ============================================================== -->
     @php
         $collections = [
             [
                 'name' => 'Punjabi Suits',
-                'image' => asset('images/reference/cat_punjabi_suits.jpg'),
+                'image' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=85&w=900&auto=format&fit=crop',
                 'url' => route('shop.suits')
             ],
             [
                 'name' => 'Party Wear',
-                'image' => asset('images/reference/cat_party_wear.jpg'),
+                'image' => 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=85&w=900&auto=format&fit=crop',
                 'url' => route('shop.party-wear')
             ],
             [
                 'name' => 'Designer Suits',
-                'image' => asset('images/reference/cat_designer_suits.jpg'),
+                'image' => 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?q=85&w=900&auto=format&fit=crop',
                 'url' => route('shop.designer-suits')
             ],
             [
                 'name' => 'Jewellery',
-                'image' => asset('images/reference/cat_jewellery.jpg'),
+                'image' => 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=85&w=900&auto=format&fit=crop',
                 'url' => route('shop.jewellery')
             ],
             [
                 'name' => 'Fabric',
-                'image' => asset('images/reference/cat_fabric.jpg'),
+                'image' => 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=85&w=900&auto=format&fit=crop',
                 'url' => route('shop.suits', ['type' => 'fabric'])
             ]
         ];
@@ -141,14 +140,14 @@
             @foreach($collections as $col)
                 <a href="{{ $col['url'] }}"
                    class="group flex flex-col bg-white border border-[#D4AF37]/35 hover:border-[#D4AF37] rounded-lg overflow-hidden transition-all duration-300 shadow-xs hover:shadow-xl hover:-translate-y-1">
-                    <!-- Image Container -->
+                    <!-- HD Image Container -->
                     <div class="relative aspect-[4/3] sm:aspect-[5/4] overflow-hidden bg-[#FAF4EC]">
                         <img src="{{ $col['image'] }}"
                              alt="{{ $col['name'] }}"
-                             class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out">
+                             class="w-full h-full object-cover object-top group-hover:scale-108 transition-transform duration-500 ease-out">
                     </div>
                     <!-- Dark Green Bottom Button Bar -->
-                    <div class="py-2 px-1 text-center bg-[#0B2417] group-hover:bg-[#5C0B18] transition-colors">
+                    <div class="py-2.5 px-1 text-center bg-[#0B2417] group-hover:bg-[#5C0B18] transition-colors">
                         <span class="text-[11px] sm:text-xs font-sans font-bold tracking-wider text-white uppercase block truncate">
                             {{ $col['name'] }}
                         </span>
@@ -162,7 +161,7 @@
                     Special<br>Offers
                 </h3>
                 <a href="{{ route('shop.sale') }}"
-                   class="mt-3.5 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-[#E8C581] text-[#FAF4EC] hover:bg-[#E8C581] hover:text-[#5C0B18] text-[11px] font-sans font-bold uppercase tracking-wider transition-all">
+                   class="mt-3.5 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-[#E8C581] text-[#FAF4EC] hover:bg-[#E8C581] hover:text-[#5C0B18] text-[11px] font-sans font-bold uppercase tracking-wider transition-all shadow-sm">
                     <span>Shop Now</span> &rarr;
                 </a>
             </div>
@@ -170,18 +169,18 @@
     </section>
 
     <!-- ============================================================== -->
-    <!-- 3. PROMOTIONAL BANNER: PREMIUM COLLECTION (EMERALD GREEN)      -->
+    <!-- 3. PROMOTIONAL BANNER: PREMIUM COLLECTION (HD EMERALD GREEN)   -->
     <!-- ============================================================== -->
     <section class="py-6 sm:py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="relative overflow-hidden rounded-lg min-h-[140px] sm:min-h-[180px] lg:min-h-[200px] flex items-center bg-[#0D3B26] border border-[#D4AF37]/40 shadow-lg">
+        <div class="relative overflow-hidden rounded-lg min-h-[160px] sm:min-h-[200px] lg:min-h-[220px] flex items-center bg-[#072416] border border-[#D4AF37]/50 shadow-xl">
             
-            <!-- High-Res Green Embroidered Fabric Background -->
+            <!-- High-Res Emerald Green Embroidered Silk Background -->
             <div class="absolute inset-0 z-0">
-                <img src="{{ asset('images/reference/premium_banner.jpg') }}"
+                <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=90&w=1800&auto=format&fit=crop"
                      alt="Premium Collection Grace in Every Detail"
-                     class="w-full h-full object-cover object-right sm:object-center filter brightness-[0.9]">
+                     class="w-full h-full object-cover object-right sm:object-center filter brightness-[0.75] contrast-[1.1]">
                 <!-- Subtle Gradient Overlay on Left for pristine text legibility -->
-                <div class="absolute inset-0 bg-gradient-to-r from-[#092B1B]/95 via-[#092B1B]/70 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-[#061D12]/95 via-[#08291A]/75 to-transparent"></div>
             </div>
 
             <!-- Left Promotional Editorial Copy -->
@@ -194,7 +193,7 @@
                 </p>
                 <div class="pt-2 sm:pt-3">
                     <a href="{{ route('shop.suits', ['featured' => 1]) }}"
-                       class="inline-flex items-center gap-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-full bg-[#E8C581] hover:bg-white text-[#0A2B1B] text-xs sm:text-sm font-sans font-bold uppercase tracking-wider transition-all shadow-md group">
+                       class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#E8C581] hover:bg-white text-[#061D12] text-xs sm:text-sm font-sans font-bold uppercase tracking-wider transition-all shadow-md group">
                         <span>Shop the Look</span>
                         <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
                     </a>
@@ -204,49 +203,49 @@
     </section>
 
     <!-- ============================================================== -->
-    <!-- 4. SECTION: TRENDING COLLECTION (6 PRODUCT CARDS)              -->
+    <!-- 4. SECTION: TRENDING COLLECTION (6 HD PRODUCT CARDS)           -->
     <!-- ============================================================== -->
     @php
         $trendingCards = [
             [
                 'name' => 'Royal Maroon Embroidered Suit',
-                'image' => asset('images/reference/trending_1.jpg'),
+                'image' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=85&w=900&auto=format&fit=crop',
                 'price' => 499,
                 'slug' => 'gulab-noor-zardozi-patiala-suit'
             ],
             [
                 'name' => 'Emerald Green Festive Suit',
-                'image' => asset('images/reference/trending_2.jpg'),
+                'image' => 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=85&w=900&auto=format&fit=crop',
                 'price' => 389,
                 'slug' => 'noor-e-kashmir-velvet-tilla-suit'
             ],
             [
                 'name' => 'Blush Rose Handwork Suit',
-                'image' => asset('images/reference/trending_3.jpg'),
+                'image' => 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=85&w=900&auto=format&fit=crop',
                 'price' => 429,
                 'slug' => 'sheesh-mahal-kalidar-bridal-anarkali'
             ],
             [
                 'name' => 'Peacock Green Designer Suit',
-                'image' => asset('images/reference/trending_4.jpg'),
+                'image' => 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?q=85&w=900&auto=format&fit=crop',
                 'price' => 599,
                 'slug' => 'bagh-e-punjab-pure-chanderi-unstitched-suit'
             ],
             [
                 'name' => 'Regal Purple Zardozi Suit',
-                'image' => asset('images/reference/trending_5.jpg'),
+                'image' => 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=85&w=900&auto=format&fit=crop',
                 'price' => 449,
                 'slug' => 'nawabi-sapphire-blue-silk-gharara-set'
             ],
             [
                 'name' => 'Mustard Gold Shahi Suit',
-                'image' => asset('images/reference/trending_6.jpg'),
+                'image' => 'https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=85&w=900&auto=format&fit=crop',
                 'price' => 399,
                 'slug' => 'noorjehan-mustard-handloom-georgette-suit'
             ],
         ];
 
-        // Bind with real database products where matching
+        // Bind with database products where available
         $dbProducts = $featuredProducts->take(6);
     @endphp
 
@@ -284,16 +283,16 @@
                     $pName = $dbP ? $dbP->name : $pData['name'];
                     $pPrice = $dbP ? ($dbP->sale_price ?? $dbP->price) : $pData['price'];
                     $pUrl = $dbP ? route('product.show', $dbP->slug) : route('shop.index');
-                    $pImg = $pData['image'];
+                    $pImg = ($dbP && !empty($dbP->primary_image_url)) ? $dbP->primary_image_url : $pData['image'];
                 @endphp
 
                 <div class="group flex flex-col bg-white border border-[#D4AF37]/35 hover:border-[#D4AF37] rounded-lg overflow-hidden transition-all duration-300 shadow-xs hover:shadow-xl hover:-translate-y-1">
-                    <!-- Image Viewport -->
+                    <!-- HD Image Viewport -->
                     <div class="relative aspect-[4/5] overflow-hidden bg-[#FAF4EC]">
                         <a href="{{ $pUrl }}" class="block w-full h-full">
                             <img src="{{ $pImg }}"
                                  alt="{{ $pName }}"
-                                 class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out">
+                                 class="w-full h-full object-cover object-top group-hover:scale-108 transition-transform duration-500 ease-out">
                         </a>
 
                         <!-- Top-Right Wishlist Heart -->
@@ -332,29 +331,29 @@
     </section>
 
     <!-- ============================================================== -->
-    <!-- 5. SECTION: OUR REELS (BURGUNDY VIDEO GALLERY WITH PLAY ICONS)   -->
+    <!-- 5. SECTION: OUR REELS (REAL INSTAGRAM REELS FROM @GAURISUITS)   -->
     <!-- ============================================================== -->
     @php
-        $reelCards = [
-            ['id' => 1, 'title' => 'Festive Red Royal Suit', 'thumb' => asset('images/reference/reel_1.jpg'), 'url' => 'https://www.instagram.com/gaurisuits'],
-            ['id' => 2, 'title' => 'Emerald Green Occasion Set', 'thumb' => asset('images/reference/reel_2.jpg'), 'url' => 'https://www.instagram.com/gaurisuits'],
-            ['id' => 3, 'title' => 'Pastel Rose Embroidered Suit', 'thumb' => asset('images/reference/reel_3.jpg'), 'url' => 'https://www.instagram.com/gaurisuits'],
-            ['id' => 4, 'title' => 'Maroon Bridal Zardozi Suit', 'thumb' => asset('images/reference/reel_4.jpg'), 'url' => 'https://www.instagram.com/gaurisuits'],
-            ['id' => 5, 'title' => 'Intricate Sleeve Tilla Work', 'thumb' => asset('images/reference/reel_5.jpg'), 'url' => 'https://www.instagram.com/gaurisuits'],
-            ['id' => 6, 'title' => 'Bottle Green Festive Flare', 'thumb' => asset('images/reference/reel_6.jpg'), 'url' => 'https://www.instagram.com/gaurisuits'],
-            ['id' => 7, 'title' => 'Royal Purple Anarkali Edit', 'thumb' => asset('images/reference/reel_7.jpg'), 'url' => 'https://www.instagram.com/gaurisuits'],
-            ['id' => 8, 'title' => 'Mustard Yellow Punjabi Suit', 'thumb' => asset('images/reference/reel_8.jpg'), 'url' => 'https://www.instagram.com/gaurisuits'],
-        ];
+        // Load the 8 authentic reels from @gaurisuits
+        $displayReels = $reels->take(8);
+        if ($displayReels->isEmpty()) {
+            $displayReels = App\Models\Reel::where('is_active', true)->orderBy('sort_order')->take(8)->get();
+        }
 
-        // Prepare reels JSON for Alpine video modal
-        $reelsJsonData = collect($reelCards)->map(function($r) {
+        $reelsJsonData = $displayReels->map(function($r) {
             return [
-                'id' => $r['id'],
-                'title' => $r['title'],
-                'video_url' => $r['url'],
-                'link_url' => $r['url'],
-                'thumbnail_url' => $r['thumb'],
-                'product' => null
+                'id' => $r->id,
+                'title' => $r->title,
+                'video_url' => $r->video_url ?: 'https://www.instagram.com/gaurisuits',
+                'link_url' => $r->link_url ?: 'https://www.instagram.com/gaurisuits',
+                'thumbnail_url' => asset($r->thumbnail_url),
+                'product' => $r->product ? [
+                    'id' => $r->product->id,
+                    'name' => $r->product->name,
+                    'price' => $r->product->effective_price,
+                    'url' => route('product.show', $r->product->slug),
+                    'image' => $r->product->primary_image_url
+                ] : null
             ];
         });
     @endphp
@@ -383,11 +382,11 @@
                     <div class="hidden sm:block w-12 sm:w-20 h-[1.5px] bg-gradient-to-l from-transparent to-[#E8C581]"></div>
                 </div>
                 <p class="text-xs sm:text-sm text-[#FAF4EC]/85 font-sans">
-                    Get Inspired by Our Latest Styles
+                    Get Inspired by Our Latest Styles on Instagram <a href="https://www.instagram.com/gaurisuits" target="_blank" rel="noopener" class="underline text-[#E8C581] hover:text-white">@gaurisuits</a>
                 </p>
             </div>
 
-            <!-- Carousel Track with Left and Right Circular Nav Buttons matching reference -->
+            <!-- Carousel Track with Left and Right Circular Nav Buttons -->
             <div class="relative group/carousel">
                 <!-- Left Nav Arrow Button -->
                 <button type="button" @click="scrollPrev()"
@@ -396,24 +395,53 @@
                     <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
                 </button>
 
-                <!-- Track of 8 Reels -->
+                <!-- Track of 8 Reels from @gaurisuits -->
                 <div x-ref="track"
                      class="flex gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar py-2 px-1">
-                    @foreach($reelCards as $rc)
-                        <div class="w-[125px] sm:w-[145px] md:w-[155px] shrink-0 snap-start aspect-[3/4] relative rounded-md overflow-hidden bg-[#24060C] border border-[#D4AF37]/50 hover:border-[#E8C581] shadow-md hover:shadow-2xl transition-all duration-300 group select-none cursor-pointer"
-                             @click="openReelModal({{ $rc['id'] }})">
-                            <!-- Reel Thumbnail -->
-                            <img src="{{ $rc['thumb'] }}"
-                                 alt="{{ $rc['title'] }}"
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out">
+                    @foreach($displayReels as $reel)
+                        <div class="w-[140px] sm:w-[165px] md:w-[180px] shrink-0 snap-start flex flex-col bg-white border border-[#D4AF37]/40 hover:border-[#E8C581] rounded-md overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group select-none">
                             
-                            <!-- Dark Vignette Overlay -->
-                            <div class="absolute inset-0 bg-black/25 group-hover:bg-black/10 transition-colors"></div>
+                            <!-- Aspect 4:5 Uncropped Poster Area with Zero Crop -->
+                            <div class="relative w-full aspect-[4/5] bg-[#140608] overflow-hidden flex items-center justify-center cursor-pointer"
+                                 @click="openReelModal({{ $reel->id }})">
+                                <!-- Ambient Blurred Background Fill -->
+                                <img src="{{ asset($reel->thumbnail_url) }}"
+                                     alt=""
+                                     aria-hidden="true"
+                                     class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-30 pointer-events-none">
+                                
+                                <!-- Foreground Authentic Instagram Reel from @gaurisuits -->
+                                <img src="{{ asset($reel->thumbnail_url) }}"
+                                     alt="{{ $reel->title }}"
+                                     class="relative z-10 max-w-full max-h-full object-contain group-hover:scale-102 transition-transform duration-500 ease-out">
+                                
+                                <!-- Instagram Badge on Top -->
+                                <div class="absolute top-2 left-2 right-2 z-20 flex items-center justify-between pointer-events-none">
+                                    <span class="bg-black/75 backdrop-blur-xs text-[9px] text-[#E8C581] font-semibold px-2 py-0.5 rounded-full border border-white/20">
+                                        @gaurisuits
+                                    </span>
+                                    <a href="{{ $reel->link_url ?: 'https://www.instagram.com/gaurisuits' }}" target="_blank" rel="noopener" class="pointer-events-auto text-white/80 hover:text-white" title="Open on Instagram">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                    </a>
+                                </div>
 
-                            <!-- White Circular Play Button in Center matching reference image -->
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/95 text-[#3B030D] flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-[#E8C581] transition-transform">
-                                    <svg class="w-3.5 h-3.5 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                <!-- White Circular Play Button in Center -->
+                                <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+                                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/95 text-[#3B030D] flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-[#E8C581] transition-transform">
+                                        <svg class="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dedicated Bottom Info Card (Zero Overlap with Graphics) -->
+                            <div class="p-2 sm:p-2.5 bg-[#FAF7F2] border-t border-[#D4AF37]/30 flex flex-col justify-between flex-1">
+                                <h4 class="font-serif text-[11px] sm:text-xs text-[#2A1810] font-semibold line-clamp-1 leading-snug hover:text-[#5C0B18] transition-colors cursor-pointer"
+                                    @click="openReelModal({{ $reel->id }})">
+                                    {{ $reel->title }}
+                                </h4>
+                                <div class="mt-1 flex items-center justify-between text-[10px]">
+                                    <span class="text-[#5C0B18] font-bold">Watch Reel</span>
+                                    <span class="text-[#8C713B]">&rarr;</span>
                                 </div>
                             </div>
                         </div>
@@ -429,7 +457,7 @@
             </div>
         </div>
 
-        <!-- Reel Video Modal Dialog -->
+        <!-- Reel Interactive Modal Dialog -->
         <div x-show="modalOpen"
              x-cloak
              class="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
@@ -440,14 +468,27 @@
                         class="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/60 text-white hover:text-[#E8C581] flex items-center justify-center text-lg font-bold border border-white/20 transition">
                     &times;
                 </button>
-                <div class="w-full aspect-[9/16] bg-black rounded-lg overflow-hidden flex items-center justify-center mt-2">
+                <div class="w-full aspect-[4/5] bg-black rounded-lg overflow-hidden flex items-center justify-center mt-2">
                     <img :src="currentReel ? currentReel.thumbnail_url : ''" class="w-full h-full object-contain">
                 </div>
-                <div class="mt-4 text-center space-y-2">
+                <div class="mt-4 text-center space-y-2.5">
                     <h4 class="font-serif text-base text-[#E8C581] font-bold" x-text="currentReel ? currentReel.title : ''"></h4>
+                    
+                    <template x-if="currentReel && currentReel.product">
+                        <div class="p-2.5 bg-white/10 rounded border border-[#E8C581]/30 flex items-center justify-between gap-3 text-left">
+                            <div class="min-w-0 flex-1">
+                                <div class="text-xs font-semibold text-white truncate" x-text="currentReel.product.name"></div>
+                                <div class="text-xs font-bold text-[#E8C581]" x-text="'$' + Number(currentReel.product.price).toFixed(2) + ' AUD'"></div>
+                            </div>
+                            <a :href="currentReel.product.url" class="px-3 py-1 bg-[#E8C581] hover:bg-white text-[#3B030D] text-[10px] uppercase font-bold rounded">
+                                View
+                            </a>
+                        </div>
+                    </template>
+
                     <a :href="currentReel && currentReel.link_url ? currentReel.link_url : 'https://www.instagram.com/gaurisuits'"
                        target="_blank" rel="noopener"
-                       class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white text-xs font-semibold shadow-md">
+                       class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] hover:opacity-90 text-white text-xs font-semibold shadow-md transition-all">
                         <span>Watch on Instagram (@gaurisuits)</span> &rarr;
                     </a>
                 </div>
@@ -456,24 +497,24 @@
     </section>
 
     <!-- ============================================================== -->
-    <!-- 6. SECTION: HAPPY CUSTOMERS (TESTIMONIALS WITH AVATARS)        -->
+    <!-- 6. SECTION: HAPPY CUSTOMERS (HD TESTIMONIALS WITH AVATARS)     -->
     <!-- ============================================================== -->
     @php
         $testimonials = [
             [
-                'avatar' => asset('images/reference/avatar_priya.jpg'),
+                'avatar' => 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=300&auto=format&fit=crop',
                 'stars' => 5,
                 'quote' => 'Beautiful collection and amazing quality! Highly recommended.',
                 'author' => '— Priya S.'
             ],
             [
-                'avatar' => asset('images/reference/avatar_neha.jpg'),
+                'avatar' => 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300&auto=format&fit=crop',
                 'stars' => 5,
                 'quote' => 'Very elegant suits. Loved the service.',
                 'author' => '— Neha K.'
             ],
             [
-                'avatar' => asset('images/reference/avatar_simran.jpg'),
+                'avatar' => 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=300&auto=format&fit=crop',
                 'stars' => 5,
                 'quote' => 'Best place for traditional outfits.',
                 'author' => '— Simran K.'
@@ -517,8 +558,8 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6">
                 @foreach($testimonials as $test)
                     <div class="p-4 sm:p-5 rounded-lg bg-[#FAF4EC] border border-[#D4AF37]/35 shadow-xs flex items-center gap-3.5 transition hover:shadow-md hover:border-[#D4AF37]">
-                        <!-- Customer Avatar -->
-                        <div class="w-11 h-11 rounded-full overflow-hidden border border-[#D4AF37] shrink-0 bg-stone-200 shadow-2xs">
+                        <!-- HD Customer Avatar -->
+                        <div class="w-12 h-12 rounded-full overflow-hidden border border-[#D4AF37] shrink-0 bg-stone-200 shadow-2xs">
                             <img src="{{ $test['avatar'] }}" alt="{{ $test['author'] }}" class="w-full h-full object-cover">
                         </div>
 
