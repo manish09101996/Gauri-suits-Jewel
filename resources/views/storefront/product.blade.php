@@ -23,8 +23,8 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
         <!-- Gallery Viewport (7 Cols on desktop) -->
         <div class="lg:col-span-7 space-y-4">
-            <div class="relative aspect-[3/4] bg-[#FAF7F2] rounded-sm overflow-hidden border border-[#D4AF37]/40 shadow-sm">
-                <img :src="activeImage" alt="{{ $product->name }}" class="w-full h-full object-cover object-top transition duration-500">
+            <div class="relative aspect-[3/4] bg-[#FAF7F2] rounded-sm overflow-hidden border border-[#D4AF37]/40 shadow-sm flex items-center justify-center">
+                <img :src="activeImage" alt="{{ $product->name }}" class="w-full h-full object-contain object-center transition duration-500">
 
                 <button type="button"
                         @click="toggleWishlist({{ $product->id }})"
@@ -55,7 +55,7 @@
                         @click="activeImage = '{{ $imgUrl }}'"
                         :class="activeImage === '{{ $imgUrl }}' ? 'border-[#D4AF37] ring-2 ring-[#D4AF37]/30 shadow-xs' : 'border-[#E8DFD5] hover:border-[#D4AF37]/60'"
                         class="w-20 sm:w-24 aspect-[3/4] rounded-xs overflow-hidden border-2 shrink-0 transition bg-[#FAF7F2]">
-                    <img src="{{ $imgUrl }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                    <img src="{{ $imgUrl }}" alt="{{ $product->name }}" class="w-full h-full object-contain p-0.5">
                 </button>
                 @endforeach
             </div>

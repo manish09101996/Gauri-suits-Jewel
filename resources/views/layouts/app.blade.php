@@ -573,8 +573,8 @@
 
             <template x-if="!loading && product">
                 <div class="grid grid-cols-1 md:grid-cols-2">
-                    <div class="h-80 md:h-full bg-[#EFE9DE]">
-                        <img :src="product.primary_image" :alt="product.name" class="w-full h-full object-cover">
+                    <div class="h-80 md:h-full bg-[#FAF7F2] flex items-center justify-center border-b md:border-b-0 md:border-r border-[#E8DFD5]">
+                        <img :src="product.primary_image" :alt="product.name" class="w-full h-full object-contain p-3">
                     </div>
                     <div class="p-6 sm:p-8 flex flex-col justify-between">
                         <div>

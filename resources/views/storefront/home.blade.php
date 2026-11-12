@@ -175,13 +175,13 @@
             </h2>
         </div>
 
-        <!-- 6 Palace Arched Silhouette Cards in one row on desktop, swipeable on mobile -->
+        <!-- 6 Luxury Category Cards in one row on desktop, swipeable on mobile -->
         <div class="flex overflow-x-auto snap-x lg:grid lg:grid-cols-6 gap-3 sm:gap-4 no-scrollbar pb-2">
             @foreach($categoryCards as $card)
                 <a href="{{ $card['url'] }}"
-                   class="group shrink-0 w-40 sm:w-48 lg:w-auto snap-start flex flex-col bg-white border border-[#D4AF37]/35 hover:border-[#D4AF37] rounded-t-[2.5rem] sm:rounded-t-[3.5rem] overflow-hidden transition-all duration-400 shadow-2xs hover:shadow-xl hover:-translate-y-1">
-                    <!-- Palace Arched Alcove Image Container -->
-                    <div class="relative aspect-[3/4] overflow-hidden bg-[#EFE9DE] rounded-t-[2.5rem] sm:rounded-t-[3.5rem]">
+                   class="group shrink-0 w-40 sm:w-48 lg:w-auto snap-start flex flex-col bg-white border border-[#D4AF37]/35 hover:border-[#D4AF37] rounded-sm overflow-hidden transition-all duration-400 shadow-2xs hover:shadow-xl hover:-translate-y-1">
+                    <!-- Luxury Framed Image Container -->
+                    <div class="relative aspect-[3/4] overflow-hidden bg-[#EFE9DE]">
                         <img src="{{ $card['image'] }}"
                              alt="{{ $card['name'] }}"
                              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop';"
@@ -427,12 +427,12 @@
             </h2>
         </div>
 
-        <!-- 5 Palace Arched Cards in one row on desktop matching royal pavilion aesthetic -->
+        <!-- 5 Luxury Occasion Cards in one row on desktop -->
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             @foreach($occasions as $occ)
                 <a href="{{ $occ['url'] }}"
-                   class="group flex flex-col bg-white border border-[#D4AF37]/35 hover:border-[#D4AF37] rounded-t-[2rem] sm:rounded-t-[2.5rem] overflow-hidden transition-all duration-400 shadow-2xs hover:shadow-xl hover:-translate-y-1">
-                    <div class="relative aspect-[3/4] overflow-hidden bg-[#EFE9DE] rounded-t-[2rem] sm:rounded-t-[2.5rem]">
+                   class="group flex flex-col bg-white border border-[#D4AF37]/35 hover:border-[#D4AF37] rounded-sm overflow-hidden transition-all duration-400 shadow-2xs hover:shadow-xl hover:-translate-y-1">
+                    <div class="relative aspect-[3/4] overflow-hidden bg-[#EFE9DE]">
                         <img src="{{ $occ['image'] }}"
                              alt="{{ $occ['name'] }}"
                              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop';"
@@ -629,67 +629,78 @@
             <div x-ref="track"
                  class="flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar py-2 -mx-4 px-4 sm:mx-0 sm:px-0">
                 @foreach($reels as $reel)
-                    <div class="w-[220px] sm:w-[260px] shrink-0 snap-start aspect-[9/16] relative rounded-lg overflow-hidden bg-[#1A0B0E] border border-[#E3DACD] hover:border-[#D4AF37] shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col justify-between select-none">
+                    <div class="w-[240px] sm:w-[270px] shrink-0 snap-start flex flex-col bg-white border border-[#D4AF37]/35 hover:border-[#D4AF37] rounded-sm overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group select-none">
 
-                        <!-- Poster Image -->
-                        <div class="absolute inset-0 z-0">
+                        <!-- Poster Image (4:5 Aspect, Full View, Zero Pixels Cut) -->
+                        <div class="relative w-full aspect-[4/5] bg-[#140608] overflow-hidden flex items-center justify-center cursor-pointer"
+                             @click="openReelModal({{ $reel->id }})">
+                            <!-- Ambient Blurred Background Fill -->
+                            <img src="{{ Str::startsWith($reel->thumbnail_url, ['http://', 'https://']) ? $reel->thumbnail_url : asset($reel->thumbnail_url) }}"
+                                 alt=""
+                                 aria-hidden="true"
+                                 class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-30 pointer-events-none">
+
+                            <!-- Foreground Main Poster (Uncropped) -->
                             <img src="{{ Str::startsWith($reel->thumbnail_url, ['http://', 'https://']) ? $reel->thumbnail_url : asset($reel->thumbnail_url) }}"
                                  alt="{{ $reel->title }}"
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out filter brightness-[0.88]">
-                            <!-- Gradient Overlays -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/30 pointer-events-none"></div>
-                        </div>
+                                 class="relative z-10 max-w-full max-h-full object-contain group-hover:scale-[1.02] transition-transform duration-500 ease-out">
 
-                        <!-- Top Tag: Instagram Atelier Tag -->
-                        <div class="relative z-10 p-3 flex items-center justify-between">
-                            <a href="{{ $reel->link_url ?: 'https://www.instagram.com/gaurisuits' }}"
-                               target="_blank" rel="noopener noreferrer"
-                               class="bg-black/60 hover:bg-[#58111A] backdrop-blur-sm text-[10px] text-white px-2.5 py-1 rounded-full font-medium flex items-center gap-1.5 border border-white/20 transition shadow-xs group/tag"
-                               title="Open on Instagram @gaurisuits">
-                                <svg class="w-3 h-3 fill-current text-[#E6CA65] group-hover/tag:text-white transition-colors" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                                <span>@gaurisuits</span>
-                            </a>
-                            <a href="{{ $reel->link_url ?: 'https://www.instagram.com/gaurisuits' }}"
-                               target="_blank" rel="noopener noreferrer"
-                               class="w-7 h-7 rounded-full bg-black/60 hover:bg-[#D4AF37] text-white hover:text-slate-950 backdrop-blur-sm flex items-center justify-center text-xs transition border border-white/20"
-                               title="View on Instagram">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                            </a>
-                        </div>
+                            <!-- Top Tag: Instagram Atelier Tag -->
+                            <div class="absolute top-2.5 left-2.5 right-2.5 z-20 flex items-center justify-between pointer-events-none">
+                                <a href="{{ $reel->link_url ?: 'https://www.instagram.com/gaurisuits' }}"
+                                   target="_blank" rel="noopener noreferrer"
+                                   class="pointer-events-auto bg-black/75 hover:bg-[#58111A] backdrop-blur-sm text-[10px] text-white px-2.5 py-1 rounded-full font-medium flex items-center gap-1.5 border border-white/20 transition shadow-xs group/tag"
+                                   title="Open on Instagram @gaurisuits">
+                                    <svg class="w-3 h-3 fill-current text-[#E6CA65] group-hover/tag:text-white transition-colors" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                                    <span>@gaurisuits</span>
+                                </a>
+                                <a href="{{ $reel->link_url ?: 'https://www.instagram.com/gaurisuits' }}"
+                                   target="_blank" rel="noopener noreferrer"
+                                   class="pointer-events-auto w-7 h-7 rounded-full bg-black/75 hover:bg-[#D4AF37] text-white hover:text-slate-950 backdrop-blur-sm flex items-center justify-center text-xs transition border border-white/20"
+                                   title="View on Instagram">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                </a>
+                            </div>
 
-                        <!-- Center Play Button Overlay -->
-                        <div class="relative z-10 flex items-center justify-center cursor-pointer"
-                             @click="openReelModal({{ $reel->id }})">
-                            <div class="w-12 h-12 rounded-full bg-black/40 backdrop-blur-md border border-[#D4AF37] text-[#E6CA65] flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:bg-[#58111A] transition-all duration-300">
-                                <svg class="w-5 h-5 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <!-- Center Play Button Overlay -->
+                            <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+                                <div class="w-12 h-12 rounded-full bg-black/55 backdrop-blur-md border border-[#D4AF37] text-[#E6CA65] flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:bg-[#58111A] transition-all duration-300">
+                                    <svg class="w-5 h-5 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Bottom Copy & Shoppable Card -->
-                        <div class="relative z-10 p-3 sm:p-3.5 space-y-2.5">
-                            <h3 class="font-serif text-xs sm:text-sm text-white font-semibold line-clamp-2 leading-snug drop-shadow cursor-pointer"
+                        <!-- Dedicated Bottom Info Card (Outside Image, Zero Overlap) -->
+                        <div class="p-3.5 bg-[#FAF7F2] border-t border-[#D4AF37]/30 flex flex-col justify-between flex-1 space-y-2.5">
+                            <h3 class="font-serif text-xs sm:text-sm text-[#2A1810] font-semibold line-clamp-2 leading-snug hover:text-[#58111A] transition-colors cursor-pointer"
                                 @click="openReelModal({{ $reel->id }})">
                                 {{ $reel->title }}
                             </h3>
 
                             @if($reel->product)
-                                <div class="bg-white/95 backdrop-blur-md p-2 rounded border border-[#D4AF37]/50 shadow-md flex items-center justify-between gap-2 transition hover:bg-[#FAF7F2]">
+                                <div class="bg-white p-2 rounded border border-[#D4AF37]/40 shadow-xs flex items-center justify-between gap-2 transition hover:border-[#D4AF37]">
                                     <a href="{{ route('product.show', $reel->product->slug) }}" class="flex items-center gap-2 min-w-0 flex-1">
                                         <img src="{{ $reel->product->primary_image_url }}"
                                              alt="{{ $reel->product->name }}"
-                                             class="w-8 h-10 object-cover rounded shrink-0 border border-stone-200">
+                                             class="w-9 h-11 object-cover rounded shrink-0 border border-stone-200">
                                         <div class="min-w-0 flex-1">
                                             <div class="text-[11px] font-semibold text-[#2A1810] truncate">{{ $reel->product->name }}</div>
-                                            <div class="text-[11px] font-bold text-[#58111A]">{{ $currencySymbol ?? '$' }}{{ number_format($reel->product->effective_price) }}</div>
+                                            <div class="text-[11px] font-bold text-[#58111A]">{{ $currencySymbol ?? '$' }}{{ number_format($reel->product->effective_price) }} AUD</div>
                                         </div>
                                     </a>
                                     <button type="button"
                                             @click.stop="$dispatch('open-quick-view', { id: {{ $reel->product->id }} })"
-                                            class="shrink-0 px-2 py-1 bg-[#58111A] hover:bg-[#781924] text-[#FAF7F2] text-[10px] font-bold uppercase tracking-wider rounded transition"
+                                            class="shrink-0 px-2.5 py-1.5 bg-[#58111A] hover:bg-[#781924] text-[#FAF7F2] text-[10px] font-bold uppercase tracking-wider rounded transition"
                                             title="Quick View">
                                         Shop
                                     </button>
                                 </div>
+                            @else
+                                <button type="button"
+                                        @click="openReelModal({{ $reel->id }})"
+                                        class="w-full py-1.5 text-center text-[11px] font-semibold text-[#58111A] hover:text-[#781924] border border-[#58111A]/30 hover:border-[#58111A] rounded bg-white transition">
+                                    Watch Reel &rarr;
+                                </button>
                             @endif
                         </div>
                     </div>
@@ -753,7 +764,7 @@
                     <template x-if="currentReel && !isInstagramReel(currentReel.video_url)">
                         <video x-ref="videoPlayer"
                                :src="currentReel ? currentReel.video_url : ''"
-                               class="w-full h-full object-cover"
+                               class="w-full h-full object-contain"
                                playsinline loop autoplay controls></video>
                     </template>
                 </div>
