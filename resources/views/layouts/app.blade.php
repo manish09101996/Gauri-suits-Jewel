@@ -68,109 +68,103 @@
 </head>
 <body class="bg-[#FDFBF7] text-[#2A1810] font-sans antialiased selection:bg-[#D4AF37] selection:text-[#3B0A11]">
 
-    <!-- Top Announcement Bar (Slim Royal Emerald & Gold with Responsive Wrapping) -->
-    @if(isset($announcement) && $announcement->is_active)
-        <aside aria-label="Announcement" class="bg-[#083323] text-[#E6CA65] text-[10px] sm:text-[11px] py-1.5 px-3 sm:px-4 text-center font-sans tracking-[0.14em] sm:tracking-[0.22em] uppercase flex items-center justify-center flex-wrap gap-x-2 gap-y-0.5 border-b border-[#D4AF37]/25 shadow-xs">
-            <span>✨ {{ $announcement->title }}</span>
-            @if($announcement->link_url)
-                <a href="{{ $announcement->link_url }}" class="underline hover:text-white transition-colors underline-offset-4 ml-0.5 font-semibold shrink-0">
-                    {{ $announcement->button_text ?: 'Shop Now' }} &rarr;
-                </a>
-            @endif
-        </aside>
-    @else
-        <aside aria-label="Announcement" class="bg-[#083323] text-[#E6CA65] text-[10px] sm:text-[11px] py-1.5 px-3 sm:px-4 text-center font-sans tracking-[0.14em] sm:tracking-[0.22em] uppercase flex items-center justify-center flex-wrap gap-x-2 gap-y-0.5 border-b border-[#D4AF37]/25 shadow-xs">
-            <span>✨ COMPLIMENTARY EXPRESS SHIPPING ABOVE {{ $currencySymbol ?? '$' }}{{ number_format($storeSettings['free_shipping_threshold'] ?? 299) }}</span>
-            <a href="{{ route('shop.index') }}" class="underline hover:text-white transition-colors underline-offset-4 ml-0.5 font-semibold shrink-0">EXPLORE &rarr;</a>
-        </aside>
-    @endif
+    <!-- Top Announcement Bar (Deep Emerald Green matching reference) -->
+    <aside aria-label="Announcement" class="bg-[#0B2417] text-[#FAF4EC] text-[11px] sm:text-xs py-2 px-4 sm:px-6 border-b border-[#D4AF37]/25 shadow-xs">
+        <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-2">
+            <!-- Left: Free Shipping with delivery van icon -->
+            <div class="flex items-center gap-2 text-[#FAF4EC]">
+                <svg class="w-4 h-4 text-[#E8C581] shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                </svg>
+                <span class="font-sans font-medium tracking-wide">Free Shipping on Orders Above ${{ number_format($storeSettings['free_shipping_threshold'] ?? 100) }}</span>
+            </div>
 
-    <!-- Main Navigation Header (Light Ivory / Champagne with Maroon Accents & Gold Details) -->
-    <!-- Main Navigation Header (Light Ivory / Champagne with Maroon Accents & Gold Details) -->
-    <header x-data class="sticky top-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E8DFD5] text-[#2D1C1B] transition-all duration-300 shadow-[0_2px_15px_rgba(0,0,0,0.03)]">
-        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-18 sm:h-20 md:h-24">
+            <!-- Right: Track Order, Contact Us & Social Icons -->
+            <div class="flex items-center gap-4 text-xs font-sans text-[#FAF4EC]">
+                <div class="hidden sm:flex items-center gap-3 tracking-wide">
+                    <a href="{{ route('order.track') }}" class="hover:text-[#E8C581] transition-colors">Track Order</a>
+                    <span class="text-white/40">|</span>
+                    <a href="{{ route('pages.contact') }}" class="hover:text-[#E8C581] transition-colors">Contact Us</a>
+                </div>
+                <div class="flex items-center gap-2.5 text-[#FAF4EC]">
+                    <a href="{{ \App\Models\Setting::get('facebook_url', 'https://facebook.com') }}" target="_blank" rel="noopener" class="hover:text-[#E8C581] transition-colors" title="Facebook" aria-label="Facebook">
+                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.688 5H18V0h-3.808C10.595 0 9 1.582 9 4.615V8z"/></svg>
+                    </a>
+                    <a href="{{ \App\Models\Setting::get('instagram_url', 'https://www.instagram.com/gaurisuits') }}" target="_blank" rel="noopener" class="hover:text-[#E8C581] transition-colors" title="Instagram" aria-label="Instagram">
+                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://youtube.com/@gaurisuits" target="_blank" rel="noopener" class="hover:text-[#E8C581] transition-colors" title="YouTube" aria-label="YouTube">
+                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.376.55 9.376.55s7.505 0 9.377-.55a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </aside>
 
-                <!-- Left: Mobile Menu Toggle & Brand Logo -->
-                <div class="flex items-center gap-1.5 sm:gap-6 min-w-0">
+    <!-- Main Navigation Header (Warm Champagne Cream with Burgundy Underline & Logo) -->
+    <header x-data class="sticky top-0 z-40 bg-[#F6EFE6]/98 backdrop-blur-md border-b border-[#E8DFD5] text-[#2A1810] transition-all duration-300 shadow-[0_2px_15px_rgba(0,0,0,0.03)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-18 sm:h-20 md:h-22">
+
+                <!-- Left: Mobile Menu Toggle & Brand Emblem Logo -->
+                <div class="flex items-center gap-2 sm:gap-4 min-w-0">
                     <button @click="$dispatch('toggle-mobile-menu')"
                             type="button"
-                            class="lg:hidden w-11 h-11 -ml-1 flex items-center justify-center text-[#2D1C1B] hover:text-[#58111A] hover:bg-black/5 active:bg-black/10 rounded-sm focus:outline-none transition-colors cursor-pointer"
+                            class="lg:hidden w-11 h-11 -ml-1 flex items-center justify-center text-[#2A1810] hover:text-[#5C0B18] hover:bg-black/5 active:bg-black/10 rounded-sm focus:outline-none transition-colors cursor-pointer"
                             aria-label="Open Navigation Menu">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                     </button>
 
-                    <!-- Finalized Brand Logo -->
-                    <a href="{{ route('home') }}" class="flex items-center gap-2 sm:gap-3.5 group py-1 min-w-0" title="Gauri Suits & Jewel - Tradition Meets Elegance">
-                        <div class="relative w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#0A3828] to-[#D4AF37] shadow-sm shrink-0 group-hover:scale-105 transition-transform duration-300">
+                    <!-- Circular Emblem Logo -->
+                    <a href="{{ route('home') }}" class="flex items-center gap-2.5 sm:gap-3 group py-1 min-w-0" title="Gauri Suits & Jewel - Tradition Meets Elegance">
+                        <div class="relative w-11 h-11 sm:w-13 sm:h-13 md:w-14 md:h-14 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#5C0B18] to-[#D4AF37] shadow-sm shrink-0 group-hover:scale-105 transition-transform duration-300">
                             <img src="{{ asset('images/logo.png') }}" alt="Gauri Suits & Jewel" class="w-full h-full object-cover rounded-full">
                         </div>
-                        <div class="flex flex-col items-start text-left min-w-0">
-                            <span class="font-serif text-lg sm:text-2xl md:text-3xl tracking-[0.12em] sm:tracking-[0.16em] text-[#3B0A11] uppercase font-normal leading-tight transition-colors group-hover:text-[#58111A] truncate">
+                        <div class="hidden sm:flex flex-col items-start text-left min-w-0">
+                            <span class="font-serif text-lg sm:text-xl md:text-2xl tracking-[0.14em] text-[#3B0A11] uppercase font-normal leading-tight transition-colors group-hover:text-[#5C0B18] truncate">
                                 GAURI
                             </span>
-                            <span class="text-[7.5px] sm:text-[9.5px] md:text-[10px] tracking-[0.24em] sm:tracking-[0.36em] text-[#8C713B] uppercase font-semibold font-sans -mt-0.5 whitespace-nowrap">
+                            <span class="text-[8px] sm:text-[9px] tracking-[0.3em] text-[#8C713B] uppercase font-semibold font-sans -mt-0.5 whitespace-nowrap">
                                 SUITS &amp; JEWEL
-                            </span>
-                            <span class="hidden sm:inline-block text-[7.5px] md:text-[8px] tracking-[0.24em] text-[#6B5E55] uppercase font-sans mt-0.5 font-medium">
-                                TRADITION MEETS ELEGANCE
                             </span>
                         </div>
                     </a>
                 </div>
 
-                <!-- Center: Desktop Navigation -->
-                <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8 text-xs font-semibold uppercase tracking-[0.18em] text-[#2D1C1B]">
-                    <a href="{{ route('home') }}" class="nav-link-royal hover:text-[#58111A] {{ request()->routeIs('home') ? 'is-active text-[#58111A] font-bold' : '' }}">Home</a>
-                    <a href="{{ route('shop.new-arrivals') }}" class="nav-link-royal text-[#0A3828] hover:text-[#125B40] font-bold {{ request()->routeIs('shop.new-arrivals') ? 'is-active' : '' }}">New Arrivals</a>
-                    <a href="{{ route('shop.suits') }}" class="nav-link-royal hover:text-[#58111A] {{ request()->is('suits*') || request()->is('punjabi-suits*') ? 'is-active text-[#58111A] font-bold' : '' }}">Suits</a>
-                    <a href="{{ route('shop.jewellery') }}" class="nav-link-royal hover:text-[#58111A] {{ request()->is('jewellery*') ? 'is-active text-[#58111A] font-bold' : '' }}">Jewellery</a>
-                    <a href="{{ route('shop.wedding-collection') }}" class="nav-link-royal hover:text-[#58111A] {{ request()->is('wedding*') || request()->is('bridal*') ? 'is-active text-[#58111A] font-bold' : '' }}">Bridal</a>
-                    <a href="{{ route('shop.best-sellers') }}" class="nav-link-royal hover:text-[#58111A] {{ request()->routeIs('shop.best-sellers') ? 'is-active text-[#58111A] font-bold' : '' }}">Best Sellers</a>
-                    <a href="{{ route('shop.sale') }}" class="nav-link-royal text-[#7A1D2A] hover:text-[#58111A] font-bold {{ request()->routeIs('shop.sale') ? 'is-active' : '' }}">Sale</a>
+                <!-- Center: Desktop Navigation matching reference image exactly -->
+                <nav class="hidden lg:flex items-center space-x-7 xl:space-x-9 text-xs font-semibold tracking-[0.14em] text-[#2A1810]">
+                    <a href="{{ route('home') }}" class="nav-link-royal hover:text-[#5C0B18] transition-colors {{ request()->routeIs('home') ? 'text-[#5C0B18] font-bold border-b-2 border-[#5C0B18] pb-1' : '' }}">Home</a>
+                    <a href="{{ route('pages.about') }}" class="nav-link-royal hover:text-[#5C0B18] transition-colors {{ request()->routeIs('pages.about') ? 'text-[#5C0B18] font-bold border-b-2 border-[#5C0B18] pb-1' : '' }}">About</a>
+                    <a href="{{ route('shop.suits') }}" class="nav-link-royal hover:text-[#5C0B18] transition-colors {{ request()->is('suits*') || request()->is('punjabi-suits*') ? 'text-[#5C0B18] font-bold border-b-2 border-[#5C0B18] pb-1' : '' }}">Suits</a>
+                    <a href="{{ route('shop.jewellery') }}" class="nav-link-royal hover:text-[#5C0B18] transition-colors {{ request()->is('jewellery*') ? 'text-[#5C0B18] font-bold border-b-2 border-[#5C0B18] pb-1' : '' }}">Jewellery</a>
+                    <a href="{{ route('shop.sale') }}" class="nav-link-royal hover:text-[#5C0B18] transition-colors {{ request()->routeIs('shop.sale') ? 'text-[#5C0B18] font-bold border-b-2 border-[#5C0B18] pb-1' : '' }}">Offers</a>
+                    <a href="#our-reels" class="nav-link-royal hover:text-[#5C0B18] transition-colors">Gallery</a>
+                    <a href="{{ route('pages.contact') }}" class="nav-link-royal hover:text-[#5C0B18] transition-colors {{ request()->routeIs('pages.contact') ? 'text-[#5C0B18] font-bold border-b-2 border-[#5C0B18] pb-1' : '' }}">Contact</a>
                 </nav>
 
-                <!-- Right: Minimal Refined Icons (Search, Account, Wishlist, Cart) -->
-                <div class="flex items-center gap-0.5 sm:gap-2 text-[#2D1C1B] pr-0.5 sm:pr-0 shrink-0">
+                <!-- Right: Search & Cart matching reference -->
+                <div class="flex items-center gap-1 sm:gap-2.5 text-[#2A1810] pr-0.5 sm:pr-0 shrink-0">
                     <!-- Search Trigger -->
-                    <button @click="$dispatch('open-search')" type="button" class="p-2 sm:p-2.5 hover:text-[#8C713B] transition-colors focus:outline-none rounded-sm hover:bg-black/5" title="Search" aria-label="Search Products">
+                    <button @click="$dispatch('open-search')" type="button" class="p-2 sm:p-2.5 hover:text-[#5C0B18] transition-colors focus:outline-none rounded-sm hover:bg-black/5" title="Search" aria-label="Search Products">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                     </button>
 
-                    <!-- Account (Shown on sm+ screens, easily accessed in mobile drawer on phones) -->
-                    <a href="{{ auth()->check() ? route('account.dashboard') : route('customer.login') }}" class="hidden sm:inline-flex p-2 sm:p-2.5 hover:text-[#8C713B] transition-colors rounded-sm hover:bg-black/5" title="Account" aria-label="Customer Account">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                        </svg>
-                    </a>
-
-                    <!-- Wishlist -->
-                    <a href="{{ route('wishlist.index') }}" class="p-2 sm:p-2.5 hover:text-[#8C713B] transition-colors relative rounded-sm hover:bg-black/5" title="Wishlist" aria-label="Customer Wishlist">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                        </svg>
-                        <span id="header-wishlist-badge" class="absolute -top-0.5 -right-0.5 bg-[#0A3828] text-white text-[9px] sm:text-[10px] min-w-[16px] h-[16px] px-1 rounded-full flex items-center justify-center font-bold shadow-xs border border-white leading-none pointer-events-none" style="display: {{ ($wishlistCount ?? 0) > 0 ? 'flex' : 'none' }};">
-                            {{ $wishlistCount ?? 0 }}
-                        </span>
-                    </a>
-
-                    <!-- Cart Drawer Trigger with Protected Safe Margins and Sharp Badge -->
+                    <!-- Cart Drawer Trigger with Red Circular Badge -->
                     <button @click="$dispatch('open-cart')"
                             onclick="window.openCart && window.openCart()"
                             type="button"
-                            class="p-2 sm:p-2.5 hover:text-[#8C713B] transition-colors relative focus:outline-none flex items-center justify-center rounded-sm hover:bg-black/5 shrink-0 cursor-pointer"
+                            class="p-2 sm:p-2.5 hover:text-[#5C0B18] transition-colors relative focus:outline-none flex items-center justify-center rounded-sm hover:bg-black/5 shrink-0 cursor-pointer"
                             title="Shopping Cart"
                             aria-label="Shopping Bag">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                         </svg>
                         <span id="header-cart-badge"
-                              class="absolute -top-1 -right-1 bg-[#58111A] text-[#F7EED9] text-[9px] sm:text-[10px] min-w-[17px] h-[17px] sm:min-w-[18px] sm:h-[18px] px-1 rounded-full flex items-center justify-center font-bold shadow-xs border border-[#D4AF37]/50 pointer-events-none z-10 leading-none"
-                              style="display: {{ ($cartCount ?? 0) > 0 ? 'flex' : 'none' }};">
+                              class="absolute -top-1 -right-1 bg-[#B31A2B] text-white text-[9.5px] min-w-[17px] h-[17px] px-1 rounded-full flex items-center justify-center font-bold shadow-xs pointer-events-none z-10 leading-none">
                             {{ $cartCount ?? 0 }}
                         </span>
                     </button>
@@ -260,55 +254,45 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
-                <nav class="px-5 py-4 space-y-1 text-xs font-semibold tracking-[0.16em] uppercase text-[#2D1C1B]">
-                    <a href="{{ route('home') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->routeIs('home') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
+                <!-- Navigation Links matching reference image -->
+                <nav class="px-5 py-4 space-y-1 text-xs font-semibold tracking-[0.16em] uppercase text-[#2A1810]">
+                    <a href="{{ route('home') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#5C0B18] {{ request()->routeIs('home') ? 'text-[#5C0B18] font-bold bg-[#FAF7F2]' : '' }}">
                         <span>Home</span>
                         <span class="text-stone-400">&rsaquo;</span>
                     </a>
-                    <a href="{{ route('shop.new-arrivals') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] text-[#0A3828] font-bold">
-                        <div class="flex items-center gap-2">
-                            <span>New Arrivals</span>
-                            <span class="px-1.5 py-0.5 text-[8.5px] bg-[#0A3828] text-[#E6CA65] font-bold tracking-wider rounded-xs">NEW</span>
-                        </div>
+                    <a href="{{ route('pages.about') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#5C0B18] {{ request()->routeIs('pages.about') ? 'text-[#5C0B18] font-bold bg-[#FAF7F2]' : '' }}">
+                        <span>About</span>
                         <span class="text-stone-400">&rsaquo;</span>
                     </a>
-                    <a href="{{ route('shop.suits') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('suits*') || request()->is('punjabi-suits*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
-                        <span>Punjabi Suits</span>
+                    <a href="{{ route('shop.suits') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#5C0B18] {{ request()->is('suits*') || request()->is('punjabi-suits*') ? 'text-[#5C0B18] font-bold bg-[#FAF7F2]' : '' }}">
+                        <span>Suits</span>
                         <span class="text-stone-400">&rsaquo;</span>
                     </a>
-                    <a href="{{ route('shop.jewellery') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('jewellery*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
-                        <span>Heirloom Jewellery</span>
+                    <a href="{{ route('shop.jewellery') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#5C0B18] {{ request()->is('jewellery*') ? 'text-[#5C0B18] font-bold bg-[#FAF7F2]' : '' }}">
+                        <span>Jewellery</span>
                         <span class="text-stone-400">&rsaquo;</span>
                     </a>
-                    <a href="{{ route('shop.wedding-collection') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->is('wedding*') || request()->is('bridal*') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
-                        <span>Bridal Couture</span>
+                    <a href="{{ route('shop.sale') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#5C0B18] {{ request()->routeIs('shop.sale') ? 'text-[#5C0B18] font-bold bg-[#FAF7F2]' : '' }}">
+                        <span>Offers</span>
                         <span class="text-stone-400">&rsaquo;</span>
                     </a>
-                    <a href="{{ route('shop.best-sellers') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#58111A] {{ request()->routeIs('shop.best-sellers') ? 'text-[#58111A] font-bold bg-[#FAF7F2]' : '' }}">
-                        <span>Best Sellers</span>
+                    <a href="#our-reels" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#5C0B18]">
+                        <span>Gallery</span>
                         <span class="text-stone-400">&rsaquo;</span>
                     </a>
-                    <a href="{{ route('shop.sale') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] text-[#7A1D2A] font-bold">
-                        <div class="flex items-center gap-2">
-                            <span>Royal Sale</span>
-                            <span class="px-1.5 py-0.5 text-[8.5px] bg-[#7A1D2A] text-white font-bold tracking-wider rounded-xs">OFFERS</span>
-                        </div>
+                    <a href="{{ route('pages.contact') }}" @click="close()" class="flex items-center justify-between py-2.5 px-2 rounded-xs hover:bg-[#FAF7F2] hover:text-[#5C0B18] {{ request()->routeIs('pages.contact') ? 'text-[#5C0B18] font-bold bg-[#FAF7F2]' : '' }}">
+                        <span>Contact</span>
                         <span class="text-stone-400">&rsaquo;</span>
                     </a>
 
                     <div class="pt-3 mt-2 border-t border-[#E8DFD5] space-y-1 text-xs font-normal normal-case tracking-normal">
-                        <a href="{{ route('order.track') }}" @click="close()" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
+                        <a href="{{ route('order.track') }}" @click="close()" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#5C0B18] rounded-xs hover:bg-[#FAF7F2]">
                             <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h2"/></svg>
                             <span>Track Your Order</span>
                         </a>
-                        <a href="{{ route('pages.about') }}" @click="close()" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
-                            <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                            <span>Our Legacy &amp; Atelier Craft</span>
-                        </a>
-                        <a href="{{ route('pages.contact') }}" @click="close()" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#58111A] rounded-xs hover:bg-[#FAF7F2]">
-                            <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                            <span>Contact Concierge</span>
+                        <a href="tel:0401365786" class="flex items-center gap-2.5 py-2 px-2 text-[#4A3E38] hover:text-[#5C0B18] rounded-xs hover:bg-[#FAF7F2]">
+                            <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                            <span>0401 365 786 (Geelong, Melbourne)</span>
                         </a>
                     </div>
                 </nav>
@@ -635,175 +619,155 @@
         </svg>
     </a>
 
-    <!-- Trust / Service Bar (4 Pillars matching screenshot) -->
-    <section class="bg-[#F9F6F0] border-t border-b border-[#E3DACD] py-8 sm:py-10">
+    <!-- Benefits Bar (4 Pillars Dark Emerald Green matching reference image) -->
+    <section class="bg-[#0B2417] text-[#FAF4EC] border-t border-b border-[#D4AF37]/30 py-5 sm:py-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 <!-- 1: Free Shipping -->
-                <div class="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
-                    <div class="text-[#8C713B] shrink-0">
-                        <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M8 17h8m-8 0a2 2 0 11-4 0 2 2 0 014 0zm8 0a2 2 0 11-4 0 2 2 0 014 0zm-8-3h12V7a2 2 0 00-2-2H4a2 2 0 00-2 2v8h2m14-5h3l3 4v3h-6v-7z"/>
+                <div class="flex items-center gap-3 justify-center sm:justify-start">
+                    <div class="text-[#E8C581] shrink-0">
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
                         </svg>
                     </div>
                     <div class="text-left">
-                        <h4 class="font-sans text-xs sm:text-[13px] font-bold text-[#3B0A11] uppercase tracking-wider">Free Shipping</h4>
-                        <p class="text-[11px] text-[#6B5E55]">Above {{ $currencySymbol ?? '$' }}{{ number_format($storeSettings['free_shipping_threshold'] ?? 299) }}</p>
+                        <h4 class="font-sans text-xs sm:text-[13px] font-bold text-[#FAF4EC] uppercase tracking-wider">Free Shipping</h4>
+                        <p class="text-[11px] text-[#E8C581]/90">On Orders Above ${{ number_format($storeSettings['free_shipping_threshold'] ?? 100) }}</p>
                     </div>
                 </div>
 
-                <!-- 2: Easy Returns -->
-                <div class="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
-                    <div class="text-[#8C713B] shrink-0">
+                <!-- 2: Premium Quality -->
+                <div class="flex items-center gap-3 justify-center sm:justify-start">
+                    <div class="text-[#E8C581] shrink-0">
                         <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                         </svg>
                     </div>
                     <div class="text-left">
-                        <h4 class="font-sans text-xs sm:text-[13px] font-bold text-[#3B0A11] uppercase tracking-wider">Easy Returns</h4>
-                        <p class="text-[11px] text-[#6B5E55]">Hassle Free</p>
+                        <h4 class="font-sans text-xs sm:text-[13px] font-bold text-[#FAF4EC] uppercase tracking-wider">Premium Quality</h4>
+                        <p class="text-[11px] text-[#E8C581]/90">Always</p>
                     </div>
                 </div>
 
-                <!-- 3: Authentic Products -->
-                <div class="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
-                    <div class="text-[#8C713B] shrink-0">
+                <!-- 3: 24/7 Support -->
+                <div class="flex items-center gap-3 justify-center sm:justify-start">
+                    <div class="text-[#E8C581] shrink-0">
                         <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                         </svg>
                     </div>
                     <div class="text-left">
-                        <h4 class="font-sans text-xs sm:text-[13px] font-bold text-[#3B0A11] uppercase tracking-wider">Authentic Products</h4>
-                        <p class="text-[11px] text-[#6B5E55]">Premium Quality</p>
+                        <h4 class="font-sans text-xs sm:text-[13px] font-bold text-[#FAF4EC] uppercase tracking-wider">24/7 Support</h4>
+                        <p class="text-[11px] text-[#E8C581]/90">We're Here to Help</p>
                     </div>
                 </div>
 
-                <!-- 4: Dedicated Support -->
-                <div class="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start">
-                    <div class="text-[#8C713B] shrink-0">
+                <!-- 4: Easy Returns -->
+                <div class="flex items-center gap-3 justify-center sm:justify-start">
+                    <div class="text-[#E8C581] shrink-0">
                         <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 8v13m0-13V3.5a2.5 2.5 0 10-5 0V8m5 0V3.5a2.5 2.5 0 115 0V8m-10 0h10a2 2 0 012 2v9a2 2 0 01-2 2H7a2 2 0 01-2-2v-9a2 2 0 012-2z"/>
                         </svg>
                     </div>
                     <div class="text-left">
-                        <h4 class="font-sans text-xs sm:text-[13px] font-bold text-[#3B0A11] uppercase tracking-wider">Dedicated Support</h4>
-                        <p class="text-[11px] text-[#6B5E55]">We're Here to Help</p>
+                        <h4 class="font-sans text-xs sm:text-[13px] font-bold text-[#FAF4EC] uppercase tracking-wider">Easy Returns</h4>
+                        <p class="text-[11px] text-[#E8C581]/90">Hassle-Free</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Modern Light Luxury Brand Footer (Warm Ivory/Champagne Canvas with Maroon & Gold Accents) -->
-    <footer x-data="{ shopOpen: false, careOpen: false, atelierOpen: false }" class="bg-[#F9F6F0] text-[#2A1810] pt-14 pb-10 border-t border-[#E3DACD]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 xl:gap-10 pb-12 border-b border-[#E3DACD]">
+    <!-- Premium Dark Green Footer matching reference image -->
+    <footer class="bg-[#061A10] text-[#FAF4EC] pt-12 pb-6 relative overflow-hidden border-t border-[#D4AF37]/30">
+        <!-- Subtle Palace Domes Watermark on the Right -->
+        <div class="absolute right-0 bottom-0 pointer-events-none opacity-20 w-48 sm:w-72 h-48 sm:h-64 bg-right-bottom bg-no-repeat bg-contain"
+             style="background-image: url('{{ asset('images/reference/footer_palace.jpg') }}'); filter: brightness(1.5) contrast(1.2);"></div>
 
-                <!-- Column 1: Shop -->
-                <div class="border-b border-[#E8DFD5] pb-4 lg:border-none lg:pb-0">
-                    <button @click="shopOpen = !shopOpen" type="button" class="w-full flex items-center justify-between lg:justify-start lg:cursor-default text-left py-1 lg:py-0">
-                        <h3 class="font-serif text-xs uppercase tracking-[0.25em] text-[#58111A] font-bold">Shop</h3>
-                        <span class="lg:hidden text-[#8C713B] transition-transform duration-200" :class="shopOpen ? 'rotate-180' : ''">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                        </span>
-                    </button>
-                    <ul :class="shopOpen ? 'block' : 'hidden lg:block'" class="mt-4 space-y-2.5 text-xs text-[#554740]">
-                        <li><a href="{{ route('shop.suits') }}" class="hover:text-[#58111A] transition-colors">Punjabi Suits</a></li>
-                        <li><a href="{{ route('shop.designer-suits') }}" class="hover:text-[#58111A] transition-colors">Patiala Salwars</a></li>
-                        <li><a href="{{ route('shop.jewellery') }}" class="hover:text-[#58111A] transition-colors">Heirloom Jewellery</a></li>
-                        <li><a href="{{ route('shop.wedding-collection') }}" class="hover:text-[#58111A] transition-colors">Bridal Couture</a></li>
-                        <li><a href="{{ route('shop.new-arrivals') }}" class="hover:text-[#0A3828] font-semibold transition-colors">New In Atelier</a></li>
-                        <li><a href="{{ route('shop.sale') }}" class="hover:text-[#7A1D2A] text-[#7A1D2A] font-semibold transition-colors">Festive Sale</a></li>
-                    </ul>
-                </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 xl:gap-10 pb-10 border-b border-white/10">
 
-                <!-- Column 2: Client Care -->
-                <div class="border-b border-[#E8DFD5] pb-4 lg:border-none lg:pb-0">
-                    <button @click="careOpen = !careOpen" type="button" class="w-full flex items-center justify-between lg:justify-start lg:cursor-default text-left py-1 lg:py-0">
-                        <h3 class="font-serif text-xs uppercase tracking-[0.25em] text-[#58111A] font-bold">Client Care</h3>
-                        <span class="lg:hidden text-[#8C713B] transition-transform duration-200" :class="careOpen ? 'rotate-180' : ''">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                        </span>
-                    </button>
-                    <ul :class="careOpen ? 'block' : 'hidden lg:block'" class="mt-4 space-y-2.5 text-xs text-[#554740]">
-                        <li><a href="{{ route('order.track') }}" class="hover:text-[#58111A] transition-colors">Track Order</a></li>
-                        <li><a href="{{ route('pages.shipping-policy') }}" class="hover:text-[#58111A] transition-colors">Shipping &amp; Delivery</a></li>
-                        <li><a href="{{ route('pages.return-policy') }}" class="hover:text-[#58111A] transition-colors">Returns &amp; Exchanges</a></li>
-                        <li><a href="{{ route('pages.refund-policy') }}" class="hover:text-[#58111A] transition-colors">Refund Policy</a></li>
-                        <li><a href="{{ route('pages.faq') }}" class="hover:text-[#58111A] transition-colors">FAQs</a></li>
-                        <li><a href="{{ route('pages.contact') }}" class="hover:text-[#58111A] transition-colors">Contact Concierge</a></li>
-                    </ul>
-                </div>
-
-                <!-- Column 3: Center Grand Brand Area with Finalized Logo -->
-                <div class="col-span-1 md:col-span-2 lg:col-span-1 flex flex-col items-center justify-center text-center space-y-2 py-6 lg:py-0 lg:border-x border-[#E3DACD]/80 px-4">
-                    <a href="{{ route('home') }}" class="group inline-block" title="Gauri Suits & Jewel">
-                        <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#0A3828] to-[#D4AF37] shadow-md shrink-0 group-hover:scale-105 transition-transform duration-300">
+                <!-- Column 1: Brand Info & Logo -->
+                <div class="space-y-3">
+                    <a href="{{ route('home') }}" class="flex items-center gap-3 group">
+                        <div class="w-14 h-14 rounded-full p-0.5 bg-gradient-to-tr from-[#D4AF37] via-[#5C0B18] to-[#D4AF37] shadow-md shrink-0">
                             <img src="{{ asset('images/logo.png') }}" alt="Gauri Suits & Jewel" class="w-full h-full object-cover rounded-full">
                         </div>
+                        <div>
+                            <span class="font-serif text-2xl tracking-[0.14em] text-[#E8C581] uppercase font-normal block leading-tight">
+                                GAURI
+                            </span>
+                            <span class="text-[9px] tracking-[0.3em] text-[#FAF4EC] uppercase font-semibold font-sans block">
+                                SUITS &amp; JEWEL
+                            </span>
+                        </div>
                     </a>
-                    <span class="font-serif text-2xl sm:text-3xl tracking-[0.18em] text-[#3B0A11] uppercase font-normal block leading-tight mt-1">
-                        GAURI
-                    </span>
-                    <span class="text-[9.5px] sm:text-[10px] tracking-[0.4em] text-[#8C713B] uppercase font-semibold block -mt-1 font-sans">
-                        SUITS &amp; JEWEL
-                    </span>
-                    <p class="text-xs text-[#6B5E55] font-serif italic max-w-xs pt-1 leading-relaxed">
+                    <p class="text-xs text-[#FAF4EC]/80 font-serif italic pt-1">
                         Tradition Meets Elegance
                     </p>
-                    <span class="text-[9px] tracking-[0.32em] text-[#0A3828] uppercase font-semibold block pt-0.5 font-sans">
-                        GEELONG • MELBOURNE • AUSTRALIA
-                    </span>
                 </div>
 
-                <!-- Column 4: The Atelier -->
-                <div class="border-b border-[#E8DFD5] pb-4 lg:border-none lg:pb-0">
-                    <button @click="atelierOpen = !atelierOpen" type="button" class="w-full flex items-center justify-between lg:justify-start lg:cursor-default text-left py-1 lg:py-0">
-                        <h3 class="font-serif text-xs uppercase tracking-[0.25em] text-[#58111A] font-bold">The Atelier</h3>
-                        <span class="lg:hidden text-[#8C713B] transition-transform duration-200" :class="atelierOpen ? 'rotate-180' : ''">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                        </span>
-                    </button>
-                    <ul :class="atelierOpen ? 'block' : 'hidden lg:block'" class="mt-4 space-y-2.5 text-xs text-[#554740]">
-                        <li><a href="{{ route('pages.about') }}" class="hover:text-[#58111A] transition-colors">Our Legacy &amp; Craft</a></li>
-                        <li><a href="{{ route('blog.index') }}" class="hover:text-[#58111A] transition-colors">Editorial Journal</a></li>
-                        <li><a href="{{ route('pages.privacy-policy') }}" class="hover:text-[#58111A] transition-colors">Privacy Policy</a></li>
-                        <li><a href="{{ route('pages.terms') }}" class="hover:text-[#58111A] transition-colors">Terms of Service</a></li>
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h3 class="font-sans text-xs uppercase tracking-[0.2em] text-[#E8C581] font-bold mb-3">Quick Links</h3>
+                    <ul class="space-y-2 text-xs text-[#FAF4EC]/85 font-sans">
+                        <li><a href="{{ route('home') }}" class="hover:text-[#E8C581] transition-colors">Home</a></li>
+                        <li><a href="{{ route('pages.about') }}" class="hover:text-[#E8C581] transition-colors">About</a></li>
+                        <li><a href="{{ route('shop.suits') }}" class="hover:text-[#E8C581] transition-colors">Suits</a></li>
+                        <li><a href="{{ route('shop.jewellery') }}" class="hover:text-[#E8C581] transition-colors">Jewellery</a></li>
+                        <li><a href="{{ route('pages.contact') }}" class="hover:text-[#E8C581] transition-colors">Contact</a></li>
                     </ul>
                 </div>
 
-                <!-- Column 5: Social & Newsletter -->
-                <div class="col-span-1 md:col-span-2 lg:col-span-1">
-                    <h3 class="font-serif text-xs uppercase tracking-[0.25em] text-[#58111A] font-bold mb-3">Stay Connected</h3>
-                    <p class="text-xs text-[#6B5E55] mb-4 leading-relaxed">Subscribe for royal seasonal trunk shows and private bridal previews.</p>
-                    <form action="{{ route('newsletter.subscribe') }}" method="POST" class="space-y-2.5">
-                        @csrf
-                        <div class="relative">
-                            <input type="email" name="email" required placeholder="Enter your email" class="w-full bg-white border border-[#D5CBC0] rounded-xs px-3.5 py-2.5 text-xs text-[#2A1810] placeholder-[#8C713B]/60 focus:outline-none focus:border-[#58111A] focus:ring-1 focus:ring-[#58111A] shadow-2xs">
-                        </div>
-                        <button type="submit" class="w-full py-2.5 bg-[#083323] hover:bg-[#0A3828] text-[#E6CA65] hover:text-white text-[10.5px] uppercase font-bold tracking-[0.22em] rounded-xs transition-colors border border-[#D4AF37]/35 shadow-xs">
-                            JOIN ATELIER
-                        </button>
-                    </form>
-                    <div class="pt-5 flex items-center space-x-3 text-[#58111A]">
-                        <a href="{{ \App\Models\Setting::get('instagram_url', 'https://www.instagram.com/gaurisuits') }}" target="_blank" rel="noopener" class="w-8 h-8 rounded-full border border-[#D5CBC0] flex items-center justify-center hover:border-[#58111A] hover:text-[#C5A869] transition-colors" title="Instagram (@gaurisuits)" aria-label="Instagram (@gaurisuits)">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                <!-- Column 3: Contact Us -->
+                <div>
+                    <h3 class="font-sans text-xs uppercase tracking-[0.2em] text-[#E8C581] font-bold mb-3">Contact Us</h3>
+                    <ul class="space-y-2.5 text-xs text-[#FAF4EC]/85 font-sans">
+                        <li class="flex items-center gap-2.5">
+                            <svg class="w-4 h-4 text-[#E8C581] shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.21 2.2z"/></svg>
+                            <a href="tel:0401365786" class="hover:text-[#E8C581] transition-colors">0401 365 786</a>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <svg class="w-4 h-4 text-[#E8C581] shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+                            <span>Geelong, Melbourne</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <svg class="w-4 h-4 text-[#E8C581] shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            <a href="mailto:info@gaurisuits.com" class="hover:text-[#E8C581] transition-colors">info@gaurisuits.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Follow Us & Newsletter -->
+                <div>
+                    <h3 class="font-sans text-xs uppercase tracking-[0.2em] text-[#E8C581] font-bold mb-2">Follow Us</h3>
+                    <div class="flex items-center space-x-3 text-[#FAF4EC] mb-4">
+                        <a href="{{ \App\Models\Setting::get('facebook_url', 'https://facebook.com') }}" target="_blank" rel="noopener" class="w-7 h-7 rounded-full bg-white/10 hover:bg-[#E8C581] hover:text-[#061A10] flex items-center justify-center transition-colors" title="Facebook" aria-label="Facebook">
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.688 5H18V0h-3.808C10.595 0 9 1.582 9 4.615V8z"/></svg>
                         </a>
-                        <a href="{{ \App\Models\Setting::get('facebook_url', 'https://facebook.com') }}" target="_blank" rel="noopener" class="w-8 h-8 rounded-full border border-[#D5CBC0] flex items-center justify-center hover:border-[#58111A] hover:text-[#C5A869] transition-colors" title="Facebook" aria-label="Facebook">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.688 5H18V0h-3.808C10.595 0 9 1.582 9 4.615V8z"/></svg>
+                        <a href="{{ \App\Models\Setting::get('instagram_url', 'https://www.instagram.com/gaurisuits') }}" target="_blank" rel="noopener" class="w-7 h-7 rounded-full bg-white/10 hover:bg-[#E8C581] hover:text-[#061A10] flex items-center justify-center transition-colors" title="Instagram" aria-label="Instagram">
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                        <a href="https://youtube.com/@gaurisuits" target="_blank" rel="noopener" class="w-7 h-7 rounded-full bg-white/10 hover:bg-[#E8C581] hover:text-[#061A10] flex items-center justify-center transition-colors" title="YouTube" aria-label="YouTube">
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.376.55 9.376.55s7.505 0 9.377-.55a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                         </a>
                     </div>
+
+                    <h4 class="font-sans text-xs text-[#FAF4EC] font-semibold mb-2">Subscribe to our Newsletter</h4>
+                    <form action="{{ route('newsletter.subscribe') }}" method="POST" class="flex items-center gap-1.5">
+                        @csrf
+                        <input type="email" name="email" required placeholder="Your Email Address" class="bg-white text-[#2A1810] placeholder-stone-500 text-xs px-3 py-2 rounded-xs focus:outline-none w-full border-0">
+                        <button type="submit" class="bg-[#E8C581] hover:bg-white text-[#061A10] font-sans font-bold text-xs uppercase px-3 py-2 rounded-xs tracking-wider transition-colors shrink-0">
+                            Subscribe
+                        </button>
+                    </form>
                 </div>
             </div>
 
-            <!-- Bottom Copyright & Accepted Payments -->
-            <div class="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-[#6B5E55] gap-4">
-                <p>&copy; {{ date('Y') }} Gauri Suits &amp; Jewel. All Rights Reserved. Geelong, Melbourne, Australia.</p>
-                <div class="flex flex-wrap items-center justify-center gap-2 text-[10px] tracking-wider uppercase font-semibold text-[#4A3E38]">
-                    <span class="px-2.5 py-1 bg-white rounded-xs border border-[#D5CBC0] shadow-2xs">Stripe</span>
-                    <span class="px-2.5 py-1 bg-white rounded-xs border border-[#D5CBC0] shadow-2xs">Visa / Mastercard</span>
-                    <span class="px-2.5 py-1 bg-white rounded-xs border border-[#D5CBC0] shadow-2xs">Cash on Delivery</span>
-                </div>
+            <!-- Bottom Sub-Footer Bar matching reference image -->
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#FAF4EC]/70 gap-2">
+                <p>&copy; 2025 Gauri Suits &amp; Jewel. All Rights Reserved.</p>
+                <p class="text-right">Designed with <span class="text-rose-400">&hearts;</span> in Melbourne</p>
             </div>
         </div>
     </footer>

@@ -86,7 +86,8 @@ class UserFlowTest extends TestCase
         $homeResponse->assertStatus(200);
         $homeResponse->assertSee('GAURI');
         $homeResponse->assertSee('SUITS &amp; JEWEL', false);
-        $homeResponse->assertSee('TIMELESS TRADITIONS');
+        $homeResponse->assertSee('Tradition Meets Elegance');
+        $homeResponse->assertSee('Our Collections');
 
         // Step 2: Browse Category / Shop
         $shopResponse = $this->get(route('shop.index', ['category' => $category->slug]));
