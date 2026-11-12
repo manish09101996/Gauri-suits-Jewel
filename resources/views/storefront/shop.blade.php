@@ -6,37 +6,44 @@
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8" x-data="{ mobileFilterOpen: false }">
 
-    <!-- Breadcrumb & Header -->
-    <div class="border-b border-stone-200 pb-8 text-center sm:text-left">
-        <nav class="flex items-center justify-center sm:justify-start gap-2 text-xs text-stone-400 mb-3 uppercase tracking-wider">
-            <a href="{{ route('home') }}" class="hover:text-brand-maroon transition">Home</a>
-            <span>/</span>
-            <a href="{{ route('shop.index') }}" class="hover:text-brand-maroon transition">Shop</a>
-            @if($currentCategory)
-                <span>/</span>
-                <span class="text-brand-charcoal font-semibold">{{ $currentCategory->name }}</span>
-            @endif
-        </nav>
+    <!-- Royal Editorial Header -->
+    <div class="bg-gradient-to-b from-[#FAF7F2] to-[#F5EFEB] border border-[#D4AF37]/35 rounded-sm p-6 sm:p-10 text-center relative overflow-hidden shadow-xs">
+        <div class="max-w-3xl mx-auto space-y-2">
+            <nav class="flex items-center justify-center gap-2 text-[10px] sm:text-xs text-[#8C713B] uppercase tracking-[0.2em] font-medium mb-2">
+                <a href="{{ route('home') }}" class="hover:text-[#58111A] transition">Home</a>
+                <span class="text-[#D4AF37]">&bull;</span>
+                <a href="{{ route('shop.index') }}" class="hover:text-[#58111A] transition">Shop</a>
+                @if($currentCategory)
+                    <span class="text-[#D4AF37]">&bull;</span>
+                    <span class="text-[#3B0A11] font-bold">{{ $currentCategory->name }}</span>
+                @endif
+            </nav>
 
-        <h1 class="font-serif text-3xl sm:text-5xl font-bold text-brand-charcoal tracking-tight">
-            {{ $pageTitle }}
-        </h1>
-        <p class="text-sm sm:text-base text-stone-600 mt-2 max-w-3xl font-light leading-relaxed">
-            {{ $pageDescription }}
-        </p>
+            <span class="text-[9.5px] sm:text-[10.5px] uppercase tracking-[0.35em] text-[#8C713B] font-bold block">
+                ✦ ROYAL ATELIER ARCHIVE ✦
+            </span>
+
+            <h1 class="font-serif text-3xl sm:text-5xl font-normal text-[#3B0A11] tracking-wide">
+                {{ $pageTitle }}
+            </h1>
+
+            <p class="text-xs sm:text-sm text-[#6B5E55] font-serif italic max-w-2xl mx-auto leading-relaxed pt-1">
+                {{ $pageDescription }}
+            </p>
+        </div>
     </div>
 
     <!-- Top Bar: Result count, Mobile Filter toggle, Sort -->
-    <div class="flex items-center justify-between gap-4 pb-4 border-b border-stone-100">
-        <div class="text-xs text-stone-500 font-medium">
-            Showing <span class="font-bold text-brand-charcoal">{{ $products->total() }}</span> {{ Str::plural('piece', $products->total()) }}
+    <div class="flex items-center justify-between gap-4 pb-4 border-b border-[#E8DFD5]">
+        <div class="text-xs text-[#6B5E55] font-medium">
+            Presenting <span class="font-bold text-[#3B0A11]">{{ $products->total() }}</span> {{ Str::plural('ensemble', $products->total()) }}
         </div>
 
         <div class="flex items-center gap-3">
             <!-- Mobile Filter Button -->
-            <button type="button" @click="mobileFilterOpen = true" class="lg:hidden inline-flex items-center gap-2 px-4 py-2 border border-stone-300 rounded-sm text-xs font-bold uppercase tracking-wider text-brand-charcoal hover:bg-stone-50 transition">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
-                Filters
+            <button type="button" @click="mobileFilterOpen = true" class="lg:hidden inline-flex items-center gap-2 px-3.5 py-2 border border-[#D4AF37]/45 rounded-xs text-xs font-bold uppercase tracking-wider text-[#3B0A11] hover:bg-[#FAF7F2] transition shadow-xs cursor-pointer">
+                <svg class="w-4 h-4 text-[#8C713B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                Refine
             </button>
 
             <!-- Sort Form -->
@@ -50,8 +57,8 @@
                         <input type="hidden" name="{{ $k }}" value="{{ $v }}">
                     @endif
                 @endforeach
-                <label for="sort" class="text-xs text-stone-500 hidden sm:inline-block">Sort by:</label>
-                <select id="sort" name="sort" onchange="this.form.submit()" class="text-xs font-semibold bg-white border border-stone-300 text-brand-charcoal rounded-sm px-3 py-2 outline-none focus:border-brand-maroon">
+                <label for="sort" class="text-xs text-[#6B5E55] hidden sm:inline-block font-sans">Sort by:</label>
+                <select id="sort" name="sort" onchange="this.form.submit()" class="text-xs font-semibold bg-[#FAF7F2] border border-[#D4AF37]/40 text-[#3B0A11] rounded-xs px-3 py-2 outline-none focus:border-[#58111A] shadow-xs cursor-pointer">
                     <option value="featured" {{ request('sort', 'featured') === 'featured' ? 'selected' : '' }}>Curated (Featured)</option>
                     <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>New Arrivals</option>
                     <option value="best_selling" {{ request('sort') === 'best_selling' ? 'selected' : '' }}>Most Loved</option>
@@ -64,11 +71,11 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
         <!-- Desktop Filter Sidebar (1 Col) -->
-        <aside class="hidden lg:block space-y-6 bg-white p-6 rounded-xl border border-stone-200/80 shadow-sm sticky top-24">
-            <div class="flex items-center justify-between pb-4 border-b border-stone-100">
-                <span class="font-serif text-base font-bold text-brand-charcoal tracking-wide">Refine Search</span>
+        <aside class="hidden lg:block space-y-6 bg-[#FAF7F2] p-6 rounded-sm border border-[#D4AF37]/35 shadow-xs sticky top-24">
+            <div class="flex items-center justify-between pb-4 border-b border-[#E8DFD5]">
+                <span class="font-serif text-sm uppercase tracking-[0.2em] font-bold text-[#3B0A11]">Refine Royal Search</span>
                 @if(request()->hasAny(['category', 'collection', 'fabric', 'colour', 'occasion', 'min_price', 'max_price', 'in_stock']))
-                    <a href="{{ route('shop.index') }}" class="text-[11px] text-brand-gold hover:text-brand-maroon font-semibold underline">
+                    <a href="{{ route('shop.index') }}" class="text-[11px] text-[#8C713B] hover:text-[#58111A] font-semibold underline">
                         Clear All
                     </a>
                 @endif
@@ -81,37 +88,37 @@
 
                 <!-- Categories -->
                 <div>
-                    <h3 class="text-xs uppercase tracking-wider font-bold text-brand-charcoal mb-3">Category</h3>
+                    <h3 class="text-xs uppercase tracking-wider font-bold text-[#3B0A11] mb-3">Category</h3>
                     <div class="space-y-2 text-xs">
                         @foreach($allCategories as $cat)
-                            <label class="flex items-center gap-2 cursor-pointer text-stone-600 hover:text-brand-maroon">
-                                <input type="radio" name="category" value="{{ $cat->slug }}" {{ request('category') === $cat->slug ? 'checked' : '' }} onchange="this.form.submit()" class="text-brand-maroon focus:ring-0">
-                                <span class="{{ request('category') === $cat->slug ? 'font-bold text-brand-maroon' : '' }}">{{ $cat->name }}</span>
+                            <label class="flex items-center gap-2 cursor-pointer text-[#4A3E38] hover:text-[#58111A]">
+                                <input type="radio" name="category" value="{{ $cat->slug }}" {{ request('category') === $cat->slug ? 'checked' : '' }} onchange="this.form.submit()" class="text-[#58111A] focus:ring-0">
+                                <span class="{{ request('category') === $cat->slug ? 'font-bold text-[#58111A]' : '' }}">{{ $cat->name }}</span>
                             </label>
                         @endforeach
                     </div>
                 </div>
 
-                <!-- Price Range -->
-                <div class="pt-4 border-t border-stone-100">
-                    <h3 class="text-xs uppercase tracking-wider font-bold text-brand-charcoal mb-3">Price Range ({{ $currencySymbol ?? '$' }})</h3>
+                <!-- Price Range (AUD) -->
+                <div class="pt-4 border-t border-[#E8DFD5]">
+                    <h3 class="text-xs uppercase tracking-wider font-bold text-[#3B0A11] mb-3">Price Range ({{ $currencySymbol ?? '$' }} AUD)</h3>
                     <div class="grid grid-cols-2 gap-2">
-                        <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="Min {{ $currencySymbol ?? '$' }}" class="bg-stone-50 border border-stone-300 rounded px-2.5 py-1.5 text-xs">
-                        <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="Max {{ $currencySymbol ?? '$' }}" class="bg-stone-50 border border-stone-300 rounded px-2.5 py-1.5 text-xs">
+                        <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="Min {{ $currencySymbol ?? '$' }}" class="bg-white border border-[#D5CBC0] rounded-xs px-2.5 py-1.5 text-xs text-[#2A1810]">
+                        <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="Max {{ $currencySymbol ?? '$' }}" class="bg-white border border-[#D5CBC0] rounded-xs px-2.5 py-1.5 text-xs text-[#2A1810]">
                     </div>
-                    <button type="submit" class="mt-2 w-full py-1.5 bg-[#58111A] hover:bg-[#3B0A11] border border-[#D4AF37]/40 text-[#F7EED9] text-xs font-bold uppercase tracking-wider rounded-xs transition shadow-xs">
-                        Apply Price
+                    <button type="submit" class="mt-2.5 w-full py-2 bg-[#58111A] hover:bg-[#3B0A11] border border-[#D4AF37]/40 text-[#F7EED9] text-xs font-bold uppercase tracking-wider rounded-xs transition shadow-xs cursor-pointer">
+                        Filter Price
                     </button>
                 </div>
 
                 <!-- Fabric Filter -->
                 @if($fabrics->isNotEmpty())
-                <div class="pt-4 border-t border-stone-100">
-                    <h3 class="text-xs uppercase tracking-wider font-bold text-brand-charcoal mb-3">Fabric</h3>
-                    <div class="space-y-1.5 max-h-48 overflow-y-auto text-xs text-stone-600">
+                <div class="pt-4 border-t border-[#E8DFD5]">
+                    <h3 class="text-xs uppercase tracking-wider font-bold text-[#3B0A11] mb-3">Fabric</h3>
+                    <div class="space-y-1.5 max-h-48 overflow-y-auto text-xs text-[#4A3E38]">
                         @foreach($fabrics as $fab)
-                            <label class="flex items-center gap-2 cursor-pointer hover:text-brand-maroon">
-                                <input type="checkbox" name="fabric[]" value="{{ $fab }}" {{ in_array($fab, (array)request('fabric', [])) ? 'checked' : '' }} onchange="this.form.submit()" class="rounded text-brand-maroon focus:ring-0">
+                            <label class="flex items-center gap-2 cursor-pointer hover:text-[#58111A]">
+                                <input type="checkbox" name="fabric[]" value="{{ $fab }}" {{ in_array($fab, (array)request('fabric', [])) ? 'checked' : '' }} onchange="this.form.submit()" class="rounded-xs text-[#58111A] focus:ring-0">
                                 <span>{{ $fab }}</span>
                             </label>
                         @endforeach
@@ -121,12 +128,12 @@
 
                 <!-- Colour Filter -->
                 @if($colours->isNotEmpty())
-                <div class="pt-4 border-t border-stone-100">
-                    <h3 class="text-xs uppercase tracking-wider font-bold text-brand-charcoal mb-3">Colour</h3>
-                    <div class="space-y-1.5 max-h-48 overflow-y-auto text-xs text-stone-600">
+                <div class="pt-4 border-t border-[#E8DFD5]">
+                    <h3 class="text-xs uppercase tracking-wider font-bold text-[#3B0A11] mb-3">Colour</h3>
+                    <div class="space-y-1.5 max-h-48 overflow-y-auto text-xs text-[#4A3E38]">
                         @foreach($colours as $col)
-                            <label class="flex items-center gap-2 cursor-pointer hover:text-brand-maroon">
-                                <input type="checkbox" name="colour[]" value="{{ $col }}" {{ in_array($col, (array)request('colour', [])) ? 'checked' : '' }} onchange="this.form.submit()" class="rounded text-brand-maroon focus:ring-0">
+                            <label class="flex items-center gap-2 cursor-pointer hover:text-[#58111A]">
+                                <input type="checkbox" name="colour[]" value="{{ $col }}" {{ in_array($col, (array)request('colour', [])) ? 'checked' : '' }} onchange="this.form.submit()" class="rounded-xs text-[#58111A] focus:ring-0">
                                 <span>{{ $col }}</span>
                             </label>
                         @endforeach
@@ -136,12 +143,12 @@
 
                 <!-- Occasion Filter -->
                 @if($occasions->isNotEmpty())
-                <div class="pt-4 border-t border-stone-100">
-                    <h3 class="text-xs uppercase tracking-wider font-bold text-brand-charcoal mb-3">Occasion</h3>
-                    <div class="space-y-1.5 text-xs text-stone-600">
+                <div class="pt-4 border-t border-[#E8DFD5]">
+                    <h3 class="text-xs uppercase tracking-wider font-bold text-[#3B0A11] mb-3">Occasion</h3>
+                    <div class="space-y-1.5 text-xs text-[#4A3E38]">
                         @foreach($occasions as $occ)
-                            <label class="flex items-center gap-2 cursor-pointer hover:text-brand-maroon">
-                                <input type="checkbox" name="occasion[]" value="{{ $occ }}" {{ in_array($occ, (array)request('occasion', [])) ? 'checked' : '' }} onchange="this.form.submit()" class="rounded text-brand-maroon focus:ring-0">
+                            <label class="flex items-center gap-2 cursor-pointer hover:text-[#58111A]">
+                                <input type="checkbox" name="occasion[]" value="{{ $occ }}" {{ in_array($occ, (array)request('occasion', [])) ? 'checked' : '' }} onchange="this.form.submit()" class="rounded-xs text-[#58111A] focus:ring-0">
                                 <span>{{ $occ }}</span>
                             </label>
                         @endforeach
@@ -150,32 +157,32 @@
                 @endif
 
                 <!-- In Stock Toggle -->
-                <div class="pt-4 border-t border-stone-100">
-                    <label class="flex items-center gap-2 cursor-pointer text-xs text-stone-700 font-semibold">
-                        <input type="checkbox" name="in_stock" value="1" {{ request('in_stock') == '1' ? 'checked' : '' }} onchange="this.form.submit()" class="rounded text-brand-maroon focus:ring-0">
-                        <span>In Stock Only</span>
+                <div class="pt-4 border-t border-[#E8DFD5]">
+                    <label class="flex items-center gap-2 cursor-pointer text-xs text-[#2A1810] font-semibold">
+                        <input type="checkbox" name="in_stock" value="1" {{ request('in_stock') == '1' ? 'checked' : '' }} onchange="this.form.submit()" class="rounded-xs text-[#58111A] focus:ring-0">
+                        <span>In Stock Ready to Ship</span>
                     </label>
                 </div>
             </form>
         </aside>
 
         <!-- Product Grid (3 Cols) -->
-        <main class="lg:col-span-3 space-y-8">
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-5 sm:gap-7">
+        <div class="lg:col-span-3 space-y-8">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-6">
                 @forelse($products as $product)
                     @include('storefront.partials.product-card', ['product' => $product])
                 @empty
-                    <div class="col-span-full bg-white rounded-2xl p-12 text-center border border-stone-200 space-y-4">
-                        <div class="w-16 h-16 rounded-full bg-stone-100 flex items-center justify-center mx-auto text-stone-400">
+                    <div class="col-span-full bg-white rounded-sm p-12 text-center border border-[#D4AF37]/35 space-y-4">
+                        <div class="w-16 h-16 rounded-full bg-[#FAF7F2] border border-[#D4AF37]/50 flex items-center justify-center mx-auto text-[#8C713B]">
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                         </div>
-                        <h3 class="font-serif text-xl font-bold text-brand-charcoal">No designs matched your criteria</h3>
-                        <p class="text-sm text-stone-500 max-w-md mx-auto">
+                        <h3 class="font-serif text-xl font-normal text-[#3B0A11]">No designs matched your criteria</h3>
+                        <p class="text-xs sm:text-sm text-[#6B5E55] max-w-md mx-auto font-serif italic">
                             Try broadening your filters or explore our newest Punjabi couture and bridal jewellery.
                         </p>
                         <div class="pt-2">
-                            <a href="{{ route('shop.index') }}" class="inline-flex px-6 py-2.5 bg-brand-maroon hover:bg-brand-gold text-white hover:text-brand-charcoal text-xs font-bold uppercase tracking-wider rounded-sm transition">
-                                View Full Catalog
+                            <a href="{{ route('shop.index') }}" class="inline-flex px-6 py-2.5 bg-[#58111A] hover:bg-[#3B0A11] border border-[#D4AF37]/50 text-[#F7EED9] text-xs font-bold uppercase tracking-wider rounded-xs transition shadow-xs">
+                                View Full Royal Archive
                             </a>
                         </div>
                     </div>
@@ -184,19 +191,19 @@
 
             <!-- Pagination -->
             @if($products->hasPages())
-                <div class="pt-6 border-t border-stone-200">
+                <div class="pt-6 border-t border-[#E8DFD5]">
                     {{ $products->links() }}
                 </div>
             @endif
-        </main>
+        </div>
     </div>
 
     <!-- Mobile Filter Drawer -->
     <div x-show="mobileFilterOpen" class="fixed inset-0 z-50 flex lg:hidden" style="display: none;">
         <div @click="mobileFilterOpen = false" class="fixed inset-0 bg-black/60 backdrop-blur-sm"></div>
-        <div class="relative ml-auto w-full max-w-xs bg-white h-full shadow-2xl p-6 overflow-y-auto space-y-6">
-            <div class="flex items-center justify-between pb-4 border-b border-stone-200">
-                <h3 class="font-serif text-lg font-bold text-brand-charcoal">Filter Ensembles</h3>
+        <div class="relative ml-auto w-full max-w-xs bg-[#FAF7F2] h-full shadow-2xl p-6 overflow-y-auto space-y-6 border-l border-[#D4AF37]/40">
+            <div class="flex items-center justify-between pb-4 border-b border-[#E8DFD5]">
+                <h3 class="font-serif text-base uppercase tracking-wider font-bold text-[#3B0A11]">Filter Ensembles</h3>
                 <button type="button" @click="mobileFilterOpen = false" class="text-stone-400 hover:text-stone-700">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
@@ -205,22 +212,22 @@
             <form method="GET" action="{{ url()->current() }}" class="space-y-6">
                 <!-- Mobile Categories -->
                 <div>
-                    <h4 class="text-xs uppercase tracking-wider font-bold text-brand-charcoal mb-3">Categories</h4>
+                    <h4 class="text-xs uppercase tracking-wider font-bold text-[#3B0A11] mb-3">Categories</h4>
                     <div class="space-y-2 text-xs">
                         @foreach($allCategories as $cat)
-                            <label class="flex items-center gap-2 cursor-pointer text-stone-600">
-                                <input type="radio" name="category" value="{{ $cat->slug }}" {{ request('category') === $cat->slug ? 'checked' : '' }} class="text-brand-maroon focus:ring-0">
+                            <label class="flex items-center gap-2 cursor-pointer text-[#4A3E38]">
+                                <input type="radio" name="category" value="{{ $cat->slug }}" {{ request('category') === $cat->slug ? 'checked' : '' }} class="text-[#58111A] focus:ring-0">
                                 <span>{{ $cat->name }}</span>
                             </label>
                         @endforeach
                     </div>
                 </div>
 
-                <div class="pt-4 border-t border-stone-200 flex gap-2">
-                    <button type="submit" class="flex-1 py-3 bg-brand-maroon text-white font-bold text-xs uppercase tracking-wider rounded-sm">
+                <div class="pt-4 border-t border-[#E8DFD5] flex gap-2">
+                    <button type="submit" class="flex-1 py-3 bg-[#58111A] text-[#F7EED9] font-bold text-xs uppercase tracking-wider rounded-xs border border-[#D4AF37]/40">
                         Apply Filters
                     </button>
-                    <a href="{{ route('shop.index') }}" class="px-4 py-3 bg-stone-100 text-stone-700 font-semibold text-xs rounded-sm text-center">
+                    <a href="{{ route('shop.index') }}" class="px-4 py-3 bg-white border border-[#D5CBC0] text-[#3B0A11] font-semibold text-xs rounded-xs text-center">
                         Reset
                     </a>
                 </div>

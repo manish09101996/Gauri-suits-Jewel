@@ -126,7 +126,7 @@ Alpine.data('cartDrawer', () => ({
             const res = await fetch(getApiUrl('/cart/summary'), { credentials: 'same-origin' });
             if (res.ok) {
                 this.summary = await res.json();
-                // Update badges in header and mobile drawer
+                // Update badges in header, mobile drawer, and mobile bottom bar
                 const badge = document.getElementById('header-cart-badge');
                 if (badge) {
                     badge.innerText = this.summary.total_items;
@@ -136,6 +136,14 @@ Alpine.data('cartDrawer', () => ({
                 if (mobileBadge) {
                     mobileBadge.innerText = this.summary.total_items;
                 }
+                const bottomBadge = document.getElementById('mobile-bottom-cart-badge');
+                if (bottomBadge) {
+                    bottomBadge.innerText = this.summary.total_items;
+                    bottomBadge.style.display = this.summary.total_items > 0 ? 'flex' : 'none';
+                }
+                document.querySelectorAll('[data-cart-badge]').forEach(el => {
+                    el.innerText = this.summary.total_items;
+                });
             }
         } catch (e) {
             console.error('Failed to fetch cart summary', e);

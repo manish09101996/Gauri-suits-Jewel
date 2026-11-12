@@ -19,43 +19,43 @@
     </div>
 
     @if(count($summary['items']) > 0)
-    <!-- Free Shipping Progress Bar -->
-    <div class="bg-stone-50 border border-stone-200/80 rounded-2xl p-5 space-y-2.5">
+    <!-- Free Shipping Progress Bar (Royal Emerald & Gold) -->
+    <div class="bg-[#FAF7F2] border border-[#D4AF37]/35 rounded-sm p-5 space-y-2.5 shadow-xs">
         <div class="flex items-center justify-between text-xs sm:text-sm">
             @if($summary['free_shipping_unlocked'])
-                <span class="font-bold text-[#0A3828] flex items-center gap-1.5">
-                    <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                <span class="font-bold text-[#083323] flex items-center gap-1.5">
+                    <svg class="w-4 h-4 fill-current text-[#25D366]" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
                     Congratulations! You have unlocked Complimentary Express Shipping!
                 </span>
             @else
-                <span class="text-stone-700 font-medium">
-                    Add <strong class="text-[#58111A] font-bold">{{ $currencySymbol ?? '$' }}{{ number_format($summary['amount_needed_free_shipping']) }}</strong> more to unlock <span class="font-bold text-[#0A3828]">FREE Insured Delivery</span>
+                <span class="text-[#3B0A11] font-medium">
+                    Add <strong class="text-[#58111A] font-bold">{{ $currencySymbol ?? '$' }}{{ number_format($summary['amount_needed_free_shipping']) }}</strong> more to unlock <span class="font-bold text-[#083323]">FREE Insured Delivery</span>
                 </span>
             @endif
-            <span class="text-xs text-[#A88B4D] font-mono font-bold">{{ $summary['free_shipping_percent'] }}%</span>
+            <span class="text-xs text-[#8C713B] font-mono font-bold">{{ $summary['free_shipping_percent'] }}%</span>
         </div>
-        <div class="w-full bg-stone-200 rounded-full h-2 overflow-hidden">
-            <div class="bg-gradient-to-r from-[#0A3828] to-[#125B40] h-full rounded-full transition-all duration-500 shadow-xs" style="width: {{ $summary['free_shipping_percent'] }}%"></div>
+        <div class="w-full bg-[#EFE9DE] rounded-full h-2 overflow-hidden">
+            <div class="bg-gradient-to-r from-[#083323] to-[#125B40] h-full rounded-full transition-all duration-500 shadow-xs" style="width: {{ $summary['free_shipping_percent'] }}%"></div>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         <!-- Cart Items List (8 Cols) -->
-        <div class="lg:col-span-8 bg-white border border-stone-200/80 rounded-2xl p-6 shadow-sm divide-y divide-stone-100 space-y-6">
+        <div class="lg:col-span-8 bg-[#FAF7F2] border border-[#D4AF37]/35 rounded-sm p-6 shadow-xs divide-y divide-[#E8DFD5] space-y-6">
             @foreach($summary['items'] as $item)
             <div class="pt-6 first:pt-0 flex flex-col sm:flex-row gap-5 items-start sm:items-center justify-between">
                 <div class="flex items-center gap-4">
-                    <a href="{{ route('product.show', $item['slug']) }}" class="w-20 sm:w-24 aspect-[3/4] bg-stone-100 rounded-lg overflow-hidden shrink-0 border border-stone-200">
+                    <a href="{{ route('product.show', $item['slug']) }}" class="w-20 sm:w-24 aspect-[3/4] bg-white rounded-xs overflow-hidden shrink-0 border border-[#D5CBC0]">
                         <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" class="w-full h-full object-cover">
                     </a>
                     <div class="space-y-1">
-                        <h3 class="font-serif text-sm sm:text-base font-bold text-brand-charcoal hover:text-brand-maroon transition">
+                        <h3 class="font-serif text-sm sm:text-base font-semibold text-[#2A1810] hover:text-[#58111A] transition">
                             <a href="{{ route('product.show', $item['slug']) }}">{{ $item['name'] }}</a>
                         </h3>
                         @if($item['size'])
-                            <div class="text-xs text-stone-500">Size / Option: <span class="font-semibold text-stone-700">{{ $item['size'] }}</span></div>
+                            <div class="text-xs text-[#6B5E55]">Size / Option: <span class="font-semibold text-[#3B0A11]">{{ $item['size'] }}</span></div>
                         @endif
-                        <div class="text-xs font-semibold text-brand-maroon">
+                        <div class="text-xs font-semibold text-[#58111A]">
                             {{ $currencySymbol ?? '$' }}{{ number_format($item['price']) }} each
                         </div>
                     </div>
@@ -63,19 +63,19 @@
 
                 <div class="flex items-center justify-between w-full sm:w-auto sm:gap-8">
                     <!-- Qty Stepper -->
-                    <div class="flex items-center border border-stone-300 rounded bg-stone-50">
-                        <button type="button" @click="updateQty({{ $item['id'] }}, {{ $item['quantity'] - 1 }})" class="px-2.5 py-1 text-stone-600 hover:bg-stone-200 font-bold text-xs">-</button>
-                        <span class="px-3 py-1 text-xs font-bold text-brand-charcoal">{{ $item['quantity'] }}</span>
-                        <button type="button" @click="updateQty({{ $item['id'] }}, {{ $item['quantity'] + 1 }})" class="px-2.5 py-1 text-stone-600 hover:bg-stone-200 font-bold text-xs">+</button>
+                    <div class="flex items-center border border-[#D5CBC0] rounded-xs bg-white">
+                        <button type="button" @click="updateQty({{ $item['id'] }}, {{ $item['quantity'] - 1 }})" class="px-2.5 py-1 text-[#58111A] hover:bg-[#FAF7F2] font-bold text-xs cursor-pointer">-</button>
+                        <span class="px-3 py-1 text-xs font-bold text-[#3B0A11]">{{ $item['quantity'] }}</span>
+                        <button type="button" @click="updateQty({{ $item['id'] }}, {{ $item['quantity'] + 1 }})" class="px-2.5 py-1 text-[#58111A] hover:bg-[#FAF7F2] font-bold text-xs cursor-pointer">+</button>
                     </div>
 
                     <!-- Line Total -->
-                    <div class="font-serif font-bold text-base text-brand-charcoal text-right min-w-[90px]">
+                    <div class="font-serif font-bold text-base text-[#2A1810] text-right min-w-[90px]">
                         {{ $currencySymbol ?? '$' }}{{ number_format($item['subtotal']) }}
                     </div>
 
                     <!-- Delete Button -->
-                    <button type="button" @click="removeItem({{ $item['id'] }})" class="text-stone-400 hover:text-rose-600 transition p-1" title="Remove">
+                    <button type="button" @click="removeItem({{ $item['id'] }})" class="text-stone-400 hover:text-rose-600 transition p-1 cursor-pointer" title="Remove">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                     </button>
                 </div>
@@ -86,25 +86,25 @@
         <!-- Order Summary & Promo Code (4 Cols) -->
         <div class="lg:col-span-4 space-y-6">
             <!-- Promo Code Card -->
-            <div class="bg-white border border-stone-200/80 rounded-2xl p-6 shadow-sm space-y-3">
-                <h3 class="text-xs uppercase font-bold tracking-wider text-brand-charcoal">Promotional Coupon</h3>
+            <div class="bg-[#FAF7F2] border border-[#D4AF37]/35 rounded-sm p-6 shadow-xs space-y-3">
+                <h3 class="text-xs uppercase font-bold tracking-wider text-[#3B0A11]">Promotional Coupon</h3>
 
                 @if($summary['coupon_code'])
-                    <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center justify-between">
+                    <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xs flex items-center justify-between">
                         <div>
-                            <span class="text-xs font-bold text-emerald-800 font-mono tracking-wider">{{ $summary['coupon_code'] }}</span>
-                            <div class="text-[11px] text-emerald-600">Discount applied: {{ $currencySymbol ?? '$' }}{{ number_format($summary['discount']) }}</div>
+                            <span class="text-xs font-bold text-[#083323] font-mono tracking-wider">{{ $summary['coupon_code'] }}</span>
+                            <div class="text-[11px] text-emerald-700">Discount applied: {{ $currencySymbol ?? '$' }}{{ number_format($summary['discount']) }}</div>
                         </div>
                         <form action="{{ route('cart.coupon.remove') }}" method="POST">
                             @csrf
-                            <button type="submit" class="text-xs font-semibold text-rose-600 hover:underline">Remove</button>
+                            <button type="submit" class="text-xs font-semibold text-rose-600 hover:underline cursor-pointer">Remove</button>
                         </form>
                     </div>
                 @else
                     <form action="{{ route('cart.coupon.apply') }}" method="POST" class="flex gap-2">
                         @csrf
-                        <input type="text" name="code" required placeholder="Enter Coupon Code" class="flex-1 bg-stone-50 border border-stone-300 rounded px-3 py-2 text-xs uppercase font-mono tracking-wider focus:outline-none focus:border-brand-maroon">
-                        <button type="submit" class="px-4 py-2 bg-stone-800 hover:bg-stone-900 text-white font-bold text-xs uppercase tracking-wider rounded transition">
+                        <input type="text" name="code" required placeholder="Enter Coupon Code" class="flex-1 bg-white border border-[#D5CBC0] rounded-xs px-3 py-2 text-xs uppercase font-mono tracking-wider text-[#2A1810] focus:outline-none focus:border-[#58111A]">
+                        <button type="submit" class="px-4 py-2 bg-[#58111A] hover:bg-[#3B0A11] text-[#F7EED9] font-bold text-xs uppercase tracking-wider rounded-xs transition cursor-pointer">
                             Apply
                         </button>
                     </form>
@@ -112,17 +112,17 @@
             </div>
 
             <!-- Order Total Breakdown Card -->
-            <div class="bg-white border border-stone-200/80 rounded-2xl p-6 shadow-sm space-y-4">
-                <h3 class="font-serif text-lg font-bold text-brand-charcoal border-b border-stone-100 pb-3">Order Summary</h3>
+            <div class="bg-[#FAF7F2] border border-[#D4AF37]/35 rounded-sm p-6 shadow-xs space-y-4">
+                <h3 class="font-serif text-lg font-normal text-[#3B0A11] border-b border-[#E8DFD5] pb-3">Order Summary</h3>
 
-                <div class="space-y-2.5 text-xs sm:text-sm text-stone-600">
+                <div class="space-y-2.5 text-xs sm:text-sm text-[#554740]">
                     <div class="flex justify-between">
                         <span>Bag Subtotal</span>
-                        <span class="font-semibold text-brand-charcoal">{{ $currencySymbol ?? '$' }}{{ number_format($summary['subtotal']) }}</span>
+                        <span class="font-semibold text-[#2A1810]">{{ $currencySymbol ?? '$' }}{{ number_format($summary['subtotal']) }}</span>
                     </div>
 
                     @if($summary['discount'] > 0)
-                    <div class="flex justify-between text-emerald-600">
+                    <div class="flex justify-between text-[#083323]">
                         <span>Coupon Savings</span>
                         <span class="font-bold">-{{ $currencySymbol ?? '$' }}{{ number_format($summary['discount']) }}</span>
                     </div>
@@ -130,19 +130,19 @@
 
                     <div class="flex justify-between">
                         <span>Shipping Delivery</span>
-                        <span class="font-semibold {{ $summary['free_shipping_unlocked'] ? 'text-emerald-600' : 'text-stone-700' }}">
-                            {{ $summary['free_shipping_unlocked'] ? 'FREE' : 'Calculated at checkout' }}
+                        <span class="font-semibold {{ $summary['free_shipping_unlocked'] ? 'text-[#083323]' : 'text-[#554740]' }}">
+                            {{ $summary['free_shipping_unlocked'] ? 'FREE EXPRESS' : 'Calculated at checkout' }}
                         </span>
                     </div>
 
-                    <div class="flex justify-between text-[11px] text-stone-400">
+                    <div class="flex justify-between text-[11px] text-[#8C713B]">
                         <span>Applicable Taxes (GST)</span>
                         <span>Included in price</span>
                     </div>
 
-                    <div class="pt-3 border-t border-stone-100 flex justify-between items-baseline font-serif text-lg font-bold text-brand-charcoal">
+                    <div class="pt-3 border-t border-[#E8DFD5] flex justify-between items-baseline font-serif text-lg font-bold text-[#2A1810]">
                         <span>Estimated Total</span>
-                        <span class="text-brand-maroon text-2xl">
+                        <span class="text-[#58111A] text-2xl font-bold">
                             {{ $currencySymbol ?? '$' }}{{ number_format(max(0, $summary['subtotal'] - $summary['discount'])) }}
                         </span>
                     </div>

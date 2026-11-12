@@ -164,23 +164,34 @@
         ];
     @endphp
 
-    <section class="py-8 sm:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- 6 Equal-Width Cards in one row on desktop, swipeable on mobile -->
+    <section class="py-8 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Kicker with Gold Flourish -->
+        <div class="text-center space-y-1 mb-6 sm:mb-8">
+            <span class="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#8C713B] font-bold block">COLLECTIONS</span>
+            <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#3B0A11] font-normal tracking-wide flex items-center justify-center gap-3">
+                <span class="text-sm sm:text-base text-[#C5A869]">❖</span>
+                <span>Adorn Every Part of You</span>
+                <span class="text-sm sm:text-base text-[#C5A869]">❖</span>
+            </h2>
+        </div>
+
+        <!-- 6 Palace Arched Silhouette Cards in one row on desktop, swipeable on mobile -->
         <div class="flex overflow-x-auto snap-x lg:grid lg:grid-cols-6 gap-3 sm:gap-4 no-scrollbar pb-2">
             @foreach($categoryCards as $card)
                 <a href="{{ $card['url'] }}"
-                   class="group shrink-0 w-44 sm:w-52 lg:w-auto snap-start flex flex-col bg-white border border-[#E3DACD] hover:border-[#58111A] transition-all duration-300 shadow-2xs hover:shadow-md">
-                    <!-- Category Image (3:4 Portrait Ratio matching screenshot) -->
-                    <div class="relative aspect-[3/4] overflow-hidden bg-[#EFE9DE]">
+                   class="group shrink-0 w-40 sm:w-48 lg:w-auto snap-start flex flex-col bg-white border border-[#D4AF37]/35 hover:border-[#D4AF37] rounded-t-[2.5rem] sm:rounded-t-[3.5rem] overflow-hidden transition-all duration-400 shadow-2xs hover:shadow-xl hover:-translate-y-1">
+                    <!-- Palace Arched Alcove Image Container -->
+                    <div class="relative aspect-[3/4] overflow-hidden bg-[#EFE9DE] rounded-t-[2.5rem] sm:rounded-t-[3.5rem]">
                         <img src="{{ $card['image'] }}"
                              alt="{{ $card['name'] }}"
                              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop';"
-                             class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out">
+                             class="w-full h-full object-cover object-top group-hover:scale-108 transition-transform duration-700 ease-out">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
                     </div>
-                    <!-- Clean White Card Label with Title and Arrow -->
-                    <div class="py-2.5 px-2 text-center bg-white border-t border-[#E8DFD5] group-hover:bg-[#FAF7F2] transition-colors">
-                        <span class="text-[10px] sm:text-[11px] font-sans font-bold tracking-[0.16em] uppercase text-[#2A1810] group-hover:text-[#58111A] transition-colors inline-flex items-center justify-center gap-1.5">
-                            {{ $card['name'] }} <span class="text-[#8C713B] group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                    <!-- Clean Gold Trimmed Card Label with Title and Arrow -->
+                    <div class="py-2.5 px-2 text-center bg-[#FAF7F2] border-t border-[#D4AF37]/30 group-hover:bg-[#58111A] transition-colors">
+                        <span class="text-[9.5px] sm:text-[10.5px] font-sans font-bold tracking-[0.16em] uppercase text-[#2A1810] group-hover:text-[#F7EED9] transition-colors inline-flex items-center justify-center gap-1.5">
+                            {{ $card['name'] }} <span class="text-[#D4AF37] group-hover:translate-x-0.5 transition-transform">&rarr;</span>
                         </span>
                     </div>
                 </a>
@@ -416,20 +427,21 @@
             </h2>
         </div>
 
-        <!-- 5 Cards in one row on desktop matching screenshot -->
+        <!-- 5 Palace Arched Cards in one row on desktop matching royal pavilion aesthetic -->
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             @foreach($occasions as $occ)
                 <a href="{{ $occ['url'] }}"
-                   class="group flex flex-col bg-white border border-[#E3DACD] hover:border-[#58111A] transition-all duration-300 shadow-2xs hover:shadow-md">
-                    <div class="relative aspect-[3/4] overflow-hidden bg-[#EFE9DE]">
+                   class="group flex flex-col bg-white border border-[#D4AF37]/35 hover:border-[#D4AF37] rounded-t-[2rem] sm:rounded-t-[2.5rem] overflow-hidden transition-all duration-400 shadow-2xs hover:shadow-xl hover:-translate-y-1">
+                    <div class="relative aspect-[3/4] overflow-hidden bg-[#EFE9DE] rounded-t-[2rem] sm:rounded-t-[2.5rem]">
                         <img src="{{ $occ['image'] }}"
                              alt="{{ $occ['name'] }}"
                              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop';"
-                             class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out">
+                             class="w-full h-full object-cover object-top group-hover:scale-108 transition-transform duration-700 ease-out">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-50 group-hover:opacity-30 transition-opacity"></div>
                     </div>
-                    <div class="py-2.5 px-2 text-center bg-white border-t border-[#E8DFD5] group-hover:bg-[#FAF7F2] transition-colors">
-                        <span class="text-[10px] sm:text-[11px] font-sans font-bold tracking-[0.16em] uppercase text-[#2A1810] group-hover:text-[#58111A] transition-colors inline-flex items-center justify-center gap-1.5">
-                            {{ $occ['name'] }} <span class="text-[#8C713B] group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                    <div class="py-2.5 px-2 text-center bg-[#FAF7F2] border-t border-[#D4AF37]/30 group-hover:bg-[#58111A] transition-colors">
+                        <span class="text-[9.5px] sm:text-[10.5px] font-sans font-bold tracking-[0.16em] uppercase text-[#2A1810] group-hover:text-[#F7EED9] transition-colors inline-flex items-center justify-center gap-1.5">
+                            {{ $occ['name'] }} <span class="text-[#D4AF37] group-hover:translate-x-0.5 transition-transform">&rarr;</span>
                         </span>
                     </div>
                 </a>
@@ -511,6 +523,33 @@
             </div>
         </div>
     </section>
+
+    <!-- ============================================================== -->
+    <!-- SECTION 5B: BEST SELLERS & ROYAL HEIRLOOMS                     -->
+    <!-- ============================================================== -->
+    @if(isset($bestSellers) && $bestSellers->isNotEmpty())
+    <section class="py-10 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="relative flex items-center justify-between mb-8 sm:mb-12">
+            <div>
+                <span class="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#8C713B] font-bold block">ROYAL COUTURE</span>
+                <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#3B0A11] font-normal tracking-wide flex items-center gap-3">
+                    <span>Most Loved By You</span>
+                    <span class="text-xs sm:text-sm text-[#C5A869]">❖</span>
+                </h2>
+                <p class="font-serif italic text-xs sm:text-sm text-[#6B5E55] mt-1">Patiala salwars, handcrafted bridal silks, and signature jewellery heirlooms</p>
+            </div>
+            <a href="{{ route('shop.best-sellers') }}" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-sans uppercase font-bold tracking-[0.2em] text-[#3B0A11] hover:text-[#8C713B] transition-colors border-b border-[#3B0A11] pb-0.5">
+                <span>EXPLORE ALL</span> &rarr;
+            </a>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+            @foreach($bestSellers->take(4) as $bestItem)
+                @include('storefront.partials.product-card', ['product' => $bestItem])
+            @endforeach
+        </div>
+    </section>
+    @endif
 
     <!-- ============================================================== -->
     <!-- SECTION 6: SHOPPABLE INSTAGRAM REELS CAROUSEL                   -->
@@ -770,6 +809,82 @@
         </div>
     </section>
     @endif
+
+    <!-- ============================================================== -->
+    <!-- SECTION 7: CLIENT REVIEWS & ROYAL TESTIMONIALS                -->
+    <!-- ============================================================== -->
+    <section class="py-12 sm:py-16 bg-[#FDFBF7] border-t border-[#E8DFD5]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-1 mb-8 sm:mb-12">
+                <span class="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#8C713B] font-bold block">PATRONS OF ROYALTY</span>
+                <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#3B0A11] font-normal tracking-wide flex items-center justify-center gap-3">
+                    <span class="text-sm sm:text-base text-[#C5A869]">❖</span>
+                    <span>Words from Our Patrons</span>
+                    <span class="text-sm sm:text-base text-[#C5A869]">❖</span>
+                </h2>
+                <p class="font-serif italic text-xs sm:text-sm text-[#6B5E55] max-w-xl mx-auto">Treasured words from our Australian patrons in Geelong, Melbourne, and beyond.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Review 1 -->
+                <div class="p-6 sm:p-7 rounded-sm bg-[#FAF7F2] border border-[#D4AF37]/35 shadow-xs flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center gap-1 text-[#D4AF37] text-sm mb-3">
+                            ★★★★★
+                        </div>
+                        <p class="font-serif italic text-sm text-[#3B0A11] leading-relaxed">
+                            "The heavy embroidery and velvet texture on my bridal suit arrived in Geelong within 3 days. The bespoke stitch fit was flawless like wearing royal couture!"
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-[#E8DFD5] flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-[#2A1810] block">Harpreet K.</span>
+                            <span class="text-[10px] text-[#8C713B] uppercase tracking-wider">Geelong, Victoria</span>
+                        </div>
+                        <span class="text-[9.5px] px-2 py-0.5 rounded-full bg-[#083323] text-[#E6CA65] font-semibold tracking-wider">VERIFIED BRIDE</span>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="p-6 sm:p-7 rounded-sm bg-[#FAF7F2] border border-[#D4AF37]/35 shadow-xs flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center gap-1 text-[#D4AF37] text-sm mb-3">
+                            ★★★★★
+                        </div>
+                        <p class="font-serif italic text-sm text-[#3B0A11] leading-relaxed">
+                            "The Polki choker set looks identical to authentic 22k family heirlooms. Ordered with Stripe online card checkout &amp; received continuous tracking updates."
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-[#E8DFD5] flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-[#2A1810] block">Simran D.</span>
+                            <span class="text-[10px] text-[#8C713B] uppercase tracking-wider">Melbourne, Victoria</span>
+                        </div>
+                        <span class="text-[9.5px] px-2 py-0.5 rounded-full bg-[#083323] text-[#E6CA65] font-semibold tracking-wider">VERIFIED BUYER</span>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="p-6 sm:p-7 rounded-sm bg-[#FAF7F2] border border-[#D4AF37]/35 shadow-xs flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center gap-1 text-[#D4AF37] text-sm mb-3">
+                            ★★★★★
+                        </div>
+                        <p class="font-serif italic text-sm text-[#3B0A11] leading-relaxed">
+                            "Direct WhatsApp stylist assistance helped me coordinate the matching dupatta shades for my brother's wedding. Absolutely palatial craftsmanship!"
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-[#E8DFD5] flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-[#2A1810] block">Jasleen M.</span>
+                            <span class="text-[10px] text-[#8C713B] uppercase tracking-wider">Sydney, NSW</span>
+                        </div>
+                        <span class="text-[9.5px] px-2 py-0.5 rounded-full bg-[#083323] text-[#E6CA65] font-semibold tracking-wider">VERIFIED PATRON</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 </div>
 @endsection
