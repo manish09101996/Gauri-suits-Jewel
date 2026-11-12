@@ -114,7 +114,8 @@ class DatabaseSeeder extends Seeder
             ['key' => 'stripe_secret_key', 'value' => 'sk_test_mock_secret_gauri', 'group' => 'payment'],
             ['key' => 'stripe_webhook_secret', 'value' => 'whsec_mock_gauri', 'group' => 'payment'],
             ['key' => 'announcement_bar', 'value' => 'COMPLIMENTARY SHIPPING ON ORDERS OVER $299 | WORLDWIDE COUTURE DELIVERY', 'group' => 'general'],
-            ['key' => 'instagram_url', 'value' => 'https://instagram.com/gaurisuitsjewel', 'group' => 'social'],
+            ['key' => 'instagram_url', 'value' => 'https://www.instagram.com/gaurisuits', 'group' => 'social'],
+            ['key' => 'social_instagram', 'value' => 'https://www.instagram.com/gaurisuits', 'group' => 'social'],
             ['key' => 'facebook_url', 'value' => 'https://facebook.com/gaurisuitsjewel', 'group' => 'social'],
         ];
         foreach ($settings as $s) {
@@ -727,7 +728,7 @@ class DatabaseSeeder extends Seeder
             'video_url' => 'https://assets.mixkit.co/videos/preview/mixkit-woman-modeling-a-traditional-indian-dress-42415-large.mp4',
             'thumbnail_url' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=600&auto=format&fit=crop',
             'product_id' => $prod1?->id,
-            'link_url' => $prod1 ? route('product.show', $prod1->slug) : null,
+            'link_url' => 'https://www.instagram.com/gaurisuits',
             'is_active' => true,
             'sort_order' => 1,
         ]);
@@ -737,7 +738,7 @@ class DatabaseSeeder extends Seeder
             'video_url' => 'https://assets.mixkit.co/videos/preview/mixkit-golden-jewelry-necklace-and-earrings-43093-large.mp4',
             'thumbnail_url' => 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=600&auto=format&fit=crop',
             'product_id' => $prod4?->id,
-            'link_url' => $prod4 ? route('product.show', $prod4->slug) : null,
+            'link_url' => 'https://www.instagram.com/gaurisuits',
             'is_active' => true,
             'sort_order' => 2,
         ]);
@@ -747,7 +748,7 @@ class DatabaseSeeder extends Seeder
             'video_url' => 'https://assets.mixkit.co/videos/preview/mixkit-fashion-model-in-an-elegant-dress-41804-large.mp4',
             'thumbnail_url' => 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=80&w=600&auto=format&fit=crop',
             'product_id' => $prod3?->id,
-            'link_url' => $prod3 ? route('product.show', $prod3->slug) : null,
+            'link_url' => 'https://www.instagram.com/gaurisuits',
             'is_active' => true,
             'sort_order' => 3,
         ]);
@@ -757,7 +758,7 @@ class DatabaseSeeder extends Seeder
             'video_url' => 'https://assets.mixkit.co/videos/preview/mixkit-woman-modeling-a-traditional-indian-dress-42415-large.mp4',
             'thumbnail_url' => 'https://images.unsplash.com/photo-1583391733975-021c37b679b3?q=80&w=600&auto=format&fit=crop',
             'product_id' => $prod2?->id,
-            'link_url' => $prod2 ? route('product.show', $prod2->slug) : null,
+            'link_url' => 'https://www.instagram.com/gaurisuits',
             'is_active' => true,
             'sort_order' => 4,
         ]);
@@ -767,7 +768,7 @@ class DatabaseSeeder extends Seeder
             'video_url' => 'https://assets.mixkit.co/videos/preview/mixkit-golden-jewelry-necklace-and-earrings-43093-large.mp4',
             'thumbnail_url' => 'https://images.unsplash.com/photo-1630019852942-f89202989a59?q=80&w=600&auto=format&fit=crop',
             'product_id' => $prod5?->id,
-            'link_url' => $prod5 ? route('product.show', $prod5->slug) : null,
+            'link_url' => 'https://www.instagram.com/gaurisuits',
             'is_active' => true,
             'sort_order' => 5,
         ]);
@@ -777,7 +778,7 @@ class DatabaseSeeder extends Seeder
             'video_url' => 'https://assets.mixkit.co/videos/preview/mixkit-fashion-model-in-an-elegant-dress-41804-large.mp4',
             'thumbnail_url' => 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?q=80&w=600&auto=format&fit=crop',
             'product_id' => $prod6?->id,
-            'link_url' => $prod6 ? route('product.show', $prod6->slug) : null,
+            'link_url' => 'https://www.instagram.com/gaurisuits',
             'is_active' => true,
             'sort_order' => 6,
         ]);

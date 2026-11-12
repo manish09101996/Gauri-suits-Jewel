@@ -139,8 +139,8 @@
             <h2 class="text-base font-semibold text-white">Social Media & Editorial Channels</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">Instagram URL</label>
-                    <input type="text" name="social_instagram" value="{{ $settings['social_instagram'] ?? 'https://instagram.com/gaurisuits' }}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Instagram URL (@gaurisuits)</label>
+                    <input type="text" name="social_instagram" value="{{ $settings['social_instagram'] ?? $settings['instagram_url'] ?? 'https://www.instagram.com/gaurisuits' }}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-slate-300 mb-1">Facebook URL</label>

@@ -35,8 +35,9 @@
         </div>
 
         <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">Video Stream URL (MP4 / WebM) *</label>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Video Stream or Instagram Reel URL (MP4 / WebM / Instagram) *</label>
             <input type="text" name="video_url" value="{{ old('video_url', $reel->video_url) }}" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white font-mono focus:border-amber-400 outline-none">
+            <span class="text-[11px] text-slate-400 mt-1 block">Supports direct video streams or Instagram reel links from @gaurisuits.</span>
         </div>
 
         <div>
@@ -55,8 +56,9 @@
         </div>
 
         <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">Custom Link URL (Optional override)</label>
-            <input type="text" name="link_url" value="{{ old('link_url', $reel->link_url) }}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
+            <label class="block text-xs font-medium text-slate-300 mb-1">Instagram Link / Custom URL</label>
+            <input type="text" name="link_url" value="{{ old('link_url', $reel->link_url ?? 'https://www.instagram.com/gaurisuits') }}" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm text-white focus:border-amber-400 outline-none">
+            <span class="text-[11px] text-slate-400 mt-1 block">Link directly to the post/reel on @gaurisuits Instagram.</span>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">

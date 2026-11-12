@@ -25,6 +25,12 @@ class SettingController extends Controller
             Setting::set($key, $value);
         }
 
+        if ($request->has('social_instagram')) {
+            Setting::set('instagram_url', $request->input('social_instagram'));
+        } elseif ($request->has('instagram_url')) {
+            Setting::set('social_instagram', $request->input('instagram_url'));
+        }
+
         if ($request->has('currency')) {
             $curr = strtoupper(trim($request->input('currency', 'AUD')));
             Setting::set('currency', $curr);
